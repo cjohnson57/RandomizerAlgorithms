@@ -1,0 +1,548 @@
+{
+  "StartRegionName": "Forest",
+  "GoalItemName": "Goal",
+  "Regions": [
+    {
+      "Name": "Forest",
+      "Exits": [
+        {
+          "ToRegionName": "Field",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Waterfall",
+          "Requirements": "Sword"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Forest_Chest",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Forest_Quest",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Field",
+      "Exits": [
+        {
+          "ToRegionName": "Forest",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Lake",
+          "Requirements": "Magic"
+        },
+        {
+          "ToRegionName": "Valley",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "City",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Village",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "River",
+          "Requirements": "Bombs"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Field_Hidden A",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Field_Hidden B",
+          "Requirements": "Bombs",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Field_Hidden C",
+          "Requirements": "Bombs and GrapplingHook",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Lake",
+      "Exits": [
+        {
+          "ToRegionName": "Field",
+          "Requirements": "Magic"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Lake_Hidden A",
+          "Requirements": "GrapplingHook",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Lake_Hidden B",
+          "Requirements": "Magic and ( Sling or Sword )",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Lake_Quest",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Village",
+      "Exits": [
+        {
+          "ToRegionName": "Field",
+          "Requirements": "None"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Village_Hidden",
+          "Requirements": "Bombs",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Village_Mini-Game",
+          "Requirements": "GrapplingHook",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Village_Quest",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "River",
+      "Exits": [
+        {
+          "ToRegionName": "Field",
+          "Requirements": "Bombs"
+        },
+        {
+          "ToRegionName": "Waterfall",
+          "Requirements": "None"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "River_Hidden A",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "River_Hidden B",
+          "Requirements": "Sling",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "River_Chest",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Waterfall",
+      "Exits": [
+        {
+          "ToRegionName": "River",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Forest",
+          "Requirements": "Bombs"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Waterfall_Hidden A",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Waterfall_Chest",
+          "Requirements": "Sling",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Waterfall_Quest",
+          "Requirements": "Sword and Bombs",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Valley",
+      "Exits": [
+        {
+          "ToRegionName": "Field",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Desert",
+          "Requirements": "GrapplingHook and Bombs"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Valley_Hidden A",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Valley_Hidden B",
+          "Requirements": "Bombs or Magic",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Valley_Chest",
+          "Requirements": "Sling",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Desert",
+      "Exits": [
+        {
+          "ToRegionName": "Valley",
+          "Requirements": "GrapplingHook and Bombs"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Desert_Chest",
+          "Requirements": "GrapplingHook and Sling",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Desert_Mini-Boss",
+          "Requirements": "Sword and Magic",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "City",
+      "Exits": [
+        {
+          "ToRegionName": "Field",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Castle",
+          "Requirements": "GateKey and Sling"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "City_Mini-Game",
+          "Requirements": "Sling",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "City_Quest",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Castle",
+      "Exits": [
+        {
+          "ToRegionName": "City",
+          "Requirements": "GateKey and Sling"
+        },
+        {
+          "ToRegionName": "Dungeon",
+          "Requirements": "Key and Bow"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Castle_Chest A",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Castle_Chest B",
+          "Requirements": "Key and Magic",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Castle_Mini-Boss",
+          "Requirements": "Sword and ( Sling or Bow )",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Dungeon",
+      "Exits": [
+        {
+          "ToRegionName": "Castle",
+          "Requirements": "Key and Bow"
+        },
+        {
+          "ToRegionName": "Arena",
+          "Requirements": "Has(Key,2)"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Dungeon_Chest",
+          "Requirements": "GrapplingHook",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Dungeon_Puzzle",
+          "Requirements": "Sword or Bow",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Arena",
+      "Exits": [
+        {
+          "ToRegionName": "Dungeon",
+          "Requirements": "Has(Key,2)"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Arena_Boss",
+          "Requirements": "Sword and Magic and Bow",
+          "Item": {
+            "Name": "Goal",
+            "Importance": 3
+          }
+        }
+      ]
+    }
+  ],
+  "Items": [
+    {
+      "Name": "Goal",
+      "Importance": 3
+    },
+    {
+      "Name": "Sword",
+      "Importance": 2
+    },
+    {
+      "Name": "Bombs",
+      "Importance": 2
+    },
+    {
+      "Name": "Sling",
+      "Importance": 2
+    },
+    {
+      "Name": "Magic",
+      "Importance": 2
+    },
+    {
+      "Name": "GrapplingHook",
+      "Importance": 2
+    },
+    {
+      "Name": "Bow",
+      "Importance": 2
+    },
+    {
+      "Name": "GateKey",
+      "Importance": 2
+    },
+    {
+      "Name": "Key",
+      "Importance": 2
+    },
+    {
+      "Name": "Key",
+      "Importance": 2
+    },
+    {
+      "Name": "HPUp",
+      "Importance": 1
+    },
+    {
+      "Name": "HPUp",
+      "Importance": 1
+    },
+    {
+      "Name": "HPUp",
+      "Importance": 1
+    },
+    {
+      "Name": "HPUp",
+      "Importance": 1
+    },
+    {
+      "Name": "HPUp",
+      "Importance": 1
+    },
+    {
+      "Name": "HPUp",
+      "Importance": 1
+    },
+    {
+      "Name": "HPUp",
+      "Importance": 1
+    },
+    {
+      "Name": "HPUp",
+      "Importance": 1
+    },
+    {
+      "Name": "HPUp",
+      "Importance": 1
+    },
+    {
+      "Name": "HPUp",
+      "Importance": 1
+    },
+    {
+      "Name": "Gold",
+      "Importance": 0
+    },
+    {
+      "Name": "Gold",
+      "Importance": 0
+    },
+    {
+      "Name": "Gold",
+      "Importance": 0
+    },
+    {
+      "Name": "Gold",
+      "Importance": 0
+    },
+    {
+      "Name": "Gold",
+      "Importance": 0
+    },
+    {
+      "Name": "Gold",
+      "Importance": 0
+    },
+    {
+      "Name": "Gold",
+      "Importance": 0
+    },
+    {
+      "Name": "Gold",
+      "Importance": 0
+    },
+    {
+      "Name": "Gold",
+      "Importance": 0
+    },
+    {
+      "Name": "Gold",
+      "Importance": 0
+    }
+  ]
+}
