@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace RandomizerAlgorithms
@@ -32,9 +33,9 @@ namespace RandomizerAlgorithms
             Region root = world.Regions.First(x => x.Name == world.StartRegionName);
             Queue<Region> TraverseOrder = new Queue<Region>();
             Queue<Region> Q = new Queue<Region>();
-            HashSet<Region> S = new HashSet<Region>();
+            HashSet<Region> visited = new HashSet<Region>();
             Q.Enqueue(root);
-            S.Add(root);
+            visited.Add(root);
 
             //Implementation of BFS
             while(Q.Count > 0)
@@ -50,16 +51,16 @@ namespace RandomizerAlgorithms
                     if(parser.RequirementsMet(e.Requirements, owneditems))
                     {
                         toadd.Exits.Add(e);
-                        Region exitto = world.Regions.First(x => x.Name == e.ToRegionName);
-                        if(!S.Contains(exitto))
+                        Region exitto = world.Regions.First(x => x.Name == e.ToRegionName); //Get the region this edge leads to
+                        if (!visited.Contains(exitto)) //Don't revisit already visited nodes on this path
                         {
                             Q.Enqueue(exitto);
-                            S.Add(exitto);
+                            visited.Add(exitto);
                         }
                     }
                 }
                 //Subsearch to check each edge to a location in the current region
-                //If requirement is met, ad it to reachable locations
+                //If requirement is met, add it to reachable locations
                 foreach(Location l in r.Locations)
                 {
                     if(parser.RequirementsMet(l.Requirements, owneditems))
@@ -70,6 +71,47 @@ namespace RandomizerAlgorithms
                 reachable.Regions.Add(toadd); //Add every reachable exit and location discovered in this iteration
             }
             return reachable;
+        }
+
+        List<List<Region>> paths = new List<List<Region>>();
+
+        //Use DFS to find all possible paths from the root to the specified region
+        public List<List<Region>> PathsToRegion(WorldGraph world, Region dest)
+        {
+            Region root = world.Regions.First(x => x.Name == world.StartRegionName);
+
+            List<Region> visited = new List<Region>();
+            paths = new List<List<Region>>();
+            if(root == dest) //If root and dest equal, return empty list
+            {
+                return paths;
+            }
+
+            RecursiveDFS(world, root, dest, visited); //Recursively run DFS, when dest found add the path to paths var
+
+            return paths; //Return list of paths
+        }
+
+        //Recursively check exits with copy of visited list
+        //It's done this way so that after the destination or a dead end is met, the code flow "backs up"
+        public void RecursiveDFS(WorldGraph world, Region r, Region dest, List<Region> visited)
+        {
+            visited.Add(r); //Add to visited list
+            if (r == dest)
+            {
+                paths.Add(visited); //If this is the dest, then visited currently equals a possible path
+                return;
+            }
+            foreach (Exit e in r.Exits)
+            {
+                Region exitto = world.Regions.First(x => x.Name == e.ToRegionName); //Get the region this edge leads to
+                if (!visited.Contains(exitto)) //Don't revisit already visited nodes on this path
+                {
+                    List<Region> copy = new List<Region>(visited); //If don't do this List is passed by reference, algo doesn't work
+                    RecursiveDFS(world, exitto, dest, copy);
+                }
+            }
+
         }
 
         /*

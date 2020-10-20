@@ -78,7 +78,6 @@ namespace RandomizerAlgorithms
                 }
             }
             return items;
-
         }
     }
 }

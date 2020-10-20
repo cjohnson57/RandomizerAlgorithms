@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 namespace RandomizerAlgorithms
 {
@@ -22,8 +23,16 @@ namespace RandomizerAlgorithms
             List<Item> majoritempool = world.Items.Where(x => x.Importance == 2).ToList();
             List<Item> minoritempool = world.Items.Where(x => x.Importance < 2).ToList();
 
+            //Statistics teststatistics = new Statistics();
+            //double complexityscore = teststatistics.CalcWorldComplexity(world);
+
+            //Search testsearcher = new Search();
+            //testsearcher.PathsToRegion(world, world.Regions.First(x => x.Name == "Waterfall"));
+
             //Parser testparse = new Parser();
-            //testparse.RequirementsMet("Has(Key,2)", majoritempool);
+            ////majoritempool.RemoveAt(8);
+            ////majoritempool.RemoveAt(0);
+            //bool result = testparse.RequirementsMet("(Sword and Bow) or Has(Key,2)", majoritempool);
 
             //string testjsontext = File.ReadAllText("../../../WorldGraphs/TestWorldOriginal.json");
             //WorldGraph testworld = JsonConvert.DeserializeObject<WorldGraph>(testjsontext);

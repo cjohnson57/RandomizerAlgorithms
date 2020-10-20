@@ -18,11 +18,11 @@ namespace RandomizerAlgorithms
             helper = new Helpers();
             searcher = new Search(helper);
         }
+
         public Fill(int seed)
         {
             helper = new Helpers(seed);
             searcher = new Search(helper);
-
         }
 
         //G: Graph of world locations (called world in code)

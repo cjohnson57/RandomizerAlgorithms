@@ -338,7 +338,7 @@
       "Exits": [
         {
           "ToRegionName": "City",
-          "Requirements": "GateKey and Sling"
+          "Requirements": "Sling"
         },
         {
           "ToRegionName": "Dungeon",
@@ -377,7 +377,7 @@
       "Exits": [
         {
           "ToRegionName": "Castle",
-          "Requirements": "Key and Bow"
+          "Requirements": "Bow"
         },
         {
           "ToRegionName": "Arena",
@@ -408,7 +408,7 @@
       "Exits": [
         {
           "ToRegionName": "Dungeon",
-          "Requirements": "Has(Key,2)"
+          "Requirements": "None"
         }
       ],
       "Locations": [

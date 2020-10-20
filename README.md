@@ -24,7 +24,7 @@ Currently, there is no existing literature on these. The goal of this project is
 Currently the program is functional. Want to add calculations for following statistics:
 
 * World complexity
-    * Must take into account regions, item locations, locks, maybe more
+    * Plan to take into account complexity of total rule/requirement strings of item locations
 
 * Randomized distribution bias
     * Basically, for forward and assumed fill, how much the item distribution is biased toward the early areas of the game by the algorithm
@@ -44,13 +44,16 @@ After all of these calculations are possible and several world graphs of increas
 * Assumed Fill
 
 [Search.cs](Search.cs) defines the functions used for searching
-* GetReachableLocations given a world graph and item set, returns all locations reachable with given item set
+* GetReachableLocations given a world graph and item set, returns all locations reachable with given item set. Utilizes BFS
+* PathsToRegion returns all possible paths (that don't go back on themselves) from the root region to a target region. Utilizes recursive DFS
 * SphereSeach calculates spheres of reachability, where all items in sphere x are reachable with items found in sphere x-1
 
-[Statistics.cs](Statistics.cs) is currently empty but will be used to calculate the aforementioned complexity, bias, and interestingness.
+[Statistics.cs](Statistics.cs) is currently mostly empty but will be used to calculate the aforementioned complexity, bias, and interestingness.
+* Complexity: Has some early code to calculate list of total requirement strings. Need to add ability in parser to simplify and then perform some heuristic on strings to determine complexity
 
 [Parser.cs](Parser.cs) is used to parse a logical requirement string and use given item set to determine if the conditions are satisfied or not.
-* Currently does preprocessing on a string to turn it into a string of true/false statements and uses a library to parse, later may build own parser for robustness
+* Utilizes a modification of the shunting yard algorithm
+* TODO: Add ability to simplify a logical string for world complexity calculation
 
 [Helpers.cs](Helpers.cs) contains some miscellaneous functions that didn't quite fit in the other files. The most significant of these is the shuffle function, which provides randomness.
 
