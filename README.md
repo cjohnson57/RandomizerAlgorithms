@@ -24,7 +24,7 @@ Currently, there is no existing literature on these. The goal of this project is
 Currently the program is functional. Want to add calculations for following statistics:
 
 * World complexity
-    * Plan to take into account complexity of total rule/requirement strings of item locations
+    * Plan to take into account complexity of absolute rule/requirement strings of item locations
 
 * Randomized distribution bias
     * Basically, for forward and assumed fill, how much the item distribution is biased toward the early areas of the game by the algorithm
@@ -49,11 +49,13 @@ After all of these calculations are possible and several world graphs of increas
 * SphereSeach calculates spheres of reachability, where all items in sphere x are reachable with items found in sphere x-1
 
 [Statistics.cs](Statistics.cs) is currently mostly empty but will be used to calculate the aforementioned complexity, bias, and interestingness.
-* Complexity: Has some early code to calculate list of total requirement strings. Need to add ability in parser to simplify and then perform some heuristic on strings to determine complexity
+* Complexity: Has some code to find the absolute rule for every item location in the graph and give it a complexity score. Some statistic on list of scores will then be used to calculate final score
+    * Ex. Sum of squares
 
 [Parser.cs](Parser.cs) is used to parse a logical requirement string and use given item set to determine if the conditions are satisfied or not.
 * Utilizes a modification of the shunting yard algorithm
-* TODO: Add ability to simplify a logical string for world complexity calculation
+* Also has ability to simplify a given rule string by transforming it into a basic boolean expression and utilizing the small script [simplify.py](simplify.py) to reduce it
+    * Used in world complexity calculation to simplify all location rules
 
 [Helpers.cs](Helpers.cs) contains some miscellaneous functions that didn't quite fit in the other files. The most significant of these is the shuffle function, which provides randomness.
 

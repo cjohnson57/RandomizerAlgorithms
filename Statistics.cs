@@ -13,6 +13,7 @@ namespace RandomizerAlgorithms
     //Interestingness? (Considers item placement)
     class Statistics
     {
+        //Calculate complexity of the base graph (Not considering items, only rules for location reachability)
         public double CalcWorldComplexity(WorldGraph world)
         {
             Search searcher = new Search();
@@ -53,6 +54,7 @@ namespace RandomizerAlgorithms
                     }
 
                 }
+                //Now calculate the total rule for each location
                 foreach(Location l in r.Locations)
                 {
                     string totalrule = "";
@@ -64,14 +66,62 @@ namespace RandomizerAlgorithms
                     {
                         totalrule = "(" + regionstring + ") and " + l.Requirements; //Must meet at least one path requirement to reach the region and the location requirement
                     }
-                    totalrule = parser.Simplify(totalrule.Replace("None", "true"));
+                    totalrule = parser.Simplify(totalrule.Replace("None", "true")); //Simplifies the boolean expression
                     totalrules.Add(totalrule);
                 }
             }
 
-
-            return 0;
+            //We now have a list for the total rule of every location in the game
+            //Calculate score for each rule and add them all to list
+            List<double> scores = new List<double>();
+            foreach(string rule in totalrules)
+            {
+                double score = 1; //Base score for each location is 1
+                if(!(rule == "1")) //If false, can reach from beginning of game, just use base scoer
+                {
+                    char[] tokens = rule.ToCharArray();
+                    foreach(char token in tokens)
+                    {
+                        if(token == '&')
+                        {
+                            score += .5; //Add .5 to score for each AND since they add complexity
+                        }
+                        else if (token == '|')
+                        {
+                            score -= .5; //Subtract .5 from score for each OR since they reduce complexity
+                        }
+                        else if (token != '(' && token != ')') //Only possible values in string are &, |, (, ), and a variable; so if this condition is true then it's a variable
+                        {
+                            score += 1; //Add 1 to score for each variable in expression
+                        }
+                    }
+                }
+                scores.Add(score);
+            }
+            //Use list of scores to calculate final score and return
+            return ScoreCalculation(scores);
         }
 
+        //Use list of scores for each rule in world to calculate final score based on some statistic
+        //Possibilities:
+        // Simple sum of scores
+        // Average of scores
+        // Average of top x%
+        // Max score
+        // Sum of Squares
+        //For now, using sum of squares, may change later
+        private double ScoreCalculation(List<double> scores)
+        {
+            double sum = scores.Sum();
+            double avg = scores.Average();
+            double max = scores.Max();
+            double sumofsquares = 0;
+            foreach (double score in scores)
+            {
+                double deviation = score - avg;
+                sumofsquares += deviation * deviation;
+            }
+            return sumofsquares;
+        }
     }
 }

@@ -23,13 +23,15 @@ namespace RandomizerAlgorithms
             List<Item> majoritempool = world.Items.Where(x => x.Importance == 2).ToList();
             List<Item> minoritempool = world.Items.Where(x => x.Importance < 2).ToList();
 
-            //Statistics teststatistics = new Statistics();
-            //double complexityscore = teststatistics.CalcWorldComplexity(world);
+            Statistics teststatistics = new Statistics();
+            double complexityscore = teststatistics.CalcWorldComplexity(world);
 
             //Search testsearcher = new Search();
             //testsearcher.PathsToRegion(world, world.Regions.First(x => x.Name == "Waterfall"));
 
             //Parser testparse = new Parser();
+            //string result = testparse.Simplify("(Sword and Bow and Bow) or Has(Key,2)"); //Should be simplified to something like (Sword and Bow) or Has(Key,2)
+            //string result2 = testparse.Simplify("Sword or Sword and Bow"); //Should be simplified to Sword
             ////majoritempool.RemoveAt(8);
             ////majoritempool.RemoveAt(0);
             //bool result = testparse.RequirementsMet("(Sword and Bow) or Has(Key,2)", majoritempool);

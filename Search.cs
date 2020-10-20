@@ -76,6 +76,7 @@ namespace RandomizerAlgorithms
         List<List<Region>> paths = new List<List<Region>>();
 
         //Use DFS to find all possible paths from the root to the specified region
+        //Not including paths that go back on themselves
         public List<List<Region>> PathsToRegion(WorldGraph world, Region dest)
         {
             Region root = world.Regions.First(x => x.Name == world.StartRegionName);
