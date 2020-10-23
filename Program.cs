@@ -23,8 +23,8 @@ namespace RandomizerAlgorithms
             List<Item> majoritempool = world.Items.Where(x => x.Importance == 2).ToList();
             List<Item> minoritempool = world.Items.Where(x => x.Importance < 2).ToList();
 
-            Statistics teststatistics = new Statistics();
-            double complexityscore = teststatistics.CalcWorldComplexity(world);
+            //Statistics teststatistics = new Statistics();
+            //double complexityscore = teststatistics.CalcWorldComplexity(world);
 
             //Search testsearcher = new Search();
             //testsearcher.PathsToRegion(world, world.Regions.First(x => x.Name == "Waterfall"));

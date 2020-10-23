@@ -34,6 +34,7 @@ namespace RandomizerAlgorithms
                 string regionstring = "";
                 if(paths.Count > 0) //If it equals 0, current region is root, do not need region string
                 {
+                    //Go through each path and calculate the rule for that path to construct an absolute rule for the region
                     for(int i = 0; i < paths.Count; i++)
                     {
                         List<Region> path = paths[i];

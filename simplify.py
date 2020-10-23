@@ -1,6 +1,5 @@
 import boolean
 import sys
-
 # This script simplifies a boolean logic expression
 # So input "A or A and B" will give output "A"
 # Used in calculation of world complexity

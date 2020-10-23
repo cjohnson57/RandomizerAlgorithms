@@ -279,6 +279,8 @@ namespace RandomizerAlgorithms
         }
     }
 
+    //Small struct used when transforming a total/absolute rule
+    //Associates a string (the item name) with a char (its identifier)
     struct Term
     {
         public string Expression;

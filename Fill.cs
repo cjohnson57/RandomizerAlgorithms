@@ -18,6 +18,7 @@ namespace RandomizerAlgorithms
             searcher = new Search(helper);
         }
 
+        //Initialize with specified seed
         public Fill(int seed)
         {
             helper = new Helpers(seed);

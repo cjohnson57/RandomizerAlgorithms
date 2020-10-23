@@ -19,6 +19,7 @@ namespace RandomizerAlgorithms
         }
 
         //Constructor with pre-specified helper so it may be seeded
+        //Currently not necessary since search uses no RNG
         public Search(Helpers h)
         {
             helper = h;
