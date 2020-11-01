@@ -19,8 +19,15 @@ namespace RandomizerAlgorithms
         //Default, empty item
         public Item()
         {
-            Name = "";
+            Name = null;
             Importance = -1;
+        }
+
+        //Parameters specified
+        public Item(string name, int importance)
+        {
+            Name = name;
+            Importance = importance;
         }
     }
 }

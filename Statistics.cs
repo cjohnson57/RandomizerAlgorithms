@@ -27,15 +27,15 @@ namespace RandomizerAlgorithms
              * Then the total rule will equal:
              * ((A->B and B->C) or (A->C)) and Rule X
              */
-            foreach(Region r in world.Regions)
+            foreach (Region r in world.Regions)
             {
                 //Must calculate every possible path (that doesn't go back on itself) from root to the region r
                 List<List<Region>> paths = searcher.PathsToRegion(world, r);
                 string regionstring = "";
-                if(paths.Count > 0) //If it equals 0, current region is root, do not need region string
+                if (paths.Count > 0) //If it equals 0, current region is root, do not need region string
                 {
                     //Go through each path and calculate the rule for that path to construct an absolute rule for the region
-                    for(int i = 0; i < paths.Count; i++)
+                    for (int i = 0; i < paths.Count; i++)
                     {
                         List<Region> path = paths[i];
                         string pathstring = "";
@@ -47,7 +47,7 @@ namespace RandomizerAlgorithms
                             }
                             pathstring += "(" + path[j].Exits.First(x => x.ToRegionName == path[j + 1].Name).Requirements + ")";
                         }
-                        if(i > 0)
+                        if (i > 0)
                         {
                             regionstring += " or "; //The pathstrings are different options, so use "or"
                         }
@@ -56,10 +56,10 @@ namespace RandomizerAlgorithms
 
                 }
                 //Now calculate the total rule for each location
-                foreach(Location l in r.Locations)
+                foreach (Location l in r.Locations)
                 {
                     string totalrule = "";
-                    if(string.IsNullOrEmpty(regionstring)) //For when region is root
+                    if (string.IsNullOrEmpty(regionstring)) //For when region is root
                     {
                         totalrule = l.Requirements;
                     }
@@ -71,33 +71,12 @@ namespace RandomizerAlgorithms
                     totalrules.Add(totalrule);
                 }
             }
-
             //We now have a list for the total rule of every location in the game
             //Calculate score for each rule and add them all to list
             List<double> scores = new List<double>();
-            foreach(string rule in totalrules)
+            foreach (string rule in totalrules)
             {
-                double score = 1; //Base score for each location is 1
-                if(!(rule == "1")) //If false, can reach from beginning of game, just use base scoer
-                {
-                    char[] tokens = rule.ToCharArray();
-                    foreach(char token in tokens)
-                    {
-                        if(token == '&')
-                        {
-                            score += .5; //Add .5 to score for each AND since they add complexity
-                        }
-                        else if (token == '|')
-                        {
-                            score -= .5; //Subtract .5 from score for each OR since they reduce complexity
-                        }
-                        else if (token != '(' && token != ')') //Only possible values in string are &, |, (, ), and a variable; so if this condition is true then it's a variable
-                        {
-                            score += 1; //Add 1 to score for each variable in expression
-                        }
-                    }
-                }
-                scores.Add(score);
+                scores.Add(parser.CalcRuleScore(rule));
             }
             //Use list of scores to calculate final score and return
             return ScoreCalculation(scores);
@@ -107,7 +86,6 @@ namespace RandomizerAlgorithms
         //Possibilities:
         // Simple sum of scores
         // Average of scores
-        // Average of top x%
         // Max score
         // Sum of Squares
         //For now, using sum of squares, may change later
@@ -122,7 +100,7 @@ namespace RandomizerAlgorithms
                 double deviation = score - avg;
                 sumofsquares += deviation * deviation;
             }
-            return sumofsquares;
+            return sum;
         }
     }
 }

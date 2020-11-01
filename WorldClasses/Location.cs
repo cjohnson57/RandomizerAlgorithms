@@ -10,5 +10,19 @@ namespace RandomizerAlgorithms
         public string Name;
         public string Requirements; //Key item requirements to traverse this edge
         public Item Item = new Item(); //What item is placed in this location
+
+        //Empty constructor
+        public Location()
+        {
+
+        }
+
+        //All parameters specified
+        public Location(string name, string requirements, Item item)
+        {
+            Name = name;
+            Requirements = requirements;
+            Item = item;
+        }
     }
 }

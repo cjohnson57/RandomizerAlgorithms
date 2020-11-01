@@ -136,16 +136,16 @@ namespace RandomizerAlgorithms
             output.Spheres.Add(s0); //Add initial sphere to sphere list
             //sx indicates every sphere after the first. Any major items found in s0 means sx should be bigger.
             WorldGraph sx = GetReachableLocations(world, owneditems);
-            int temp = owneditems.Count(); //Temp is the count of previously owned major items
-            owneditems = sx.CollectMajorItems(); //This is the new count of owned major items
+            int temp = owneditems.Where(x => x.Importance >= 2).Count(); //Temp is the count of previously owned major items
+            owneditems = sx.CollectAllItems(); //Used to find new count of major items
             //If counts are equal then no new major items found, stop searching
-            while (owneditems.Count > temp) //If new count is not greater than old count, that means all currently reachable locations have been found
+            while (owneditems.Where(x => x.Importance >= 2).Count() > temp) //If new count is not greater than old count, that means all currently reachable locations have been found
             {
                 output.Spheres.Add(sx); //If new locations found, add to sphere list
                 //Take the same steps taken before the loop: Get new reachable locations, collect new major items, and check to see if new count is larger than old count
                 sx = GetReachableLocations(world, owneditems);
-                temp = owneditems.Count();
-                owneditems = sx.CollectMajorItems();
+                temp = owneditems.Where(x => x.Importance >= 2).Count(); //Only want to consider count of major items
+                owneditems = sx.CollectAllItems();
             }
             //At this point, either a dead end has been found or the end of the game has
             //If the goal item is in the list of owned items, means the end has been found and thus the game is completable

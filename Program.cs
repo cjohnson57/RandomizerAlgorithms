@@ -9,22 +9,22 @@ namespace RandomizerAlgorithms
 {
     class Program
     {
-        const int trials = 1;
+        const int trials = 10;
         //Random, forward, and assumed fill; set to true to test on that algo
-        static bool[] dotests = { false, false, true };
+        static bool[] dotests = { true, true, true };
 
         static void Main(string[] args)
         {
-            Fill filler = new Fill(950834059);
+            Fill filler = new Fill();
             Search searcher = new Search();
 
             string jsontext = File.ReadAllText("../../../WorldGraphs/TestWorld.json");
             WorldGraph world = JsonConvert.DeserializeObject<WorldGraph>(jsontext);
-            List<Item> majoritempool = world.Items.Where(x => x.Importance == 2).ToList();
-            List<Item> minoritempool = world.Items.Where(x => x.Importance < 2).ToList();
 
-            //Statistics teststatistics = new Statistics();
-            //double complexityscore = teststatistics.CalcWorldComplexity(world);
+            //string generatedjson = GenerateWorld(50, 30);
+
+            Statistics teststatistics = new Statistics();
+            ////double complexityscore = teststatistics.CalcWorldComplexity(world);
 
             //Search testsearcher = new Search();
             //testsearcher.PathsToRegion(world, world.Regions.First(x => x.Name == "Waterfall"));
@@ -46,11 +46,14 @@ namespace RandomizerAlgorithms
             {
                 for (int i = 0; i < trials; i++)
                 {
-                    WorldGraph randomgraph = filler.RandomFill(world, majoritempool); 
+                    WorldGraph input = world.Copy(); //Copy so that world is not passed by reference and overwritten
+                    List<Item> majoritempool = input.Items.Where(x => x.Importance == 2).ToList();
+                    List<Item> minoritempool = input.Items.Where(x => x.Importance < 2).ToList();
+                    WorldGraph randomgraph = filler.RandomFill(input, majoritempool); 
                     randomgraph = filler.RandomFill(randomgraph, minoritempool);
 
                     SphereSearchOutput output = searcher.SphereSearch(randomgraph);
-                    Print_Spheres(output);
+                    //Print_Spheres(output);
                 }
             }
 
@@ -59,11 +62,13 @@ namespace RandomizerAlgorithms
             {
                 for (int i = 0; i < trials; i++)
                 {
-                    WorldGraph forwardgraph = filler.ForwardFill(world, majoritempool); //Shuffle major items with logic
+                    WorldGraph input = world.Copy(); //Copy so that world is not passed by reference and overwritten
+                    List<Item> majoritempool = input.Items.Where(x => x.Importance == 2).ToList();
+                    List<Item> minoritempool = input.Items.Where(x => x.Importance < 2).ToList();
+                    WorldGraph forwardgraph = filler.ForwardFill(input, majoritempool); //Shuffle major items with logic
                     forwardgraph = filler.RandomFill(forwardgraph, minoritempool); //Shuffle minor items without logic
 
                     SphereSearchOutput output = searcher.SphereSearch(forwardgraph);
-                    Print_Spheres(output);
                 }
             }
 
@@ -72,13 +77,13 @@ namespace RandomizerAlgorithms
             {
                 for (int i = 0; i < trials; i++)
                 {
-                    WorldGraph assumedgraph = filler.AssumedFill(world, majoritempool); //Shuffle major items with logic
+                    WorldGraph input = world.Copy(); //Copy so that world is not passed by reference and overwritten
+                    List<Item> majoritempool = input.Items.Where(x => x.Importance == 2).ToList();
+                    List<Item> minoritempool = input.Items.Where(x => x.Importance < 2).ToList();
+                    WorldGraph assumedgraph = filler.AssumedFill(input, majoritempool); //Shuffle major items with logic
                     assumedgraph = filler.RandomFill(assumedgraph, minoritempool); //Shuffle minor items without logic
 
                     SphereSearchOutput output = searcher.SphereSearch(assumedgraph);
-                    Print_Spheres(output);
-
-                    //string jsonworld = JsonConvert.SerializeObject(assumedgraph);
                 }
             }
         }
@@ -135,6 +140,44 @@ namespace RandomizerAlgorithms
                 }
             }
             Console.WriteLine(Environment.NewLine + "Is Completable: " + input.Completable + Environment.NewLine); //After finishing, print if completable or not
+        }
+
+        //Generates a world with a specific count of regions and items
+        //First generates many worlds to determine an average complexity then returns a world generated with a certain tolerance of that complexity
+        //This takes a while to run, mainly because each complexity calculation takes ~2 seconds due to running the external python script
+        static string GenerateWorld(int regioncount, int itemcount)
+        {
+            double goalcomplexity = AverageComplexity(regioncount, itemcount); //Get the average complexity of worlds generated with these parameters
+            //Now generate worlds until one is generated within a certain tolerance of the average
+            double tolerance = .10; //10%
+            while (true)
+            {
+                //Generate a world, check its complexity
+                WorldGenerator generator = new WorldGenerator(regioncount, itemcount);
+                WorldGraph generated = generator.Generate();
+                int test = generated.GetLocationCount();
+                double complexity = generator.GetComplexity();
+                if (goalcomplexity * (1-tolerance) < complexity && complexity < goalcomplexity * (1+tolerance))
+                {
+                    //Once complexity within x% of average has been generated, return json of the world so it can be saved
+                    return generated.ToJson();
+                }
+            }
+        }
+
+        //Calculate the avrage complexity from generating many worlds with a specific regioncount and itemcount
+        static double AverageComplexity(int regioncount, int itemcount)
+        {
+            //First do x trials to determine an average complexity
+            int gentrials = 20;
+            double totalcomplexity = 0;
+            for (int i = 0; i < gentrials; i++)
+            {
+                WorldGenerator generator = new WorldGenerator(regioncount, itemcount);
+                WorldGraph generated = generator.Generate();
+                totalcomplexity += generator.GetComplexity();
+            }
+             return totalcomplexity / gentrials; //Determine average complexity, we want the goal complexity to be within some% of this
         }
     }
 }

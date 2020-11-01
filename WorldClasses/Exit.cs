@@ -10,5 +10,28 @@ namespace RandomizerAlgorithms
     {
         public string ToRegionName;
         public string Requirements; //Key item requirements to traverse this edge
+
+        //Parameterless constructor
+        //Just used for initialization
+        public Exit()
+        {
+            ToRegionName = "";
+            Requirements = "";
+        }
+        
+        //Constructor which specifies the to region name
+        //Requirement initialized to nothing
+        public Exit(string to)
+        {
+            ToRegionName = to;
+            Requirements = "None";
+        }
+
+        //Constructor which specifies both parameters
+        public Exit(string to, string requirements)
+        {
+            ToRegionName = to;
+            Requirements = requirements;
+        }
     }
 }

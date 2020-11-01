@@ -13,8 +13,19 @@ namespace RandomizerAlgorithms
 
 
         public Region()
-        { 
+        {
+            Name = "";
+            Exits = new HashSet<Exit>();
+            Locations = new HashSet<Location>();
+        }
 
+        //Another name constructor but with a string name instead of another region
+        //Used in world generation to create new regions
+        public Region(string name)
+        {
+            Name = name;
+            Exits = new HashSet<Exit>();
+            Locations = new HashSet<Location>();
         }
 
         //Constructor with specified name
