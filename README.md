@@ -62,7 +62,7 @@ After all of these calculations are possible and several world graphs of increas
 [WorldGenerator.cs](WorldGenerator.cs) contains code to generate a randomized world graph given an input region count and item list.
 
 [WorldClasses](WorldClasses) contains several classes which are used to define an input world graph.
-* Of particular note is [WodlGraph.cs](WorldClasses/WorldGraph.cs), which contains many functions used to find information about its layout.
+* Of particular note is [WorldGraph.cs](WorldClasses/WorldGraph.cs), which contains many functions used to find information about its layout.
 
 [WorldGraphs](WorldGraphs) contains some sample world graphs in .json form.
 * Currently these include a test world (empty items besides goal), randomized test world (items filled by Assumed Fill), and the test world with its original item placements for comparison.
