@@ -59,10 +59,21 @@ After all of these calculations are possible and several world graphs of increas
 
 [Helpers.cs](Helpers.cs) contains some miscellaneous functions that didn't quite fit in the other files. The most significant of these is the shuffle function, which provides randomness.
 
+[WorldGenerator.cs](WorldGenerator.cs) contains code to generate a randomized world graph given an input region count and item list.
+
 [WorldClasses](WorldClasses) contains several classes which are used to define an input world graph.
+* Of particular note is [WorldGraph.cs](WorldClasses/WorldGraph.cs), which contains many functions used to find information about its layout.
 
 [WorldGraphs](WorldGraphs) contains some sample world graphs in .json form.
 * Currently these include a test world (empty items besides goal), randomized test world (items filled by Assumed Fill), and the test world with its original item placements for comparison.
+
+## Documents
+
+[Pseudocode](https://drive.google.com/file/d/1w8PWoPOP0WWzDxhrliUTG9Q8VwHo0w_A/view?usp=sharing) Some pseudocode definitions of the algorithms used in this code, namely the Fill and Search functions.
+
+[Initial Project Description/Update](https://docs.google.com/presentation/d/1kH7OujADrh_7JZ6zIJkcokt-aar8Mkaei7hMrmHWP9Y/edit?usp=sharing) Short presentation created after finishing the initial algorithm implementation.
+
+[Complexity and Generation](https://docs.google.com/presentation/d/1BCcFDL4GdgRi2Ih_mrm7cEvWyxCpN6MDrw45Zl3AJjk/edit?usp=sharing) Document which describes the initial implementation of the complexity calculation and world generation.
 
 ## Examples
 
