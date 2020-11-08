@@ -75,6 +75,8 @@ After all of these calculations are possible and several world graphs of increas
 
 [Complexity and Generation](https://docs.google.com/presentation/d/1BCcFDL4GdgRi2Ih_mrm7cEvWyxCpN6MDrw45Zl3AJjk/edit?usp=sharing) Document which describes the initial implementation of the complexity calculation and world generation.
 
+[Complexity and Generation Evaluation](https://docs.google.com/presentation/d/1Sh6Km-P5fIdDRbM25pEOpdnlFkdVT1MeZXqyVRnMhSA/edit?usp=sharing) Goes over some evaluation done to determine what metric with which to calculate the final complexity score. Also describes generation of 5 sample worlds for testing purposes.
+
 ## Examples
 
 Sample World (Original Design)
