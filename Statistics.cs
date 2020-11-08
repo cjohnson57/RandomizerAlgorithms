@@ -10,7 +10,7 @@ namespace RandomizerAlgorithms
     //This class implements functions to compute the following properties of a world:
     //Complexity (Does not consider item placement)
     //Bias (Considers item placement)
-    //Interestingness? (Considers item placement)
+    //Interestingness (Considers item placement)
     class Statistics
     {
         //Calculate complexity of the base graph (Not considering items, only rules for location reachability)
@@ -71,33 +71,12 @@ namespace RandomizerAlgorithms
                     totalrules.Add(totalrule);
                 }
             }
-
             //We now have a list for the total rule of every location in the game
             //Calculate score for each rule and add them all to list
             List<double> scores = new List<double>();
             foreach(string rule in totalrules)
             {
-                double score = 1; //Base score for each location is 1
-                if(!(rule == "1")) //If false, can reach from beginning of game, just use base scoer
-                {
-                    char[] tokens = rule.ToCharArray();
-                    foreach(char token in tokens)
-                    {
-                        if(token == '&')
-                        {
-                            score += .5; //Add .5 to score for each AND since they add complexity
-                        }
-                        else if (token == '|')
-                        {
-                            score -= .5; //Subtract .5 from score for each OR since they reduce complexity
-                        }
-                        else if (token != '(' && token != ')') //Only possible values in string are &, |, (, ), and a variable; so if this condition is true then it's a variable
-                        {
-                            score += 1; //Add 1 to score for each variable in expression
-                        }
-                    }
-                }
-                scores.Add(score);
+                scores.Add(parser.CalcRuleScore(rule));
             }
             //Use list of scores to calculate final score and return
             return ScoreCalculation(scores);
@@ -122,7 +101,17 @@ namespace RandomizerAlgorithms
                 double deviation = score - avg;
                 sumofsquares += deviation * deviation;
             }
-            return sumofsquares;
+            scores = scores.OrderBy(x => x).ToList();
+            double percent = .75; //Want top 75%
+            int start = Convert.ToInt32(scores.Count() * (1 - percent));
+            List<double> toppercent = new List<double>(0);
+            for(int i = start; i < scores.Count; i++)
+            {
+                toppercent.Add(scores[i]);
+            }
+            double avgtoppercent = toppercent.Average();
+            return avgtoppercent;
         }
     }
+
 }

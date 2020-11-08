@@ -9,22 +9,36 @@ namespace RandomizerAlgorithms
 {
     class Program
     {
-        const int trials = 1;
+        const int trials = 10;
         //Random, forward, and assumed fill; set to true to test on that algo
-        static bool[] dotests = { false, false, true };
+        static bool[] dotests = { true, true, true };
+        //Fill list with name of worlds you want to consider
+        static string[] testworlds = { "World1", "World2", "World3", "World4", "World5" };
 
         static void Main(string[] args)
         {
-            Fill filler = new Fill(950834059);
+            Fill filler = new Fill();
             Search searcher = new Search();
+            Statistics stats = new Statistics();
 
-            string jsontext = File.ReadAllText("../../../WorldGraphs/TestWorld.json");
-            WorldGraph world = JsonConvert.DeserializeObject<WorldGraph>(jsontext);
-            List<Item> majoritempool = world.Items.Where(x => x.Importance == 2).ToList();
-            List<Item> minoritempool = world.Items.Where(x => x.Importance < 2).ToList();
+            string testjsontext = File.ReadAllText("../../../WorldGraphs/World3.json");
+            WorldGraph testworld = JsonConvert.DeserializeObject<WorldGraph>(testjsontext);
 
-            //Statistics teststatistics = new Statistics();
-            //double complexityscore = teststatistics.CalcWorldComplexity(world);
+            //double[] testaverages = new double[5];
+            //for (int regioncount = 10; regioncount <= 50; regioncount += 5)
+            //{
+            //    for (int itemcount = 5; itemcount <= Math.Min(regioncount, 30); itemcount += 5)
+            //    {
+            //        double complexity = AverageComplexity(regioncount, itemcount);
+            //        Console.WriteLine("Regions: " + regioncount + ", Items: " + itemcount + ", Complexity: " + complexity);
+            //    }
+            //}
+
+            //string generatedjson = GenerateWorld(50, 30);
+
+            //string jsontest = File.ReadAllText("../../../WorldGraphs/World5.json");
+            //WorldGraph testworld = JsonConvert.DeserializeObject<WorldGraph>(jsontest);
+            //int testlocationcount = testworld.GetLocationCount();
 
             //Search testsearcher = new Search();
             //testsearcher.PathsToRegion(world, world.Regions.First(x => x.Name == "Waterfall"));
@@ -41,45 +55,96 @@ namespace RandomizerAlgorithms
             //SphereSearchOutput testoutput = searcher.SphereSearch(testworld);
             //Print_Spheres(testoutput);
 
-            //Loop for random fill
-            if (dotests[0])
+            foreach (string worldname in testworlds)
             {
-                for (int i = 0; i < trials; i++)
+
+                string jsontext = File.ReadAllText("../../../WorldGraphs/" + worldname + ".json");
+                WorldGraph world = JsonConvert.DeserializeObject<WorldGraph>(jsontext);
+                //Loop for random fill
+                if (dotests[0])
                 {
-                    WorldGraph randomgraph = filler.RandomFill(world, majoritempool); 
-                    randomgraph = filler.RandomFill(randomgraph, minoritempool);
+                    double totalbias = 0;
+                    double totaltime = 0;
+                    for (int i = 0; i < trials; i++)
+                    {
+                        DateTime start = DateTime.Now;
 
-                    SphereSearchOutput output = searcher.SphereSearch(randomgraph);
-                    Print_Spheres(output);
+                        WorldGraph input = world.Copy(); //Copy so that world is not passed by reference and overwritten
+                        List<Item> majoritempool = input.Items.Where(x => x.Importance == 2).ToList();
+                        List<Item> minoritempool = input.Items.Where(x => x.Importance < 2).ToList();
+                        WorldGraph randomgraph = filler.RandomFill(input, majoritempool);
+                        randomgraph = filler.RandomFill(randomgraph, minoritempool);
+
+                        DateTime end = DateTime.Now;
+
+                        double difference = (end - start).TotalMilliseconds;
+                        totaltime += difference;
+
+                        SphereSearchOutput output = searcher.SphereSearch(randomgraph);
+                    }
+                    double avgbias = totalbias / trials;
+                    Console.WriteLine("Average bias for random fill in world " + worldname + ": " + avgbias);
+                    double avgtime = totaltime / trials;
+                    Console.WriteLine("Average time to generate for random fill in world " + worldname + ": " + avgtime + "ms");
                 }
-            }
-
-            //Loop for forward fill
-            if (dotests[1])
-            {
-                for (int i = 0; i < trials; i++)
+                Console.Write(Environment.NewLine);
+                //Loop for forward fill
+                if (dotests[1])
                 {
-                    WorldGraph forwardgraph = filler.ForwardFill(world, majoritempool); //Shuffle major items with logic
-                    forwardgraph = filler.RandomFill(forwardgraph, minoritempool); //Shuffle minor items without logic
+                    double totalbias = 0;
+                    double totaltime = 0;
+                    for (int i = 0; i < trials; i++)
+                    {
+                        DateTime start = DateTime.Now;
 
-                    SphereSearchOutput output = searcher.SphereSearch(forwardgraph);
-                    Print_Spheres(output);
+                        WorldGraph input = world.Copy(); //Copy so that world is not passed by reference and overwritten
+                        List<Item> majoritempool = input.Items.Where(x => x.Importance == 2).ToList();
+                        List<Item> minoritempool = input.Items.Where(x => x.Importance < 2).ToList();
+                        WorldGraph forwardgraph = filler.ForwardFill(input, majoritempool); //Shuffle major items with logic
+                        forwardgraph = filler.RandomFill(forwardgraph, minoritempool); //Shuffle minor items without logic
+
+                        DateTime end = DateTime.Now;
+
+                        double difference = (end - start).TotalMilliseconds;
+                        totaltime += difference;
+
+                        SphereSearchOutput output = searcher.SphereSearch(forwardgraph);
+                    }
+                    double avgbias = totalbias / trials;
+                    Console.WriteLine("Average bias for forward fill in world " + worldname + ": " + avgbias);
+                    double avgtime = totaltime / trials;
+                    Console.WriteLine("Average time to generate for forward fill in world " + worldname + ": " + avgtime + "ms");
                 }
-            }
-
-            //Loop for assumed fill
-            if (dotests[2])
-            {
-                for (int i = 0; i < trials; i++)
+                Console.Write(Environment.NewLine);
+                //Loop for assumed fill
+                if (dotests[2])
                 {
-                    WorldGraph assumedgraph = filler.AssumedFill(world, majoritempool); //Shuffle major items with logic
-                    assumedgraph = filler.RandomFill(assumedgraph, minoritempool); //Shuffle minor items without logic
+                    double totalbias = 0;
+                    double totaltime = 0;
+                    for (int i = 0; i < trials; i++)
+                    {
+                        DateTime start = DateTime.Now;
 
-                    SphereSearchOutput output = searcher.SphereSearch(assumedgraph);
-                    Print_Spheres(output);
+                        WorldGraph input = world.Copy(); //Copy so that world is not passed by reference and overwritten
+                        List<Item> majoritempool = input.Items.Where(x => x.Importance == 2).ToList();
+                        List<Item> minoritempool = input.Items.Where(x => x.Importance < 2).ToList();
+                        WorldGraph assumedgraph = filler.AssumedFill(input, majoritempool); //Shuffle major items with logic
+                        assumedgraph = filler.RandomFill(assumedgraph, minoritempool); //Shuffle minor items without logic
 
-                    //string jsonworld = JsonConvert.SerializeObject(assumedgraph);
+                        DateTime end = DateTime.Now;
+
+                        double difference = (end - start).TotalMilliseconds;
+                        totaltime += difference;
+
+                        SphereSearchOutput output = searcher.SphereSearch(assumedgraph);
+                    }
+                    double avgbias = totalbias / trials;
+                    Console.WriteLine("Average bias for assumed fill in world " + worldname + ": " + avgbias);
+                    double avgtime = totaltime / trials;
+                    Console.WriteLine("Average time to generate for assumed fill in world " + worldname + ": " + avgtime + "ms");
                 }
+                Console.Write(Environment.NewLine);
+                Console.Write(Environment.NewLine);
             }
         }
 
@@ -135,6 +200,44 @@ namespace RandomizerAlgorithms
                 }
             }
             Console.WriteLine(Environment.NewLine + "Is Completable: " + input.Completable + Environment.NewLine); //After finishing, print if completable or not
+        }
+
+        //Generates a world with a specific count of regions and items
+        //First generates many worlds to determine an average complexity then returns a world generated with a certain tolerance of that complexity
+        //This takes a while to run, mainly because each complexity calculation takes ~2 seconds due to running the external python script
+        static string GenerateWorld(int regioncount, int itemcount)
+        {
+            double goalcomplexity = AverageComplexity(regioncount, itemcount); //Get the average complexity of worlds generated with these parameters
+            //Now generate worlds until one is generated within a certain tolerance of the average
+            double tolerance = .10; //10%
+            while (true)
+            {
+                //Generate a world, check its complexity
+                WorldGenerator generator = new WorldGenerator(regioncount, itemcount);
+                WorldGraph generated = generator.Generate();
+                int test = generated.GetLocationCount();
+                double complexity = generator.GetComplexity();
+                if (goalcomplexity * (1-tolerance) < complexity && complexity < goalcomplexity * (1+tolerance))
+                {
+                    //Once complexity within x% of average has been generated, return json of the world so it can be saved
+                    return generated.ToJson();
+                }
+            }
+        }
+
+        //Calculate the avrage complexity from generating many worlds with a specific regioncount and itemcount
+        static double AverageComplexity(int regioncount, int itemcount)
+        {
+            //First do x trials to determine an average complexity
+            int gentrials = 20;
+            double totalcomplexity = 0;
+            for (int i = 0; i < gentrials; i++)
+            {
+                WorldGenerator generator = new WorldGenerator(regioncount, itemcount);
+                WorldGraph generated = generator.Generate();
+                totalcomplexity += generator.GetComplexity();
+            }
+             return totalcomplexity / gentrials; //Determine average complexity, we want the goal complexity to be within some% of this
         }
     }
 }

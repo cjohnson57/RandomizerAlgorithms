@@ -10,7 +10,7 @@ namespace RandomizerAlgorithms
     class Helpers
     {
 
-        private static Random rng;
+        private Random rng;
 
         public Helpers()
         {
@@ -55,6 +55,12 @@ namespace RandomizerAlgorithms
             return r;
         }
 
+        //Gets a random element from a list
+        public T RandomElement<T>(IList<T> list)
+        {
+            return list[rng.Next(list.Count + 1)];
+        }
+
         //Takes away redundant items from list subfrom which are already in toremove
         //Currently not used
         public List<T> SubtractLists<T>(List<T> subfrom, List<T> toremove)
@@ -64,6 +70,29 @@ namespace RandomizerAlgorithms
                 subfrom.Remove(elem);
             }
             return subfrom;
+        }
+
+        //Returns a single char that represents a given number in [0, 25]
+        //Ex 0 -> A, 1 -> B.... 25 -> Z
+        private char NumToLetter(int num)
+        {
+            return (char)(65 + num);
+        }
+
+        //Returns a string that represents the given number
+        //Ex 0 -> A, 1 -> B.... 25 -> Z, 26 -> AA, 27 -> AB.... 51 -> AZ, 52 -> BA....
+        public string NumToLetters(int num)
+        {
+            if(num < 26)
+            {
+                return NumToLetter(num).ToString();
+            }
+            else
+            {
+                int dividedby = num / 26; //Gives the 2nd "digit" of the string
+                int remainder = num % 26;
+                return NumToLetter(dividedby-1).ToString() + NumToLetter(remainder);
+            }
         }
     }
 }

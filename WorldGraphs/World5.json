@@ -1,0 +1,2598 @@
+{
+  "StartRegionName": "Region-0",
+  "GoalItemName": "Goal",
+  "Regions": [
+    {
+      "Name": "Region-0",
+      "Exits": [
+        {
+          "ToRegionName": "Region-1",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-27",
+          "Requirements": "X"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-0_Location-0",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-0_Location-1",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-0_Location-2",
+          "Requirements": "V",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-1",
+      "Exits": [
+        {
+          "ToRegionName": "Region-0",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-31",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-26",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-3",
+          "Requirements": "C"
+        },
+        {
+          "ToRegionName": "Region-6",
+          "Requirements": "V"
+        },
+        {
+          "ToRegionName": "Region-11",
+          "Requirements": "J"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-1_Location-0",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-1_Location-1",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-1_Location-2",
+          "Requirements": "A",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-1_Location-3",
+          "Requirements": "AA or W",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-2",
+      "Exits": [
+        {
+          "ToRegionName": "Region-44",
+          "Requirements": "Y"
+        },
+        {
+          "ToRegionName": "Region-24",
+          "Requirements": "AD and P and AA"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-2_Location-0",
+          "Requirements": "A",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-2_Location-1",
+          "Requirements": "D",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-2_Location-2",
+          "Requirements": "W",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-3",
+      "Exits": [
+        {
+          "ToRegionName": "Region-1",
+          "Requirements": "C"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-3_Location-0",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-3_Location-1",
+          "Requirements": "(P) or (W or E and AD) and (R)",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-3_Location-2",
+          "Requirements": "AC",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-4",
+      "Exits": [
+        {
+          "ToRegionName": "Region-45",
+          "Requirements": "N"
+        },
+        {
+          "ToRegionName": "Region-43",
+          "Requirements": "B or G"
+        },
+        {
+          "ToRegionName": "Region-18",
+          "Requirements": "Z"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-4_Location-0",
+          "Requirements": "K or Q",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-4_Location-1",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-4_Location-2",
+          "Requirements": "A",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-4_Location-3",
+          "Requirements": "(F and Q or D) or (L or J) or (Q)",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-5",
+      "Exits": [
+        {
+          "ToRegionName": "Region-10",
+          "Requirements": "Z"
+        },
+        {
+          "ToRegionName": "Region-15",
+          "Requirements": "L"
+        },
+        {
+          "ToRegionName": "Region-29",
+          "Requirements": "P and L"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-5_Location-0",
+          "Requirements": "(Z and M) or (B) or (AC)",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-5_Location-1",
+          "Requirements": "P",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-5_Location-2",
+          "Requirements": "(K) and (B and M and F)",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-6",
+      "Exits": [
+        {
+          "ToRegionName": "Region-1",
+          "Requirements": "V"
+        },
+        {
+          "ToRegionName": "Region-38",
+          "Requirements": "M"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-6_Location-0",
+          "Requirements": "K and Y and V",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-6_Location-1",
+          "Requirements": "W or F",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-6_Location-2",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-6_Location-3",
+          "Requirements": "AD or AB",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-7",
+      "Exits": [
+        {
+          "ToRegionName": "Region-28",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-37",
+          "Requirements": "V"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-7_Location-0",
+          "Requirements": "C and H",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-7_Location-1",
+          "Requirements": "X",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-7_Location-2",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-8",
+      "Exits": [
+        {
+          "ToRegionName": "Region-41",
+          "Requirements": "(V or A) or (H) or (A)"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-8_Location-0",
+          "Requirements": "P and S",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-8_Location-1",
+          "Requirements": "H",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-8_Location-2",
+          "Requirements": "AB",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-9",
+      "Exits": [
+        {
+          "ToRegionName": "Region-49",
+          "Requirements": "Q"
+        },
+        {
+          "ToRegionName": "Region-17",
+          "Requirements": "E"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-9_Location-0",
+          "Requirements": "Q or C and R",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-9_Location-1",
+          "Requirements": "M and L",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-9_Location-2",
+          "Requirements": "U and H",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-10",
+      "Exits": [
+        {
+          "ToRegionName": "Region-5",
+          "Requirements": "Z"
+        },
+        {
+          "ToRegionName": "Region-14",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-30",
+          "Requirements": "J or D"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-10_Location-0",
+          "Requirements": "F",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-10_Location-1",
+          "Requirements": "A or V",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-10_Location-2",
+          "Requirements": "B and T or L",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-11",
+      "Exits": [
+        {
+          "ToRegionName": "Region-1",
+          "Requirements": "J"
+        },
+        {
+          "ToRegionName": "Region-17",
+          "Requirements": "AD"
+        },
+        {
+          "ToRegionName": "Region-34",
+          "Requirements": "S"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-11_Location-0",
+          "Requirements": "J or AA or N",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-11_Location-1",
+          "Requirements": "T",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-11_Location-2",
+          "Requirements": "T",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-11_Location-3",
+          "Requirements": "Y",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-12",
+      "Exits": [
+        {
+          "ToRegionName": "Region-22",
+          "Requirements": "X"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-12_Location-0",
+          "Requirements": "AC or N or Q",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-12_Location-1",
+          "Requirements": "I or J",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-12_Location-2",
+          "Requirements": "F or U",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-13",
+      "Exits": [
+        {
+          "ToRegionName": "Region-31",
+          "Requirements": "H"
+        },
+        {
+          "ToRegionName": "Region-16",
+          "Requirements": "W or I"
+        },
+        {
+          "ToRegionName": "Region-22",
+          "Requirements": "P or I and AC"
+        },
+        {
+          "ToRegionName": "Region-35",
+          "Requirements": "A"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-13_Location-0",
+          "Requirements": "Q",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-13_Location-1",
+          "Requirements": "D and W or AB",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-13_Location-2",
+          "Requirements": "L",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-14",
+      "Exits": [
+        {
+          "ToRegionName": "Region-10",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-15",
+          "Requirements": "(AB and N) and (R or Z or F) or (N and Z and AD)"
+        },
+        {
+          "ToRegionName": "Region-36",
+          "Requirements": "C"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-14_Location-0",
+          "Requirements": "H",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-14_Location-1",
+          "Requirements": "(X or E) and (J) and (V and U and AB)",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-15",
+      "Exits": [
+        {
+          "ToRegionName": "Region-5",
+          "Requirements": "L"
+        },
+        {
+          "ToRegionName": "Region-14",
+          "Requirements": "(AB and N) and (R or Z or F) or (N and Z and AD)"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-15_Location-0",
+          "Requirements": "J or V",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-15_Location-1",
+          "Requirements": "N",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-15_Location-2",
+          "Requirements": "W",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-16",
+      "Exits": [
+        {
+          "ToRegionName": "Region-13",
+          "Requirements": "W or I"
+        },
+        {
+          "ToRegionName": "Region-41",
+          "Requirements": "(M or P or AB) or (T and Y) and (Z and G or K)"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-16_Location-0",
+          "Requirements": "B or AA",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-16_Location-1",
+          "Requirements": "X and E",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-16_Location-2",
+          "Requirements": "W and M",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-16_Location-3",
+          "Requirements": "E and C",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-17",
+      "Exits": [
+        {
+          "ToRegionName": "Region-11",
+          "Requirements": "AD"
+        },
+        {
+          "ToRegionName": "Region-9",
+          "Requirements": "E"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-17_Location-0",
+          "Requirements": "P",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-17_Location-1",
+          "Requirements": "AD and J or AB",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-17_Location-2",
+          "Requirements": "Z",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-18",
+      "Exits": [
+        {
+          "ToRegionName": "Region-4",
+          "Requirements": "Z"
+        },
+        {
+          "ToRegionName": "Region-32",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-45",
+          "Requirements": "(L and E and K) or (AA and AD and S)"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-18_Location-0",
+          "Requirements": "M",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-18_Location-1",
+          "Requirements": "AD or G",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-18_Location-2",
+          "Requirements": "AC",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-18_Location-3",
+          "Requirements": "L or M or G",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-19",
+      "Exits": [
+        {
+          "ToRegionName": "Region-48",
+          "Requirements": "Y and R or AA"
+        },
+        {
+          "ToRegionName": "Region-43",
+          "Requirements": "H or D"
+        },
+        {
+          "ToRegionName": "Region-21",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-25",
+          "Requirements": "A and D"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-19_Location-0",
+          "Requirements": "AD",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-19_Location-1",
+          "Requirements": "S and F and C",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-19_Location-2",
+          "Requirements": "W",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-19_Location-3",
+          "Requirements": "Y",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-20",
+      "Exits": [
+        {
+          "ToRegionName": "Region-23",
+          "Requirements": "M"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-20_Location-0",
+          "Requirements": "Y",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-20_Location-1",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-20_Location-2",
+          "Requirements": "M and P",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-21",
+      "Exits": [
+        {
+          "ToRegionName": "Region-19",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-30",
+          "Requirements": "(H or V) and (G and A)"
+        },
+        {
+          "ToRegionName": "Region-33",
+          "Requirements": "(P and U or J) or (D and L) and (AC and I and P)"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-21_Location-0",
+          "Requirements": "W",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-21_Location-1",
+          "Requirements": "S",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-22",
+      "Exits": [
+        {
+          "ToRegionName": "Region-12",
+          "Requirements": "X"
+        },
+        {
+          "ToRegionName": "Region-13",
+          "Requirements": "P or I and AC"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-22_Location-0",
+          "Requirements": "S",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-22_Location-1",
+          "Requirements": "(F or K) and (W or H)",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-22_Location-2",
+          "Requirements": "O",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-22_Location-3",
+          "Requirements": "P",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-23",
+      "Exits": [
+        {
+          "ToRegionName": "Region-20",
+          "Requirements": "M"
+        },
+        {
+          "ToRegionName": "Region-40",
+          "Requirements": "C"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-23_Location-0",
+          "Requirements": "AA",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-23_Location-1",
+          "Requirements": "H",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-23_Location-2",
+          "Requirements": "K or D and I",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-24",
+      "Exits": [
+        {
+          "ToRegionName": "Region-2",
+          "Requirements": "AD and P and AA"
+        },
+        {
+          "ToRegionName": "Region-27",
+          "Requirements": "AD"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-24_Location-0",
+          "Requirements": "AB",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-24_Location-1",
+          "Requirements": "M",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-25",
+      "Exits": [
+        {
+          "ToRegionName": "Region-19",
+          "Requirements": "A and D"
+        },
+        {
+          "ToRegionName": "Region-36",
+          "Requirements": "N"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-25_Location-0",
+          "Requirements": "I",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-25_Location-1",
+          "Requirements": "R",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-25_Location-2",
+          "Requirements": "AA and V",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-26",
+      "Exits": [
+        {
+          "ToRegionName": "Region-1",
+          "Requirements": "None"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-26_Location-0",
+          "Requirements": "U or X",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-26_Location-1",
+          "Requirements": "N",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-27",
+      "Exits": [
+        {
+          "ToRegionName": "Region-0",
+          "Requirements": "X"
+        },
+        {
+          "ToRegionName": "Region-24",
+          "Requirements": "AD"
+        },
+        {
+          "ToRegionName": "Region-42",
+          "Requirements": "C or I"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-27_Location-0",
+          "Requirements": "W and B",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-27_Location-1",
+          "Requirements": "M and U or F",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-28",
+      "Exits": [
+        {
+          "ToRegionName": "Region-7",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-46",
+          "Requirements": "R and K"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-28_Location-0",
+          "Requirements": "L",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-28_Location-1",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-28_Location-2",
+          "Requirements": "AB and Z or AC",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-28_Location-3",
+          "Requirements": "L",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-29",
+      "Exits": [
+        {
+          "ToRegionName": "Region-5",
+          "Requirements": "P and L"
+        },
+        {
+          "ToRegionName": "Region-39",
+          "Requirements": "F"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-29_Location-0",
+          "Requirements": "E and Y",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-29_Location-1",
+          "Requirements": "G",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-30",
+      "Exits": [
+        {
+          "ToRegionName": "Region-10",
+          "Requirements": "J or D"
+        },
+        {
+          "ToRegionName": "Region-21",
+          "Requirements": "(H or V) and (G and A)"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-30_Location-0",
+          "Requirements": "AC or E",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-30_Location-1",
+          "Requirements": "(G or Q) or (R or H or C)",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-30_Location-2",
+          "Requirements": "H",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-31",
+      "Exits": [
+        {
+          "ToRegionName": "Region-1",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-13",
+          "Requirements": "H"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-31_Location-0",
+          "Requirements": "L",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-31_Location-1",
+          "Requirements": "T and Q and AD",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-31_Location-2",
+          "Requirements": "N",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-31_Location-3",
+          "Requirements": "G or H",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-32",
+      "Exits": [
+        {
+          "ToRegionName": "Region-18",
+          "Requirements": "None"
+        },
+        {
+          "ToRegionName": "Region-40",
+          "Requirements": "M and R"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-32_Location-0",
+          "Requirements": "I or E",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-32_Location-1",
+          "Requirements": "X or Y",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-32_Location-2",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-32_Location-3",
+          "Requirements": "R or AA",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-33",
+      "Exits": [
+        {
+          "ToRegionName": "Region-37",
+          "Requirements": "(T or P and J) and (L)"
+        },
+        {
+          "ToRegionName": "Region-21",
+          "Requirements": "(P and U or J) or (D and L) and (AC and I and P)"
+        },
+        {
+          "ToRegionName": "Region-35",
+          "Requirements": "U"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-33_Location-0",
+          "Requirements": "M",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-33_Location-1",
+          "Requirements": "Q and J",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-33_Location-2",
+          "Requirements": "P or T",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-33_Location-3",
+          "Requirements": "G and B and E",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-34",
+      "Exits": [
+        {
+          "ToRegionName": "Region-43",
+          "Requirements": "Q"
+        },
+        {
+          "ToRegionName": "Region-11",
+          "Requirements": "S"
+        },
+        {
+          "ToRegionName": "Region-42",
+          "Requirements": "AA"
+        },
+        {
+          "ToRegionName": "Region-47",
+          "Requirements": "AC"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-34_Location-0",
+          "Requirements": "B or R and S",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-34_Location-1",
+          "Requirements": "I or G",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-34_Location-2",
+          "Requirements": "Q or Z or F",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-34_Location-3",
+          "Requirements": "AD",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-35",
+      "Exits": [
+        {
+          "ToRegionName": "Region-13",
+          "Requirements": "A"
+        },
+        {
+          "ToRegionName": "Region-33",
+          "Requirements": "U"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-35_Location-0",
+          "Requirements": "(V) and (C or J)",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-35_Location-1",
+          "Requirements": "AA",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-36",
+      "Exits": [
+        {
+          "ToRegionName": "Region-14",
+          "Requirements": "C"
+        },
+        {
+          "ToRegionName": "Region-25",
+          "Requirements": "N"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-36_Location-0",
+          "Requirements": "U and T",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-36_Location-1",
+          "Requirements": "(R and AA and Y) or (G or Q) or (AD and D)",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-36_Location-2",
+          "Requirements": "R",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-37",
+      "Exits": [
+        {
+          "ToRegionName": "Region-33",
+          "Requirements": "(T or P and J) and (L)"
+        },
+        {
+          "ToRegionName": "Region-7",
+          "Requirements": "V"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-37_Location-0",
+          "Requirements": "W",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-37_Location-1",
+          "Requirements": "F or U",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-38",
+      "Exits": [
+        {
+          "ToRegionName": "Region-6",
+          "Requirements": "M"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-38_Location-0",
+          "Requirements": "U and H",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-38_Location-1",
+          "Requirements": "S",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-38_Location-2",
+          "Requirements": "G",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-39",
+      "Exits": [
+        {
+          "ToRegionName": "Region-29",
+          "Requirements": "F"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-39_Location-0",
+          "Requirements": "(N or Z) or (O or C)",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-39_Location-1",
+          "Requirements": "Y",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-39_Location-2",
+          "Requirements": "U and T",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-39_Location-3",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-40",
+      "Exits": [
+        {
+          "ToRegionName": "Region-23",
+          "Requirements": "C"
+        },
+        {
+          "ToRegionName": "Region-32",
+          "Requirements": "M and R"
+        },
+        {
+          "ToRegionName": "Region-46",
+          "Requirements": "(S) or (W and I and U) or (W)"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-40_Location-0",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-40_Location-1",
+          "Requirements": "U",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-41",
+      "Exits": [
+        {
+          "ToRegionName": "Region-8",
+          "Requirements": "(V or A) or (H) or (A)"
+        },
+        {
+          "ToRegionName": "Region-16",
+          "Requirements": "(M or P or AB) or (T and Y) and (Z and G or K)"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-41_Location-0",
+          "Requirements": "J",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-41_Location-1",
+          "Requirements": "AC and Y",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-41_Location-2",
+          "Requirements": "Q",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-42",
+      "Exits": [
+        {
+          "ToRegionName": "Region-27",
+          "Requirements": "C or I"
+        },
+        {
+          "ToRegionName": "Region-34",
+          "Requirements": "AA"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-42_Location-0",
+          "Requirements": "A or K and F",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-42_Location-1",
+          "Requirements": "U or B or M",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-42_Location-2",
+          "Requirements": "B and O",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-43",
+      "Exits": [
+        {
+          "ToRegionName": "Region-4",
+          "Requirements": "B or G"
+        },
+        {
+          "ToRegionName": "Region-19",
+          "Requirements": "H or D"
+        },
+        {
+          "ToRegionName": "Region-34",
+          "Requirements": "Q"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-43_Location-0",
+          "Requirements": "None",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-43_Location-1",
+          "Requirements": "U",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-44",
+      "Exits": [
+        {
+          "ToRegionName": "Region-2",
+          "Requirements": "Y"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-44_Location-0",
+          "Requirements": "I",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-44_Location-1",
+          "Requirements": "E or X",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-44_Location-2",
+          "Requirements": "T or K",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-45",
+      "Exits": [
+        {
+          "ToRegionName": "Region-4",
+          "Requirements": "N"
+        },
+        {
+          "ToRegionName": "Region-18",
+          "Requirements": "(L and E and K) or (AA and AD and S)"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-45_Location-0",
+          "Requirements": "X",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-45_Location-1",
+          "Requirements": "O",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-45_Location-2",
+          "Requirements": "E",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-46",
+      "Exits": [
+        {
+          "ToRegionName": "Region-28",
+          "Requirements": "R and K"
+        },
+        {
+          "ToRegionName": "Region-40",
+          "Requirements": "(S) or (W and I and U) or (W)"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-46_Location-0",
+          "Requirements": "B",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-46_Location-1",
+          "Requirements": "G",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-47",
+      "Exits": [
+        {
+          "ToRegionName": "Region-34",
+          "Requirements": "AC"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-47_Location-0",
+          "Requirements": "I or J or A",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-47_Location-1",
+          "Requirements": "W",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-47_Location-2",
+          "Requirements": "B",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-48",
+      "Exits": [
+        {
+          "ToRegionName": "Region-19",
+          "Requirements": "Y and R or AA"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Region-48_Location-0",
+          "Requirements": "AD or M",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        },
+        {
+          "Name": "Region-48_Location-1",
+          "Requirements": "E and W",
+          "Item": {
+            "Name": null,
+            "Importance": -1
+          }
+        }
+      ]
+    },
+    {
+      "Name": "Region-49",
+      "Exits": [
+        {
+          "ToRegionName": "Region-9",
+          "Requirements": "Q"
+        }
+      ],
+      "Locations": [
+        {
+          "Name": "Final Boss",
+          "Requirements": "(G and M or D) or (Z or D) and (AA)",
+          "Item": {
+            "Name": "Goal",
+            "Importance": 3
+          }
+        }
+      ]
+    }
+  ],
+  "Items": [
+    {
+      "Name": "Goal",
+      "Importance": 3
+    },
+    {
+      "Name": "A",
+      "Importance": 2
+    },
+    {
+      "Name": "AA",
+      "Importance": 2
+    },
+    {
+      "Name": "AB",
+      "Importance": 2
+    },
+    {
+      "Name": "AC",
+      "Importance": 2
+    },
+    {
+      "Name": "AD",
+      "Importance": 2
+    },
+    {
+      "Name": "B",
+      "Importance": 2
+    },
+    {
+      "Name": "C",
+      "Importance": 2
+    },
+    {
+      "Name": "D",
+      "Importance": 2
+    },
+    {
+      "Name": "E",
+      "Importance": 2
+    },
+    {
+      "Name": "F",
+      "Importance": 2
+    },
+    {
+      "Name": "G",
+      "Importance": 2
+    },
+    {
+      "Name": "H",
+      "Importance": 2
+    },
+    {
+      "Name": "I",
+      "Importance": 2
+    },
+    {
+      "Name": "J",
+      "Importance": 2
+    },
+    {
+      "Name": "K",
+      "Importance": 2
+    },
+    {
+      "Name": "L",
+      "Importance": 2
+    },
+    {
+      "Name": "M",
+      "Importance": 2
+    },
+    {
+      "Name": "N",
+      "Importance": 2
+    },
+    {
+      "Name": "O",
+      "Importance": 2
+    },
+    {
+      "Name": "P",
+      "Importance": 2
+    },
+    {
+      "Name": "Q",
+      "Importance": 2
+    },
+    {
+      "Name": "R",
+      "Importance": 2
+    },
+    {
+      "Name": "S",
+      "Importance": 2
+    },
+    {
+      "Name": "T",
+      "Importance": 2
+    },
+    {
+      "Name": "U",
+      "Importance": 2
+    },
+    {
+      "Name": "V",
+      "Importance": 2
+    },
+    {
+      "Name": "W",
+      "Importance": 2
+    },
+    {
+      "Name": "X",
+      "Importance": 2
+    },
+    {
+      "Name": "Y",
+      "Importance": 2
+    },
+    {
+      "Name": "Z",
+      "Importance": 2
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem1",
+      "Importance": 1
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    },
+    {
+      "Name": "JunkItem0",
+      "Importance": 0
+    }
+  ]
+}

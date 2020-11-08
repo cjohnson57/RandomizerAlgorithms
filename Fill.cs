@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace RandomizerAlgorithms
@@ -56,7 +57,7 @@ namespace RandomizerAlgorithms
                 helper.Place(ref world, location, item); //Place random item in random location
                 owneditems.Add(item); //Add to owned items
             }
-            return world; //Return modified world graph
+            return world; //World has been filled with items, return
         }
 
         /*
@@ -87,7 +88,7 @@ namespace RandomizerAlgorithms
                 helper.Shuffle(locations);
 
             }
-            return world;
+            return world; //World has been filled with items, return
         }
 
         /*
@@ -103,22 +104,29 @@ namespace RandomizerAlgorithms
         {
             List<Item> owneditems = itempool; //In contrast to other two algos, I is initialized to all items and itempool is empty
             itempool = new List<Item>();
-            WorldGraph reachable = searcher.GetReachableLocations(world, owneditems); //Initially R should equal all locations in the game
-            List<Location> locations = reachable.GetAllEmptyLocations();
-            helper.Shuffle(locations);
+            WorldGraph reachable = searcher.GetReachableLocationsAssumed(world, owneditems); //Initially R should equal all locations in the game
+            List<Location> reachablelocations = reachable.GetAllEmptyLocations();
             helper.Shuffle(owneditems);
-            while (locations.Count > 0 && owneditems.Count > 0)
+            while (reachablelocations.Count > 0 && owneditems.Count > 0)
             {
                 Item item = helper.Pop(owneditems); //Pop random item from I, R will shrink
                 helper.Shuffle(owneditems);
-                reachable = searcher.GetReachableLocations(world, owneditems); //Recalculate R now that less items are owned
-                locations = reachable.GetAllEmptyLocations(); 
-                helper.Shuffle(locations);
-                Location location = helper.Pop(locations); //Select random location
+                reachable = searcher.GetReachableLocationsAssumed(world, owneditems); //Recalculate R now that less items are owned
+                reachablelocations = reachable.GetAllEmptyLocations(); //Get empty locations which are reachable
+                helper.Shuffle(reachablelocations);
+                Location location = new Location();
+                try
+                {
+                    location = helper.Pop(reachablelocations); //Remove location from list
+                }
+                catch //If this happens, means there are no reachable locations left and must return, usually indicates uncompletable permutation
+                {
+                    break;
+                }
                 helper.Place(ref world, location, item); //Place random item in random location
                 itempool.Add(item); //Add item to item pool
             }
-            return world;
+            return world; //World has been filled with items, return
         }
     }
 }
