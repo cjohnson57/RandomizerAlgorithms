@@ -13,11 +13,12 @@ namespace RandomizerAlgorithms
     //Interestingness (Considers item placement)
     class Statistics
     {
+        Search searcher = new Search();
+        Parser parser = new Parser();
+
         //Calculate complexity of the base graph (Not considering items, only rules for location reachability)
-        public double CalcWorldComplexity(WorldGraph world)
+        public TestComplexityOutput CalcWorldComplexity(WorldGraph world)
         {
-            Search searcher = new Search();
-            Parser parser = new Parser();
             List<string> totalrules = new List<string>();
             /*
              * For each location, calculate a total rule
@@ -79,7 +80,7 @@ namespace RandomizerAlgorithms
                 scores.Add(parser.CalcRuleScore(rule));
             }
             //Use list of scores to calculate final score and return
-            return ScoreCalculation(scores);
+            return ComplexityScoreCalculation(scores);
         }
 
         //Use list of scores for each rule in world to calculate final score based on some statistic
@@ -90,7 +91,7 @@ namespace RandomizerAlgorithms
         // Max score
         // Sum of Squares
         //For now, using sum of squares, may change later
-        private double ScoreCalculation(List<double> scores)
+        private TestComplexityOutput ComplexityScoreCalculation(List<double> scores)
         {
             double sum = scores.Sum();
             double avg = scores.Average();
@@ -102,16 +103,121 @@ namespace RandomizerAlgorithms
                 sumofsquares += deviation * deviation;
             }
             scores = scores.OrderBy(x => x).ToList();
-            double percent = .75; //Want top 75%
-            int start = Convert.ToInt32(scores.Count() * (1 - percent));
-            List<double> toppercent = new List<double>(0);
+            //Top 50 percent
+            int start = Convert.ToInt32(scores.Count() * (1 - .5));
+            List<double> top50percent = new List<double>(0);
+            for (int i = start; i < scores.Count; i++)
+            {
+                top50percent.Add(scores[i]);
+            }
+            double avgtop50percent = top50percent.Average(); ////This was chosen as the metric for complexity
+            //Top 75 percent
+            start = Convert.ToInt32(scores.Count() * (1 - .75));
+            List<double> top75percent = new List<double>(0);
             for(int i = start; i < scores.Count; i++)
             {
-                toppercent.Add(scores[i]);
+                top75percent.Add(scores[i]);
             }
-            double avgtoppercent = toppercent.Average();
-            return avgtoppercent;
+            double avgtop75percent = top75percent.Average();
+            TestComplexityOutput test = new TestComplexityOutput();
+            test.sum = sum;
+            test.average = avg;
+            test.max = max;
+            test.sumofsquares = sumofsquares;
+            test.top50 = avgtop50percent;
+            test.top75 = avgtop75percent;
+            return test;
         }
+        //Calculates the bias for a given permutation of items in the world graph
+        public BiasOutput CalcDistributionBias(WorldGraph world)
+        {
+            //Get total counts for majors and items so a percent can be calculated
+            int totalmajorcount = world.Items.Where(x => x.Importance >= 2).Count();
+            int totallocationcount = world.GetLocationCount();
+            //Find spheres in randomized world
+            Search searcher = new Search();
+            List<WorldGraph> spheres = searcher.SphereSearch(world).Spheres;
+            //Initialize variables to use in the loop
+            double[] spherebias = new double[spheres.Count];
+            int rollingmajorcount = 0;
+            int rollinglocationcount = 0;
+            for (int i = 0; i < spheres.Count; i++)
+            {
+                WorldGraph sphere = spheres[i];
+                //Check the number of major items in the sphere, not counting those in previous spheres
+                int majoritemcount = sphere.CollectMajorItems().Count - rollingmajorcount;
+                rollingmajorcount += majoritemcount;
+                //Check the number of locations in the sphere, not counting those in previous spheres
+                int locationcount = sphere.GetLocationCount() - rollinglocationcount;
+                rollinglocationcount += locationcount;
+                //Find the percentage of major items and locations in this sphere
+                double majorpercent = majoritemcount / (double)totalmajorcount;
+                double locationpercent = locationcount / (double)totallocationcount;
+                //Now find the difference between the two percentages
+                double difference = majorpercent - locationpercent;
+                spherebias[i] = difference;
+            }
+            //Now that we have a list of biases find the sum of their absolute values to determine absolute bias
+            //Also use the positivity of bias before and after the median to determine bias direction
+            double overallsum = 0;
+            double beforesum = 0; //Sums bias before median so a bias direction can be computed
+            double aftersum = 0; //Sums bias after median so a bias direction can be computed
+            bool even = spherebias.Length % 2 == 0; //Want to check if even so can determine when after the median is
+            int median = spherebias.Length / 2; //Use median to determine bias direction
+            for (int i = 0; i < spherebias.Length; i++)
+            {
+                overallsum += Math.Abs(spherebias[i]);
+                if (i < median) //Before median, add to that sum
+                {
+                    beforesum += spherebias[i];
+                }
+                else if ((i >= median && even) || (i > median && !even)) //After median, add to that sum. If it's even then >= makes sense so every index is checked, if odd then skip middle
+                {
+                    aftersum = spherebias[i];
+                }
+            }
+            BiasOutput output = new BiasOutput();
+            output.bias = overallsum / spherebias.Length; //Get average of absolute value to determine overall bias
+            output.direction = beforesum < aftersum; //If bias is more positive before the median, the direction is toward the beginning, otherwise toward end
+            return output;
+        }
+
+        //Calculate info about human-like playthrough and then return the score
+        public double CalcDistributionInterestingness(WorldGraph world)
+        {
+            PlaythroughInfo info = searcher.PlayThrough(world);
+            return ScorePlaythrough(info);
+        }
+
+        /*
+         * Score info about human-like playthrough
+         * Several considerations:
+         * 1. Number of locations collected for each region traversed
+         * 2. Number of regions traversed between finding major or helpful items
+         * 3. Number of regions traversed between finding major items
+         */
+        public double ScorePlaythrough(PlaythroughInfo input)
+        {
+            double score = 0;
+
+            return score;
+        }
+    }
+
+    struct TestComplexityOutput
+    {
+        public double sum;
+        public double average;
+        public double max;
+        public double sumofsquares;
+        public double top50; //Chosen metric for complexity
+        public double top75;
+    }
+
+    struct BiasOutput
+    {
+        public double bias;
+        public bool direction; //0: Toward beginning, 1: Toward end
     }
 
 }

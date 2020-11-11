@@ -212,7 +212,7 @@ namespace RandomizerAlgorithms
                         // Name: Region-x_Location-y, ex Region-5_Location-2
                         // Requirement: Randomly Generated
                         // Item: null item
-                        Location l = new Location(r.Name + "_Location-" + i.ToString(), GenerateRandomRequirement(), new Item());
+                        Location l = new Location(r.Name + "_Location-" + i.ToString(), GenerateRandomRequirement(false), new Item());
                         regions.First(x => x == r).Locations.Add(l); //Add generated location to region
                     }
                 }
@@ -261,7 +261,7 @@ namespace RandomizerAlgorithms
         //This function generates a completely random requirement
         private void AddExits(HashSet<Region> regions, Region from, Region to)
         {
-            string requirement = GenerateRandomRequirement(); //For simplicity we will use same requirement both ways
+            string requirement = GenerateRandomRequirement(true); //For simplicity we will use same requirement both ways
             //Use constructor that specifies requirement, get requirement from random requirement function
             Exit e1 = new Exit(to.Name, requirement); //Exit to be appended to the "from" region
             Exit e2 = new Exit(from.Name, requirement); //Exit to be appended to the "to" region
@@ -307,11 +307,12 @@ namespace RandomizerAlgorithms
         }
 
         //Generate a random requirement of variable complexity
-        private string GenerateRandomRequirement()
+        private string GenerateRandomRequirement(bool exit)
         {
-            //12.5% chance to have no requirement
-            int random = rng.Next(1, 9);
-            if(random == 1)
+            //20% chance to have no requirement if a location
+            //60% chance to have no requirement if an exit
+            int random = rng.Next(1, 6);
+            if((random == 1 && !exit) || (random < 4 && exit))
             {
                 return "None";
             }
@@ -416,7 +417,7 @@ namespace RandomizerAlgorithms
             return list;
         }
 
-        public double GetComplexity()
+        public TestComplexityOutput GetComplexity()
         {
             Statistics stats = new Statistics();
             return stats.CalcWorldComplexity(Generated);

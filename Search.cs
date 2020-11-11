@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -150,14 +151,14 @@ namespace RandomizerAlgorithms
                 return paths;
             }
 
-            RecursiveDFS(world, root, dest, visited); //Recursively run DFS, when dest found add the path to paths var
+            RecursiveDFSForPathlist(world, root, dest, visited); //Recursively run DFS, when dest found add the path to paths var
 
             return paths; //Return list of paths
         }
 
         //Recursively check exits with copy of visited list
         //It's done this way so that after the destination or a dead end is met, the code flow "backs up"
-        public void RecursiveDFS(WorldGraph world, Region r, Region dest, List<Region> visited)
+        public void RecursiveDFSForPathlist(WorldGraph world, Region r, Region dest, List<Region> visited)
         {
             visited.Add(r); //Add to visited list
             if (r == dest)
@@ -171,7 +172,7 @@ namespace RandomizerAlgorithms
                 if (!visited.Contains(exitto)) //Don't revisit already visited nodes on this path
                 {
                     List<Region> copy = new List<Region>(visited); //If don't do this List is passed by reference, algo doesn't work
-                    RecursiveDFS(world, exitto, dest, copy);
+                    RecursiveDFSForPathlist(world, exitto, dest, copy);
                 }
             }
 
@@ -186,9 +187,9 @@ namespace RandomizerAlgorithms
          * is added to the list of spheres S, and all items in the temporary set are added to I. It then
          * iterates again with a new sphere s.
          */
-        public SphereSearchOutput SphereSearch(WorldGraph world)
+        public SphereSearchInfo SphereSearch(WorldGraph world)
         {
-            SphereSearchOutput output = new SphereSearchOutput();
+            SphereSearchInfo output = new SphereSearchInfo();
             output.Spheres = new List<WorldGraph>();
             List<Item> owneditems = new List<Item>();
             //Initial sphere s0 includes items reachable from the start of the game
@@ -213,12 +214,197 @@ namespace RandomizerAlgorithms
             output.Completable = owneditems.Count(x => x.Name == world.GoalItemName) > 0;
             return output;
         }
+
+        /*
+         * The goal of this function is to traverse the game world like a player of the game rather than like an algorithm.
+         * It's assumed that the player has decent knowledge of the game, meaning they know where locations are and
+         * wether or not those locations and regions are accessible.
+         * Therefore a heuristic is used to score each posisble exit a player could take based on number of item locations
+         * and how close they are to the current location.
+         * Whichever exit has the maximum score (meaning maximum potential to gain new items) is taken.
+         * We keep several counts which can be used to gauge interestingness of a seed:
+         * 1. Number of locations collected for each region traversed
+         * 2. Number of regions traversed between finding major or helpful items
+         * 3. Number of regions traversed between finding major items
+         */
+        public PlaythroughInfo PlayThrough(WorldGraph world)
+        {
+            List<int> BetweenMajorOrHelpfulList = new List<int>();
+            List<int> BetweenMajorList = new List<int>();
+            List<int> LocationsPerTraversal = new List<int>();
+
+            Region current = world.Regions.First(x => x.Name == world.StartRegionName);
+            List<Item> owneditems = new List<Item>();
+
+            int BetweenMajorOrHelpfulCount = 0;
+            int BetweenMajorCount = 0;
+            while(owneditems.Count(x => x.Importance == 3) < 1) //Loop until goal item found, or dead end reached (see break statement below)
+            {
+                int checkcount = 0;
+                int prevcount = -1;
+                while(prevcount < owneditems.Count()) // While loop to re-check locations if major item is found in this region
+                {
+                    prevcount = owneditems.Count();
+                    //First, check each location in the current region, if accessible and not already searched check it for major items
+                    foreach (Location l in current.Locations)
+                    {
+                        if (l.Item.Importance > -1 && parser.RequirementsMet(l.Requirements, owneditems))
+                        {
+                            checkcount++; //Add to check count
+                            Item i = l.Item;
+                            l.Item = new Item(); //Remove item, location importance set to -1
+                            if (i.Importance == 1) //Maybe have some consideration for helpful items since they are better to find than major ones
+                            {
+                                //Update helpful list only and reset counts
+                                BetweenMajorOrHelpfulList.Add(BetweenMajorOrHelpfulCount);
+                                BetweenMajorOrHelpfulCount = 0;
+                            }
+                            else if (i.Importance == 2) //Major item
+                            {
+                                owneditems.Add(i); //Collect item
+                                //Update both lists and reset counts
+                                BetweenMajorOrHelpfulList.Add(BetweenMajorOrHelpfulCount);
+                                BetweenMajorList.Add(BetweenMajorCount);
+                                BetweenMajorOrHelpfulCount = 0;
+                                BetweenMajorCount = 0;
+                            }
+                            else if (i.Importance == 3) //Goal item, break loop here
+                            {
+                                owneditems.Add(i); //Collect goal item, indicates successful completion
+                                //Update both lists and reset counts
+                                BetweenMajorOrHelpfulList.Add(BetweenMajorOrHelpfulCount);
+                                BetweenMajorList.Add(BetweenMajorCount);
+                                BetweenMajorOrHelpfulCount = 0;
+                                BetweenMajorCount = 0;
+                            }
+                        }
+                    }
+                }
+                LocationsPerTraversal.Add(checkcount);
+                List<double> exitscores = new List<double>();
+                if (current.Exits.Count == 1) //Only one exit, take it unless need to break
+                {
+                    double score = ExitScore(world, owneditems, current, current.Exits.First());
+                    if(score > 0) //If score is -1 and this is the only exit, then a dead end has been reached; if score is 0, then there are no items left to find; otherwise simply take exit since it is the only one
+                    {
+                        current = world.Regions.First(x => x.Name == current.Exits.First().ToRegionName); //Move to region
+                        //Update count of regions between finding items
+                        BetweenMajorOrHelpfulCount++;
+                        BetweenMajorCount++;
+                    }
+                    else
+                    {
+                        break; //Break loop in failure
+                    }
+                }
+                else
+                {
+                    List<double> scores = new List<double>();
+                    //Calculate score for each exit
+                    foreach (Exit e in current.Exits)
+                    {
+                        scores.Add(ExitScore(world, owneditems, current, e));
+                    }
+                    if(scores.Count(x => x > 0) > 0) //If none of the scores are greater than 0, all exits are either untraversable or have no available items, indicating dead end has been reached
+                    {
+                        int maxindex = scores.IndexOf(scores.Max()); //Get index of the maximum score
+                        current = world.Regions.First(x => x.Name == current.Exits.ElementAt(maxindex).ToRegionName); //Move to region with maximum score
+                        //Update count of regions between finding items
+                        BetweenMajorOrHelpfulCount++;
+                        BetweenMajorCount++;
+                    }
+                    else
+                    {
+                        break; //Break loop in failure
+                    }
+                }
+            }
+            //Package all lists into list of lists and return
+            PlaythroughInfo output = new PlaythroughInfo();
+            output.BetweenMajorOrHelpfulList = BetweenMajorOrHelpfulList;
+            output.BetweenMajorList = BetweenMajorList;
+            output.LocationsPerTraversal = LocationsPerTraversal;
+            output.Completable = owneditems.Count(x => x.Importance == 3) > 0; //Has goal item, so game is completable
+            return output;
+        }
+
+        //Used to represent the maximum nodes traversed in this search
+        private int maxtraversed;
+
+        //Utilizes the recusive DFS for exit score function to return a score for this exit if its requirement is met, otherwise returns -1
+        private double ExitScore(WorldGraph world, List<Item> owneditems, Region current, Exit exit)
+        {
+            if(parser.RequirementsMet(exit.Requirements, owneditems))
+            {
+                double score = 0;
+                List<Region> visited = new List<Region>();
+                visited.Add(current); //Do this so path does not go through current region
+                Region exitto = world.Regions.First(x => x.Name == exit.ToRegionName); //Get the region this edge leads to
+                maxtraversed = 0;
+                score += RecursiveDFSForExitScore(world, exitto, visited, owneditems, 1); //Add score from a recursive search which scores item locations, scored lower more regions traversed
+                int multiplier = maxtraversed == 1 ? 2 : 1; //Give a multiplier if this edge leads to a single, dead-end region
+                return score * multiplier;
+            }
+            else //Can not traverse exit
+            {
+                return -1; //Return -1 to indicate it cannot be crossed
+            }
+        }
+
+        //Scores an exit by recurisvely searching for items, adding score for every available location, with less weight if farther away
+        public double RecursiveDFSForExitScore(WorldGraph world, Region r, List<Region> visited, List<Item> owneditems, int traversed)
+        {
+            maxtraversed = Math.Max(traversed, maxtraversed);
+            visited.Add(r); //Add to visited list
+            double score = 0;
+            double multiplier = Math.Max(1 / 8, 1 / (double)traversed); //Max multiplier is 1, Minimum multiplier is 1/8
+            //First look at all locations in region to add to score
+            foreach (Location l in r.Locations)
+            {
+                if (parser.RequirementsMet(l.Requirements, owneditems)) //Only want to consider available locations
+                {
+                    if (l.Item.Importance == 3) //Path contains goal item, add large amount to score, add 100 / traversed so that shorter paths to goal preferred
+                    {
+                        score += 10000000000 + (100 / traversed);
+                    }
+                    else if (l.Item.Importance > -1) //Else just add 1 if item isn't already collected (remember, although player knows there is a location here, they don't know what item it is unless it's the goal)
+                    {
+                        score += 1 * multiplier;
+                    }
+                }
+            }
+            //Now recursively look through each exit
+            foreach (Exit e in r.Exits)
+            {
+                if (parser.RequirementsMet(e.Requirements, owneditems)) //Only consider exit if it can be traversed
+                {
+                    Region exitto = world.Regions.First(x => x.Name == e.ToRegionName); //Get the region this edge leads to
+                    if (!visited.Contains(exitto)) //Don't revisit already visited nodes on this path
+                    {
+                        //Recursively call this function, adding 1 to traversed, score will be added to our score and returned
+                        //We purposely pass visited by reference rather than by value, ensuring that locations are only visited once
+                        score += RecursiveDFSForExitScore(world, exitto, visited, owneditems, traversed + 1);
+                    }
+
+                }
+            }
+            return score;
+        }
     }
 
     //Class to record list of spheres and completability bool
-    struct SphereSearchOutput
+    struct SphereSearchInfo
     {
         public List<WorldGraph> Spheres;
+        public bool Completable;
+    }
+
+    //Class to record different playthrough metrics and completability bool
+    struct PlaythroughInfo
+    {
+        public List<int> BetweenMajorOrHelpfulList;
+        public List<int> BetweenMajorList;
+        public List<int> LocationsPerTraversal;
         public bool Completable;
     }
 }
