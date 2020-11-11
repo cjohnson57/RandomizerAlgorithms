@@ -13,9 +13,7 @@ There are three algorithms which can accomplish this:
 * Forward Fill
 * Assumed Fill
 
-For in depth descriptions and psuedocode of the algorithms used, see the following document:
-
-https://drive.google.com/file/d/1KiCcuJ86YTDVQAVm7HmEQH8xxMhLdQKq/view?usp=sharing
+For in depth descriptions and psuedocode of the algorithms used, see the Documents section.
 
 Currently, there is no existing literature on these. The goal of this project is to publish a paper about the algorithms so the previous statement is no longer true.
 
@@ -23,14 +21,11 @@ Currently, there is no existing literature on these. The goal of this project is
 
 Currently the program is functional. Want to add calculations for following statistics:
 
-* World complexity
-    * Plan to take into account complexity of absolute rule/requirement strings of item locations
-
 * Randomized distribution bias
     * Basically, for forward and assumed fill, how much the item distribution is biased toward the early areas of the game by the algorithm
     
 * Interestingness
-    * This one is bit more nebulous. May include bias, number of items available per sphere
+    * This one is bit more nebulous. Plan is to implement a search which acts as a player would, get some metrics from that search, and use those metrics to score interestingness.
     
 After all of these calculations are possible and several world graphs of increasing complexity have been generated, want to perform extensive experimention to determine each of these statistics, as well as failure rate and execution time, for each algorithm on each graph.
     
@@ -48,9 +43,8 @@ After all of these calculations are possible and several world graphs of increas
 * PathsToRegion returns all possible paths (that don't go back on themselves) from the root region to a target region. Utilizes recursive DFS
 * SphereSeach calculates spheres of reachability, where all items in sphere x are reachable with items found in sphere x-1
 
-[Statistics.cs](Statistics.cs) is currently mostly empty but will be used to calculate the aforementioned complexity, bias, and interestingness.
-* Complexity: Has some code to find the absolute rule for every item location in the graph and give it a complexity score. Some statistic on list of scores will then be used to calculate final score
-    * Ex. Sum of squares
+[Statistics.cs](Statistics.cs) Used to calculate the aforementioned complexity, bias, and interestingness.
+* Complexity: Completed. Finds the absolute rule of every location in the world graph and scores it, then uses the average of the max 75% of these scores to return a final complexity score.
 
 [Parser.cs](Parser.cs) is used to parse a logical requirement string and use given item set to determine if the conditions are satisfied or not.
 * Utilizes a modification of the shunting yard algorithm
@@ -65,7 +59,7 @@ After all of these calculations are possible and several world graphs of increas
 * Of particular note is [WorldGraph.cs](WorldClasses/WorldGraph.cs), which contains many functions used to find information about its layout.
 
 [WorldGraphs](WorldGraphs) contains some sample world graphs in .json form.
-* Currently these include a test world (empty items besides goal), randomized test world (items filled by Assumed Fill), and the test world with its original item placements for comparison.
+* Currently these include a test world (empty items besides goal), randomized test world (items filled by Assumed Fill), and the test world with its originally designed item placements for comparison. Also contains 5 randomly generated test worlds of increasing complexity for evaluation.
 
 ## Documents
 
@@ -74,6 +68,8 @@ After all of these calculations are possible and several world graphs of increas
 [Initial Project Description/Update](https://docs.google.com/presentation/d/1kH7OujADrh_7JZ6zIJkcokt-aar8Mkaei7hMrmHWP9Y/edit?usp=sharing) Short presentation created after finishing the initial algorithm implementation.
 
 [Complexity and Generation](https://docs.google.com/presentation/d/1BCcFDL4GdgRi2Ih_mrm7cEvWyxCpN6MDrw45Zl3AJjk/edit?usp=sharing) Document which describes the initial implementation of the complexity calculation and world generation.
+
+[Complexity and Generation Evaluation](https://docs.google.com/presentation/d/1Sh6Km-P5fIdDRbM25pEOpdnlFkdVT1MeZXqyVRnMhSA/edit?usp=sharing) Goes over some evaluation done to determine what metric with which to calculate the final complexity score. Also describes generation of 5 sample worlds for testing purposes.
 
 ## Examples
 
