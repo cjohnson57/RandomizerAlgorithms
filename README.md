@@ -19,11 +19,11 @@ Currently, there is no existing literature on these. The goal of this project is
 
 ## Needs to be done
 
-Interestingness Calculation
+* Interestingness Calculation
     * A bit nebulous. Already have search which traverses the world like a player and extracts metrics. Need to use those metrics to score interestingness.
     * Will distribute a survey to the OoT randomizer discord to find how to calculate these
     
-After finishing interestingness, want to perform extensive experimention to determine each of these statistics, as well as failure rate and execution time, for each algorithm on each graph.
+* After finishing interestingness, want to perform extensive experimention to determine each of these statistics, as well as failure rate and execution time, for each algorithm on each graph.
     
 ## Files
 
