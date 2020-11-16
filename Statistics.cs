@@ -185,7 +185,7 @@ namespace RandomizerAlgorithms
         //Calculate info about human-like playthrough and then return the score
         public double CalcDistributionInterestingness(WorldGraph world)
         {
-            PlaythroughInfo info = searcher.PlayThrough(world);
+            PlaythroughInfo info = searcher.PlayerSearch(world);
             return ScorePlaythrough(info);
         }
 

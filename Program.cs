@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
-using System.Security.Cryptography.X509Certificates;
+using Microsoft.EntityFrameworkCore;
 
 namespace RandomizerAlgorithms
 {
     class Program
     {
-        const int trials = 10;
-        //Random, forward, and assumed fill; set to true to test on that algo
-        static bool[] dotests = { true, true, true };
-        //Fill list with name of worlds you want to consider
-        //static string[] testworlds = { "World1", "World2", "World3", "World4", "World5" };
-        static string[] testworlds = { "World3" };
+        //Number of trials to perform per algorithm per world
+        const int trials = 2;
 
+        //Random, forward, and assumed fill; set to true to test on that algo
+        static readonly bool[] dotests = { true, true, true };
+
+        //Fill list with name of worlds you want to consider
+        static readonly string[] testworlds = { "World1", "World2", "World3", "World4", "World5" };
+        //static string[] testworlds = { "World3" };
+
+        //Class which abstracts the database used to store experimental results
+        private static ResultDB db = new ResultDB();
+
+        //Experiment space
         static void Main(string[] args)
         {
             Fill filler = new Fill();
@@ -63,7 +70,6 @@ namespace RandomizerAlgorithms
             //SphereSearchInfo testoutput = searcher.SphereSearch(testworld);
             //Print_Spheres(testoutput);
 
-
             string[] algos = { "Random", "Forward", "Assumed" };
             foreach (string worldname in testworlds)
             {
@@ -74,6 +80,7 @@ namespace RandomizerAlgorithms
                 {
                     if(dotests[i])
                     {
+                        double totalint = 0;
                         double totalbias = 0;
                         double totaltime = 0;
                         for (int j = 0; j < trials; j++)
@@ -98,18 +105,31 @@ namespace RandomizerAlgorithms
                                     break;
                             }
                             randomizedgraph = filler.RandomFill(randomizedgraph, minoritempool); //Use random for minor items always since they don't matter
-
+                            //Calculate metrics 
                             DateTime end = DateTime.Now;
-
                             double difference = (end - start).TotalMilliseconds;
                             totaltime += difference;
-
                             SphereSearchInfo output = searcher.SphereSearch(randomizedgraph);
                             BiasOutput biasoutput = stats.CalcDistributionBias(randomizedgraph);
                             double bias = biasoutput.bias;
                             totalbias += bias;
-                            bool direction = biasoutput.direction;
+                            double interestingness = stats.CalcDistributionInterestingness(randomizedgraph);
+                            totalint += interestingness;
+                            //Store result in database
+                            Result result = new Result();
+                            result.Algorithm = algos[i];
+                            result.World = worldname;
+                            result.Completable = output.Completable;
+                            result.ExecutionTime = difference;
+                            result.Bias = biasoutput.bias;
+                            result.BiasDirection = biasoutput.direction;
+                            result.Interestingness = interestingness;
+                            db.Entry(result).State = EntityState.Added;
+                            db.SaveChanges();
+
                         }
+                        double avgint = totalint / trials;
+                        Console.WriteLine("Average interestingness for " + algos[i] + " Fill in world " + worldname + ": " + avgint);
                         double avgbias = totalbias / trials;
                         Console.WriteLine("Average bias for " + algos[i] + " Fill in world " + worldname + ": " + avgbias);
                         double avgtime = totaltime / trials;

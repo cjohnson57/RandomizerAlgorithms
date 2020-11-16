@@ -227,13 +227,14 @@ namespace RandomizerAlgorithms
          * 2. Number of regions traversed between finding major or helpful items
          * 3. Number of regions traversed between finding major items
          */
-        public PlaythroughInfo PlayThrough(WorldGraph world)
+        public PlaythroughInfo PlayerSearch(WorldGraph world)
         {
             List<int> BetweenMajorOrHelpfulList = new List<int>();
             List<int> BetweenMajorList = new List<int>();
             List<int> LocationsPerTraversal = new List<int>();
 
             Region current = world.Regions.First(x => x.Name == world.StartRegionName);
+            Region previous = new Region();
             List<Item> owneditems = new List<Item>();
 
             int BetweenMajorOrHelpfulCount = 0;
@@ -284,7 +285,7 @@ namespace RandomizerAlgorithms
                 List<double> exitscores = new List<double>();
                 if (current.Exits.Count == 1) //Only one exit, take it unless need to break
                 {
-                    double score = ExitScore(world, owneditems, current, current.Exits.First());
+                    double score = ExitScore(world, owneditems, current, previous, current.Exits.First());
                     if(score > 0) //If score is -1 and this is the only exit, then a dead end has been reached; if score is 0, then there are no items left to find; otherwise simply take exit since it is the only one
                     {
                         current = world.Regions.First(x => x.Name == current.Exits.First().ToRegionName); //Move to region
@@ -303,11 +304,12 @@ namespace RandomizerAlgorithms
                     //Calculate score for each exit
                     foreach (Exit e in current.Exits)
                     {
-                        scores.Add(ExitScore(world, owneditems, current, e));
+                        scores.Add(ExitScore(world, owneditems, current, previous, e));
                     }
                     if(scores.Count(x => x > 0) > 0) //If none of the scores are greater than 0, all exits are either untraversable or have no available items, indicating dead end has been reached
                     {
                         int maxindex = scores.IndexOf(scores.Max()); //Get index of the maximum score
+                        previous = current;
                         current = world.Regions.First(x => x.Name == current.Exits.ElementAt(maxindex).ToRegionName); //Move to region with maximum score
                         //Update count of regions between finding items
                         BetweenMajorOrHelpfulCount++;
@@ -332,7 +334,7 @@ namespace RandomizerAlgorithms
         private int maxtraversed;
 
         //Utilizes the recusive DFS for exit score function to return a score for this exit if its requirement is met, otherwise returns -1
-        private double ExitScore(WorldGraph world, List<Item> owneditems, Region current, Exit exit)
+        private double ExitScore(WorldGraph world, List<Item> owneditems, Region current, Region previous, Exit exit)
         {
             if(parser.RequirementsMet(exit.Requirements, owneditems))
             {
@@ -343,7 +345,8 @@ namespace RandomizerAlgorithms
                 maxtraversed = 0;
                 score += RecursiveDFSForExitScore(world, exitto, visited, owneditems, 1); //Add score from a recursive search which scores item locations, scored lower more regions traversed
                 int multiplier = maxtraversed == 1 ? 2 : 1; //Give a multiplier if this edge leads to a single, dead-end region
-                return score * multiplier;
+                int divider = exit.ToRegionName == previous.Name ? 4 : 1; //Give a divider if this is the region the player just came from, avoid immediately backtracking
+                return score * multiplier / divider;
             }
             else //Can not traverse exit
             {
