@@ -176,17 +176,19 @@ namespace RandomizerAlgorithms
                     aftersum = spherebias[i];
                 }
             }
+            //Package output and return
             BiasOutput output = new BiasOutput();
-            output.bias = overallsum / spherebias.Length; //Get average of absolute value to determine overall bias
+            output.biasvalue = overallsum / spherebias.Length; //Get average of absolute value to determine overall bias
             output.direction = beforesum < aftersum; //If bias is more positive before the median, the direction is toward the beginning, otherwise toward end
             return output;
         }
 
         //Calculate info about human-like playthrough and then return the score
-        public double CalcDistributionInterestingness(WorldGraph world)
+        public InterestingnessOutput CalcDistributionInterestingness(WorldGraph world)
         {
-            PlaythroughInfo info = searcher.PlayerSearch(world);
-            return ScorePlaythrough(info);
+            PlaythroughInfo info = searcher.PlaythroughSearch(world.Copy());
+            BiasOutput biasinfo = CalcDistributionBias(world.Copy());
+            return ScorePlaythrough(world, info, biasinfo);
         }
 
         /*
@@ -196,11 +198,95 @@ namespace RandomizerAlgorithms
          * 2. Number of regions traversed between finding major or helpful items
          * 3. Number of regions traversed between finding major items
          */
-        public double ScorePlaythrough(PlaythroughInfo input)
+        public InterestingnessOutput ScorePlaythrough(WorldGraph world, PlaythroughInfo input, BiasOutput biasinfo)
         {
-            double score = 0;
-
-            return score;
+            //First, calculate fun metric, which desires a consistently high rate of checking item locations
+            Queue<int> RollingAvg = new Queue<int>();
+            List<double> avgs = new List<double>();
+            List<bool> highavg = new List<bool>();
+            foreach (int num in input.LocationsPerTraversal)
+            {
+                if(RollingAvg.Count == 5) //Rolling average of last 5 values
+                {
+                    RollingAvg.Dequeue();
+                }
+                RollingAvg.Enqueue(num);
+                double avg = RollingAvg.Average();
+                highavg.Add(avg >= 1); //If average is above 1, considered high enough to be fun, so add true to list, else add false
+                avgs.Add(avg);
+            }
+            double fun = (double)highavg.Count(x => x) / highavg.Count(); //Our "Fun" score is the percentage of high values in the list
+            //Next calculate challenge metric, which desires rate at which items are found to be within some optimal range so that it is not too often or too rare
+            double LocationToItemRatio = (double)world.GetLocationCount() / world.Items.Where(x => x.Importance == 2).Count();
+            int low = (int)Math.Floor(LocationToItemRatio * .5);
+            int high = (int)Math.Ceiling(LocationToItemRatio * 1.5);
+            RollingAvg = new Queue<int>();
+            avgs = new List<double>();
+            List<bool> avginrange = new List<bool>();
+            foreach (int num in input.BetweenMajorList)
+            {
+                if (RollingAvg.Count == 3) //Tighter rolling average of last 3 values
+                {
+                    RollingAvg.Dequeue();
+                }
+                RollingAvg.Enqueue(num);
+                double avg = RollingAvg.Average();
+                avginrange.Add(low <= avg && avg <= high); //If value is within range rather than too high or too low, add true to list to indicate it is within a good range
+                avgs.Add(avg);
+            }
+            double challenge = (double)avginrange.Count(x => x) / avginrange.Count(); //Our "Challenge" score is the percentage of values in the list within desirable range
+            //Next calculate satisfyingness metric based on how many locations are unlocked when an item is found
+            double LocationToItemRatioWithoutInitial = (double)(world.GetLocationCount() - input.InitialReachableCount) / world.Items.Where(x => x.Importance == 2).Count();
+            int satthreshold = (int)Math.Floor(LocationToItemRatioWithoutInitial); //Set threshold as number of not-immediately-accessible locations divided by number of major items
+            List<bool> SatisfyingReachesThreshold = new List<bool>();
+            foreach(int num in input.LocationsUnlockedPerMajorFound)
+            {
+                SatisfyingReachesThreshold.Add(num >= satthreshold);
+            }
+            double satisfyingness = (double)SatisfyingReachesThreshold.Count(x => x) / SatisfyingReachesThreshold.Count(); //Our "Satisfyingness" score is the percentage of values above the desired threshold
+            //Finally calculate boredom by observing regions which were visited more often than is expected
+            //First get a count of how many times each region was visited
+            List<int> visitcounts = new List<int>();
+            foreach(Region r in world.Regions)
+            {
+                visitcounts.Add(input.Traversed.Count(x => x.Name == r.Name));
+            }
+            //Calculate threshold with max number of times region should be visited being the number of traversals divided by number of regions
+            double TraversedToRegionRatio = (double)input.Traversed.Count() / world.Regions.Count();
+            int borethreshold = (int)Math.Ceiling(TraversedToRegionRatio);
+            List<bool> VisitsAboveThreshold = new List<bool>();
+            foreach(int num in visitcounts)
+            {
+                VisitsAboveThreshold.Add(num > borethreshold); //Again as before, add list of bool when value is above threshold
+            }
+            double boredom = (double)VisitsAboveThreshold.Count(x => x) / VisitsAboveThreshold.Count(); //Our "Boredom" score is the percentage of values above the desired threshold
+            //Add calculated stats to output. If a result is NaN (possible when not completable) save as -1
+            InterestingnessOutput output = new InterestingnessOutput();
+            output.bias = biasinfo;
+            output.fun = double.IsNaN(fun) ? -1 : fun;
+            output.challenge = double.IsNaN(challenge) ? -1 : challenge;
+            output.satisfyingness = double.IsNaN(satisfyingness) ? -1 : satisfyingness;
+            output.boredom = double.IsNaN(boredom) ? -1 : boredom;
+            //Use stats to calculate final interestingness score
+            //Each score is a double in the range [0, 1]
+            //Multiply each score (or its 1 - score if low score is desirable) by its percentage share of the total
+            double biasscore = (1 - output.bias.biasvalue) * .2;
+            double funscore = output.fun * .2;
+            double challengescore = output.challenge * .2;
+            double satscore = output.satisfyingness * .2;
+            double borescore = (1 - output.boredom) * .2;
+            double intscore = biasscore + funscore + challengescore + satscore + borescore;
+            //If any components are NaN, consider interestingness as NaN as well
+            if(double.IsNaN(fun) || double.IsNaN(challenge) || double.IsNaN(satisfyingness) || double.IsNaN(boredom))
+            {
+                output.interestingness = -1;
+            }
+            else
+            {
+                output.interestingness = intscore;
+            }
+            output.completable = input.Completable;
+            return output;
         }
     }
 
@@ -216,8 +302,21 @@ namespace RandomizerAlgorithms
 
     struct BiasOutput
     {
-        public double bias;
+        public double biasvalue;
         public bool direction; //0: Toward beginning, 1: Toward end
+    }
+
+    struct InterestingnessOutput
+    {
+        public BiasOutput bias;
+        public double fun;
+        public double challenge;
+        public double satisfyingness;
+        public double boredom;
+
+        public double interestingness;
+
+        public bool completable;
     }
 
 }

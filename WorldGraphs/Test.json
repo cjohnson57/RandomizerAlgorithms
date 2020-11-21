@@ -257,7 +257,7 @@
         },
         {
           "ToRegionName": "Region-9",
-          "Requirements": "A and B and C and D and E"
+          "Requirements": "A"
         }
       ],
       "Locations": [
@@ -323,7 +323,7 @@
         },
         {
           "ToRegionName": "Region-9",
-          "Requirements": "A and B and C and D and E"
+          "Requirements": "None"
         }
       ],
       "Locations": [
@@ -360,7 +360,7 @@
       "Locations": [
         {
           "Name": "Final Boss",
-          "Requirements": "None",
+          "Requirements": "(D or C) or (B) and (B or D)",
           "Item": {
             "Name": "Goal",
             "Importance": 3

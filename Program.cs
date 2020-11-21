@@ -10,14 +10,14 @@ namespace RandomizerAlgorithms
     class Program
     {
         //Number of trials to perform per algorithm per world
-        const int trials = 2;
+        const int trials = 1000;
 
         //Random, forward, and assumed fill; set to true to test on that algo
         static readonly bool[] dotests = { true, true, true };
 
         //Fill list with name of worlds you want to consider
-        static readonly string[] testworlds = { "World1", "World2", "World3", "World4", "World5" };
-        //static string[] testworlds = { "World3" };
+        //static readonly string[] testworlds = { "World1", "World2", "World3", "World4", "World5" };
+        static string[] testworlds = { "World3" };
 
         //Class which abstracts the database used to store experimental results
         private static ResultDB db = new ResultDB();
@@ -80,8 +80,7 @@ namespace RandomizerAlgorithms
                 {
                     if(dotests[i])
                     {
-                        double totalint = 0;
-                        double totalbias = 0;
+                        List<InterestingnessOutput> intstats = new List<InterestingnessOutput>();
                         double totaltime = 0;
                         for (int j = 0; j < trials; j++)
                         {
@@ -109,29 +108,34 @@ namespace RandomizerAlgorithms
                             DateTime end = DateTime.Now;
                             double difference = (end - start).TotalMilliseconds;
                             totaltime += difference;
-                            SphereSearchInfo output = searcher.SphereSearch(randomizedgraph);
-                            BiasOutput biasoutput = stats.CalcDistributionBias(randomizedgraph);
-                            double bias = biasoutput.bias;
-                            totalbias += bias;
-                            double interestingness = stats.CalcDistributionInterestingness(randomizedgraph);
-                            totalint += interestingness;
+                            //SphereSearchInfo output = searcher.SphereSearch(randomizedgraph);
+                            InterestingnessOutput intstat = stats.CalcDistributionInterestingness(randomizedgraph);
+                            intstats.Add(intstat);
                             //Store result in database
                             Result result = new Result();
                             result.Algorithm = algos[i];
                             result.World = worldname;
-                            result.Completable = output.Completable;
+                            result.Completable = intstat.completable;
                             result.ExecutionTime = difference;
-                            result.Bias = biasoutput.bias;
-                            result.BiasDirection = biasoutput.direction;
-                            result.Interestingness = interestingness;
-                            db.Entry(result).State = EntityState.Added;
-                            db.SaveChanges();
+                            result.Bias = intstat.bias.biasvalue;
+                            result.BiasDirection = intstat.bias.direction;
+                            result.Interestingness = intstat.interestingness;
+                            //db.Entry(result).State = EntityState.Added;
+                            //db.SaveChanges();
 
                         }
-                        double avgint = totalint / trials;
+                        double avgint = intstats.Where(x => x.completable).Average(x => x.interestingness);
                         Console.WriteLine("Average interestingness for " + algos[i] + " Fill in world " + worldname + ": " + avgint);
-                        double avgbias = totalbias / trials;
+                        double avgbias = intstats.Where(x => x.completable).Average(x => x.bias.biasvalue);
                         Console.WriteLine("Average bias for " + algos[i] + " Fill in world " + worldname + ": " + avgbias);
+                        double avgfun = intstats.Where(x => x.completable).Average(x => x.fun);
+                        Console.WriteLine("Average fun for " + algos[i] + " Fill in world " + worldname + ": " + avgfun);
+                        double avgchal = intstats.Where(x => x.completable).Average(x => x.challenge);
+                        Console.WriteLine("Average challenge for " + algos[i] + " Fill in world " + worldname + ": " + avgchal);
+                        double avgsat = intstats.Where(x => x.completable).Average(x => x.satisfyingness);
+                        Console.WriteLine("Average satisfyingness for " + algos[i] + " Fill in world " + worldname + ": " + avgsat);
+                        double avgbore = intstats.Where(x => x.completable).Average(x => x.boredom);
+                        Console.WriteLine("Average boredom for " + algos[i] + " Fill in world " + worldname + ": " + avgbore);
                         double avgtime = totaltime / trials;
                         Console.WriteLine("Average time to generate for " + algos[i] + " Fill in world " + worldname + ": " + avgtime + "ms");
                     }
@@ -201,7 +205,7 @@ namespace RandomizerAlgorithms
         //This takes a while to run, mainly because each complexity calculation takes ~2 seconds due to running the external python script
         static string GenerateWorld(int regioncount, int itemcount)
         {
-            double goalcomplexity = 59.20;
+            double goalcomplexity = AverageComplexity(regioncount, itemcount).Average(x => x.top50);
             //Now generate worlds until one is generated within a certain tolerance of the average
             double tolerance = .10; //10%
             while (true)
@@ -223,7 +227,7 @@ namespace RandomizerAlgorithms
         static List<TestComplexityOutput> AverageComplexity(int regioncount, int itemcount)
         {
             //First do x trials to determine an average complexity
-            int gentrials = 100;
+            int gentrials = 5;
             List<TestComplexityOutput> outputs = new List<TestComplexityOutput>();
             for (int i = 0; i < gentrials; i++)
             {

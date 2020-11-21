@@ -74,6 +74,7 @@ namespace RandomizerAlgorithms
 
         //Returns a single char that represents a given number in [0, 25]
         //Ex 0 -> A, 1 -> B.... 25 -> Z
+        //Used in world generation to generate item names
         private char NumToLetter(int num)
         {
             return (char)(65 + num);
@@ -81,6 +82,7 @@ namespace RandomizerAlgorithms
 
         //Returns a string that represents the given number
         //Ex 0 -> A, 1 -> B.... 25 -> Z, 26 -> AA, 27 -> AB.... 51 -> AZ, 52 -> BA....
+        //Used in world generation to generate item names
         public string NumToLetters(int num)
         {
             if(num < 26)

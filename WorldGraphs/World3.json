@@ -547,7 +547,7 @@
         },
         {
           "ToRegionName": "Region-34",
-          "Requirements": "None"
+          "Requirements": "F and L and K and B and C and H and D and I and G and E and N and J and A and M and O"
         }
       ],
       "Locations": [
@@ -1377,13 +1377,13 @@
       "Exits": [
         {
           "ToRegionName": "Region-12",
-          "Requirements": "None"
+          "Requirements": "F and L and K and B and C and H and D and I and G and E and N and J and A and M and O"
         }
       ],
       "Locations": [
         {
           "Name": "Final Boss",
-          "Requirements": "(L and N) or (C or O) and (E or D)",
+          "Requirements": "None",
           "Item": {
             "Name": "Goal",
             "Importance": 3

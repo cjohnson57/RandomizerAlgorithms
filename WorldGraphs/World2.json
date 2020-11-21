@@ -319,7 +319,7 @@
       "Exits": [
         {
           "ToRegionName": "Region-24",
-          "Requirements": "J and D"
+          "Requirements": "H and B and D and I and E and G and A and C and J and F"
         },
         {
           "ToRegionName": "Region-14",
@@ -979,13 +979,13 @@
       "Exits": [
         {
           "ToRegionName": "Region-8",
-          "Requirements": "J and D"
+          "Requirements": "H and B and D and I and E and G and A and C and J and F"
         }
       ],
       "Locations": [
         {
           "Name": "Final Boss",
-          "Requirements": "(B and F or J) and (H or J and G) or (F or C or J)",
+          "Requirements": "None",
           "Item": {
             "Name": "Goal",
             "Importance": 3

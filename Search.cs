@@ -227,20 +227,26 @@ namespace RandomizerAlgorithms
          * 2. Number of regions traversed between finding major or helpful items
          * 3. Number of regions traversed between finding major items
          */
-        public PlaythroughInfo PlayerSearch(WorldGraph world)
+        public PlaythroughInfo PlaythroughSearch(WorldGraph world)
         {
             List<int> BetweenMajorOrHelpfulList = new List<int>();
             List<int> BetweenMajorList = new List<int>();
             List<int> LocationsPerTraversal = new List<int>();
+            List<int> LocationsUnlockedPerMajorFound = new List<int>();
 
             Region current = world.Regions.First(x => x.Name == world.StartRegionName);
             Region previous = new Region();
             List<Item> owneditems = new List<Item>();
+            List<Region> traversed = new List<Region>();
 
             int BetweenMajorOrHelpfulCount = 0;
             int BetweenMajorCount = 0;
+            bool gomode = false;
+            int prevlocationsunlocked = GetReachableLocations(world, owneditems).GetLocationCount(); //Initial count of unlocked locations
+            int initial = prevlocationsunlocked; //Saved to add to output later
             while(owneditems.Count(x => x.Importance == 3) < 1) //Loop until goal item found, or dead end reached (see break statement below)
             {
+                traversed.Add(current);
                 int checkcount = 0;
                 int prevcount = -1;
                 while(prevcount < owneditems.Count()) // While loop to re-check locations if major item is found in this region
@@ -268,27 +274,34 @@ namespace RandomizerAlgorithms
                                 BetweenMajorList.Add(BetweenMajorCount);
                                 BetweenMajorOrHelpfulCount = 0;
                                 BetweenMajorCount = 0;
+                                //Find number of locations unlocked, add to list, update count of locations unlocked
+                                int locationsunlocked = GetReachableLocations(world, owneditems).GetLocationCount();
+                                int newlocations = locationsunlocked - prevlocationsunlocked;
+                                LocationsUnlockedPerMajorFound.Add(newlocations);
+                                prevlocationsunlocked = locationsunlocked;
                             }
                             else if (i.Importance == 3) //Goal item, break loop here
                             {
                                 owneditems.Add(i); //Collect goal item, indicates successful completion
-                                //Update both lists and reset counts
-                                BetweenMajorOrHelpfulList.Add(BetweenMajorOrHelpfulCount);
-                                BetweenMajorList.Add(BetweenMajorCount);
-                                BetweenMajorOrHelpfulCount = 0;
-                                BetweenMajorCount = 0;
                             }
                         }
                     }
                 }
-                LocationsPerTraversal.Add(checkcount);
+                if(!gomode) //Update this traversal with the number of locations checked within it, unless player is in go mode
+                {
+                    LocationsPerTraversal.Add(checkcount);
+                }
                 List<double> exitscores = new List<double>();
                 if (current.Exits.Count == 1) //Only one exit, take it unless need to break
                 {
-                    double score = ExitScore(world, owneditems, current, previous, current.Exits.First());
+                    double score = ExitScore(world, owneditems, current, traversed, current.Exits.First());
                     if(score > 0) //If score is -1 and this is the only exit, then a dead end has been reached; if score is 0, then there are no items left to find; otherwise simply take exit since it is the only one
                     {
                         current = world.Regions.First(x => x.Name == current.Exits.First().ToRegionName); //Move to region
+                        if(score >= 10000000000) //Score this high indicates player is in "go mode" where they are now rushing the end of the game
+                        {
+                            gomode = true;
+                        }
                         //Update count of regions between finding items
                         BetweenMajorOrHelpfulCount++;
                         BetweenMajorCount++;
@@ -304,13 +317,17 @@ namespace RandomizerAlgorithms
                     //Calculate score for each exit
                     foreach (Exit e in current.Exits)
                     {
-                        scores.Add(ExitScore(world, owneditems, current, previous, e));
+                        scores.Add(ExitScore(world, owneditems, current, traversed, e));
                     }
                     if(scores.Count(x => x > 0) > 0) //If none of the scores are greater than 0, all exits are either untraversable or have no available items, indicating dead end has been reached
                     {
                         int maxindex = scores.IndexOf(scores.Max()); //Get index of the maximum score
                         previous = current;
                         current = world.Regions.First(x => x.Name == current.Exits.ElementAt(maxindex).ToRegionName); //Move to region with maximum score
+                        if (scores.Max() >= 10000000000) //Score this high indicates player is in "go mode" where they are now rushing the end of the game
+                        {
+                            gomode = true;
+                        }
                         //Update count of regions between finding items
                         BetweenMajorOrHelpfulCount++;
                         BetweenMajorCount++;
@@ -326,7 +343,10 @@ namespace RandomizerAlgorithms
             output.BetweenMajorOrHelpfulList = BetweenMajorOrHelpfulList;
             output.BetweenMajorList = BetweenMajorList;
             output.LocationsPerTraversal = LocationsPerTraversal;
+            output.LocationsUnlockedPerMajorFound = LocationsUnlockedPerMajorFound;
+            output.Traversed = traversed;
             output.Completable = owneditems.Count(x => x.Importance == 3) > 0; //Has goal item, so game is completable
+            output.InitialReachableCount = initial;
             return output;
         }
 
@@ -334,7 +354,7 @@ namespace RandomizerAlgorithms
         private int maxtraversed;
 
         //Utilizes the recusive DFS for exit score function to return a score for this exit if its requirement is met, otherwise returns -1
-        private double ExitScore(WorldGraph world, List<Item> owneditems, Region current, Region previous, Exit exit)
+        private double ExitScore(WorldGraph world, List<Item> owneditems, Region current, List<Region> traversed, Exit exit)
         {
             if(parser.RequirementsMet(exit.Requirements, owneditems))
             {
@@ -345,7 +365,16 @@ namespace RandomizerAlgorithms
                 maxtraversed = 0;
                 score += RecursiveDFSForExitScore(world, exitto, visited, owneditems, 1); //Add score from a recursive search which scores item locations, scored lower more regions traversed
                 int multiplier = maxtraversed == 1 ? 2 : 1; //Give a multiplier if this edge leads to a single, dead-end region
-                int divider = exit.ToRegionName == previous.Name ? 4 : 1; //Give a divider if this is the region the player just came from, avoid immediately backtracking
+
+                //Give divider based on how recently the region was visited
+                int divider = 1;
+                int lastindex = traversed.FindLastIndex(x => x.Name == exit.ToRegionName);
+                if(lastindex > -1)
+                {
+                    int howrecent = traversed.Count - 2 - lastindex;
+                    divider = 8 - howrecent; //Most recent region divided by 8, 2nd most recent divided by 7, etc to minimum of 1
+                    divider = divider < 1 ? 1 : divider;
+                }
                 return score * multiplier / divider;
             }
             else //Can not traverse exit
@@ -408,6 +437,9 @@ namespace RandomizerAlgorithms
         public List<int> BetweenMajorOrHelpfulList;
         public List<int> BetweenMajorList;
         public List<int> LocationsPerTraversal;
+        public List<int> LocationsUnlockedPerMajorFound;
+        public List<Region> Traversed;
+        public int InitialReachableCount;
         public bool Completable;
     }
 }

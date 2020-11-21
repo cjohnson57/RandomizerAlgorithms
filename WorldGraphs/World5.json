@@ -207,7 +207,7 @@
         },
         {
           "ToRegionName": "Region-49",
-          "Requirements": "None"
+          "Requirements": "O and U and H and AA and K and AB and AC and B and A and D and AD and Z and R and X and M and P and V and G and J and S and T and W and N and C and L and F and Y and E and I and Q"
         }
       ],
       "Locations": [
@@ -2010,13 +2010,13 @@
       "Exits": [
         {
           "ToRegionName": "Region-4",
-          "Requirements": "None"
+          "Requirements": "O and U and H and AA and K and AB and AC and B and A and D and AD and Z and R and X and M and P and V and G and J and S and T and W and N and C and L and F and Y and E and I and Q"
         }
       ],
       "Locations": [
         {
           "Name": "Final Boss",
-          "Requirements": "(AA or C) or (X or W or D) and (Q or AA or L)",
+          "Requirements": "None",
           "Item": {
             "Name": "Goal",
             "Importance": 3

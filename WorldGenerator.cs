@@ -151,8 +151,30 @@ namespace RandomizerAlgorithms
             Generated = new WorldGraph("Region-0", "Goal", regions.ToHashSet(), MajorItemList);
             Region goalregion = Generated.GetFarthestRegion();
             Item goalitem = new Item("Goal", 3); //Create goal item
-            Location goallocation = new Location("Final Boss", GenerateComplexRandomRequirement(), goalitem); //Create location for goal item with complex requirement
+            Location goallocation = new Location("Final Boss", "None", goalitem); //Create location for goal item with no requirement since entrance to region will have full requirement
+            //We want all exits to the goal region to require every item so that they will all be required to complete the game
+            string fullrequirement = "";
+            foreach(Item i in MajorItemList)
+            {
+                fullrequirement += i.Name + " and ";
+            }
+            fullrequirement = fullrequirement.Substring(0, fullrequirement.Length - 5); //Remove final " and "
             regions.First(x => x == goalregion).Locations.Add(goallocation);
+            foreach(Exit e in regions.First(x => x == goalregion).Exits)
+            {
+                e.Requirements = fullrequirement;
+            }
+            //Must also write to requirements leading into final region
+            foreach(Region r in regions)
+            {
+                foreach(Exit e in r.Exits)
+                {
+                    if(e.ToRegionName == goalregion.Name)
+                    {
+                        e.Requirements = fullrequirement;
+                    }
+                }
+            }
             //Finally, generate item locations and place the location in the region
             foreach(Region r in regions)
             {
@@ -356,11 +378,11 @@ namespace RandomizerAlgorithms
                 string portion = "";
                 //20% chance of 1 requirement, 40% chance of 2, 40% chance of 3 per portion
                 int random = rng.Next(1, 6);
-                if(random == 1) //Get one requirement
+                if (random == 1) //Get one requirement
                 {
                     portion = GenerateOneRandomRequirement();
                 }
-                else if(random > 1 && random < 4) //Get two requirements
+                else if (random > 1 && random < 4) //Get two requirements
                 {
                     portion = GenerateTwoRandomRequirements();
                 }
