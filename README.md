@@ -45,10 +45,11 @@ Currently, there is no existing literature on these. The goal of this project is
 * Complexity: Finds the absolute rule of every location in the world graph and scores it, then uses the average of the max 75% of these scores to return a final complexity score.
 * Interestingness: Performs PlaythroughSearch, extracts some metrics, and calculates a final interestingness score with the following considerations:
    * Bias: Looks at a randomized world and compares the percentage of item locations in early spheres to the percentage of major items to evaluate whether the algorithm introduced some bias by placing items early. Lower bias is better. This is by far the most objective measure, as it does not utilize PlaythroughSearch or some threshold/scoring system to produce its result.
-   * Fun: Utilizes the PlaythroughSearch metric of locations checked per traversal. Fun equals the percentage of traversals in which the rolling average of locations collected in the last 5 traversals is greater than 1. This is to represent making consistent progress throughout the game world. Higher fun is better.
-   * Challenge: Utilizes the PlaythroughSearch metric of traversals between finding a major item. Goal is for this number of traversals to be within some desirable range so major items are not found too often or too rarely. Lower value for this range is half of (# of locations / # of major items), upper bound is 1.5x this value. Again a rolling average is used but with is tighter, only considering the last 3 values. Challenge equals the percentage of these averages that fall within the desirable range. Higher challenge is better.
-   * Satisfyingness: Utilizes the PlaythroughSearch metric of locations unlocked per major item found. The idea is that finding a major item is more satisfying when it is more immediately useful, i.e. more locations are unlocked. The threshold for a satisfying item is that it unlocked a number of locations greater than (# of locations in the world (not counting those immediately accessible) / # of major items). Satisfyingness equals the percentage of these values which is greather than the threshold value. Higher satisfyingness is better.
-   * Boredom: Utilizes the list of traversals extracted from PlaythroughSearch. Uses this list to construct a count for each region in the world of how often it was visited. Boredom equals the percentage of regions which were visited more often than a threshold value. Here the threshold is set as the number of traverals divided by the number of regions (the average). Lower boredom is better.
+   * Fun: Represents making consistent progress throughout the game world by discovering item locations. Higher fun is better.
+   * Challenge: Represents finding major items not too often but not too rarely, either. Higher challenge is better.
+   * Satisfyingness: Represents how many locations are unlocked whenever a key item is discovered, i.e. how immediately useful the item is. Higher satisfyingness is better.
+   * Boredom: Represents the player needing to repeatedly visit the same regions to make progress. Lower boredom is better.
+For more information on how Interestingness metrics are calculated, see "Bias and PlaythroughSearch" and "Interestingness" under the Documents section.
 
 [Parser.cs](Parser.cs) is used to parse a logical requirement string and use given item set to determine if the conditions are satisfied or not.
 * Utilizes a modification of the shunting yard algorithm
@@ -77,7 +78,7 @@ Currently, there is no existing literature on these. The goal of this project is
 
 [Bias and PlaythroughSearch](https://docs.google.com/presentation/d/1_IezP3AD45V2YAj6AuKbr5FpFIJ9hw1qitbcXZCW-Hk/edit?usp=sharing) describes the calculation of bias from a computed world permutation as well as the implementation of PlaythroughSearch, which attempts to traverse the world as a player of the game would.
 
-[Interestingness](https://docs.google.com/presentation/d/1VVmOIxesQDbI6D2yY7VFo1dLZs9_RkW5aShiv04aJKQ/edit?usp=sharing) describes the evaluation and calculation of metrics used to produce a final interestingness metric for a given filled world.
+[Interestingness](https://docs.google.com/presentation/d/1VVmOIxesQDbI6D2yY7VFo1dLZs9_RkW5aShiv04aJKQ/edit?usp=sharing) describes the evaluation and calculation of metrics used to produce a final interestingness metric for a given permutation of items in a world.
 
 ## Examples
 
