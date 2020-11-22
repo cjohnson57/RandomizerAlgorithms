@@ -49,6 +49,7 @@ Currently, there is no existing literature on these. The goal of this project is
    * Challenge: Represents finding major items not too often but not too rarely, either. Higher challenge is better.
    * Satisfyingness: Represents how many locations are unlocked whenever a key item is discovered, i.e. how immediately useful the item is. Higher satisfyingness is better.
    * Boredom: Represents the player needing to repeatedly visit the same regions to make progress. Lower boredom is better.
+
 For more information on how Interestingness metrics are calculated, see "Bias and PlaythroughSearch" and "Interestingness" under the Documents section.
 
 [Parser.cs](Parser.cs) is used to parse a logical requirement string and use given item set to determine if the conditions are satisfied or not.
