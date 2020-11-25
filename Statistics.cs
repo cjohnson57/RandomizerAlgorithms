@@ -186,8 +186,16 @@ namespace RandomizerAlgorithms
         //Calculate info about human-like playthrough and then return the score
         public InterestingnessOutput CalcDistributionInterestingness(WorldGraph world)
         {
-            PlaythroughInfo info = searcher.PlaythroughSearch(world.Copy());
-            BiasOutput biasinfo = CalcDistributionBias(world.Copy());
+            PlaythroughInfo info = new PlaythroughInfo();
+            try
+            {
+                info = searcher.PlaythroughSearch(world.Copy());
+            }
+            catch
+            {
+                throw new Exception(); //Something went wrong, have calling code retry
+            }
+            BiasOutput biasinfo = CalcDistributionBias(world);
             return ScorePlaythrough(world, info, biasinfo);
         }
 

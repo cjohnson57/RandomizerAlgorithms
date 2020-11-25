@@ -12,5 +12,5 @@ if ".txt" in requirements:
     requirements = file.read()
     file.close()
     os.remove(sys.argv[1])
-test = algebra.parse(requirements)
-print(test.simplify()) # Redirected to a string in the C#
+parsed = algebra.parse(requirements)
+print(parsed.simplify()) # Redirected to a string in the C#

@@ -10,14 +10,14 @@ namespace RandomizerAlgorithms
     class Program
     {
         //Number of trials to perform per algorithm per world
-        const int trials = 1000;
+        const int trials = 100000;
 
         //Random, forward, and assumed fill; set to true to test on that algo
         static readonly bool[] dotests = { true, true, true };
 
         //Fill list with name of worlds you want to consider
-        //static readonly string[] testworlds = { "World1", "World2", "World3", "World4", "World5" };
-        static string[] testworlds = { "World3" };
+        static readonly string[] testworlds = { "World1", "World2", "World3", "World4", "World5" };
+        //static string[] testworlds = { "World5" };
 
         //Class which abstracts the database used to store experimental results
         private static ResultDB db = new ResultDB();
@@ -29,8 +29,8 @@ namespace RandomizerAlgorithms
             Search searcher = new Search();
             Statistics stats = new Statistics();
 
-            string testjsontext = File.ReadAllText("../../../WorldGraphs/World3.json");
-            WorldGraph testworld = JsonConvert.DeserializeObject<WorldGraph>(testjsontext);
+            //string testjsontext = File.ReadAllText("../../../WorldGraphs/World3.json");
+            //WorldGraph testworld = JsonConvert.DeserializeObject<WorldGraph>(testjsontext);
 
             //double[] testaverages = new double[5];
             //for (int regioncount = 10; regioncount <= 50; regioncount += 5)
@@ -73,44 +73,57 @@ namespace RandomizerAlgorithms
             string[] algos = { "Random", "Forward", "Assumed" };
             foreach (string worldname in testworlds)
             {
+                DateTime expstart = DateTime.Now;
                 string jsontext = File.ReadAllText("../../../WorldGraphs/" + worldname + ".json");
                 WorldGraph world = JsonConvert.DeserializeObject<WorldGraph>(jsontext);
+                int l = world.GetLocationCount();
                 //Loop to perform fill
                 for(int i = 0; i < 3; i++) //0 = Random, 1 = Forward, 2 = assumed
                 {
                     if(dotests[i])
                     {
-                        List<InterestingnessOutput> intstats = new List<InterestingnessOutput>();
-                        double totaltime = 0;
-                        for (int j = 0; j < trials; j++)
+                        //List<InterestingnessOutput> intstats = new List<InterestingnessOutput>();
+                        //double totaltime = 0;
+                        int savecounter = 0;
+                        int countofexp = db.Results.Count(x => x.Algorithm == algos[i] && x.World == worldname);
+                        while(countofexp < trials) //Go until there are trial number of records in db
                         {
-                            DateTime start = DateTime.Now;
-
-                            WorldGraph input = world.Copy(); //Copy so that world is not passed by reference and overwritten
-                            List<Item> majoritempool = input.Items.Where(x => x.Importance == 2).ToList();
-                            List<Item> minoritempool = input.Items.Where(x => x.Importance < 2).ToList();
-                            WorldGraph randomizedgraph = new WorldGraph();
-                            //Decide which algo to use based on i
-                            switch(i)
+                            InterestingnessOutput intstat = new InterestingnessOutput();
+                            double difference = -1;
+                            while(true) //If something goes wrong in playthrough search, may need to retry 
                             {
-                                case 0:
-                                    randomizedgraph = filler.RandomFill(input, majoritempool);
-                                    break;
-                                case 1:
-                                    randomizedgraph = filler.ForwardFill(input, majoritempool);
-                                    break;
-                                case 2:
-                                    randomizedgraph = filler.AssumedFill(input, majoritempool);
-                                    break;
+                                WorldGraph input = world.Copy(); //Copy so that world is not passed by reference and overwritten
+                                List<Item> majoritempool = input.Items.Where(x => x.Importance == 2).ToList();
+                                List<Item> minoritempool = input.Items.Where(x => x.Importance < 2).ToList();
+                                WorldGraph randomizedgraph = new WorldGraph();
+                                DateTime start = DateTime.Now; //Start timing right before algorithm
+                                //Decide which algo to use based on i
+                                switch (i)
+                                {
+                                    case 0:
+                                        randomizedgraph = filler.RandomFill(input, majoritempool);
+                                        break;
+                                    case 1:
+                                        randomizedgraph = filler.ForwardFill(input, majoritempool);
+                                        break;
+                                    case 2:
+                                        randomizedgraph = filler.AssumedFill(input, majoritempool);
+                                        break;
+                                }
+                                randomizedgraph = filler.RandomFill(randomizedgraph, minoritempool); //Use random for minor items always since they don't matter
+                                //Calculate metrics 
+                                DateTime end = DateTime.Now;
+                                difference = (end - start).TotalMilliseconds;
+                                //totaltime += difference;
+                                //SphereSearchInfo output = searcher.SphereSearch(randomizedgraph);
+                                try
+                                {
+                                    intstat = stats.CalcDistributionInterestingness(randomizedgraph);
+                                    break; //Was successful, continue
+                                }
+                                catch { } //Something went wrong, retry fill from scratch
                             }
-                            randomizedgraph = filler.RandomFill(randomizedgraph, minoritempool); //Use random for minor items always since they don't matter
-                            //Calculate metrics 
-                            DateTime end = DateTime.Now;
-                            double difference = (end - start).TotalMilliseconds;
-                            totaltime += difference;
-                            //SphereSearchInfo output = searcher.SphereSearch(randomizedgraph);
-                            InterestingnessOutput intstat = stats.CalcDistributionInterestingness(randomizedgraph);
-                            intstats.Add(intstat);
+                            //intstats.Add(intstat);
                             //Store result in database
                             Result result = new Result();
                             result.Algorithm = algos[i];
@@ -120,30 +133,45 @@ namespace RandomizerAlgorithms
                             result.Bias = intstat.bias.biasvalue;
                             result.BiasDirection = intstat.bias.direction;
                             result.Interestingness = intstat.interestingness;
-                            //db.Entry(result).State = EntityState.Added;
-                            //db.SaveChanges();
-
+                            result.Fun = intstat.fun;
+                            result.Challenge = intstat.challenge;
+                            result.Satisfyingness = intstat.satisfyingness;
+                            result.Boredom = intstat.boredom;
+                            db.Entry(result).State = EntityState.Added;
+                            savecounter++;
+                            if (savecounter >= 1000) //Save every 1000 results processed
+                            {
+                                db.SaveChanges();
+                                savecounter = 0;
+                            }
+                            countofexp++;
                         }
-                        double avgint = intstats.Where(x => x.completable).Average(x => x.interestingness);
-                        Console.WriteLine("Average interestingness for " + algos[i] + " Fill in world " + worldname + ": " + avgint);
-                        double avgbias = intstats.Where(x => x.completable).Average(x => x.bias.biasvalue);
-                        Console.WriteLine("Average bias for " + algos[i] + " Fill in world " + worldname + ": " + avgbias);
-                        double avgfun = intstats.Where(x => x.completable).Average(x => x.fun);
-                        Console.WriteLine("Average fun for " + algos[i] + " Fill in world " + worldname + ": " + avgfun);
-                        double avgchal = intstats.Where(x => x.completable).Average(x => x.challenge);
-                        Console.WriteLine("Average challenge for " + algos[i] + " Fill in world " + worldname + ": " + avgchal);
-                        double avgsat = intstats.Where(x => x.completable).Average(x => x.satisfyingness);
-                        Console.WriteLine("Average satisfyingness for " + algos[i] + " Fill in world " + worldname + ": " + avgsat);
-                        double avgbore = intstats.Where(x => x.completable).Average(x => x.boredom);
-                        Console.WriteLine("Average boredom for " + algos[i] + " Fill in world " + worldname + ": " + avgbore);
-                        double avgtime = totaltime / trials;
-                        Console.WriteLine("Average time to generate for " + algos[i] + " Fill in world " + worldname + ": " + avgtime + "ms");
+                        //double avgint = intstats.Where(x => x.completable).Average(x => x.interestingness);
+                        //Console.WriteLine("Average interestingness for " + algos[i] + " Fill in world " + worldname + ": " + avgint);
+                        //double avgbias = intstats.Where(x => x.completable).Average(x => x.bias.biasvalue);
+                        //Console.WriteLine("Average bias for " + algos[i] + " Fill in world " + worldname + ": " + avgbias);
+                        //double avgfun = intstats.Where(x => x.completable).Average(x => x.fun);
+                        //Console.WriteLine("Average fun for " + algos[i] + " Fill in world " + worldname + ": " + avgfun);
+                        //double avgchal = intstats.Where(x => x.completable).Average(x => x.challenge);
+                        //Console.WriteLine("Average challenge for " + algos[i] + " Fill in world " + worldname + ": " + avgchal);
+                        //double avgsat = intstats.Where(x => x.completable).Average(x => x.satisfyingness);
+                        //Console.WriteLine("Average satisfyingness for " + algos[i] + " Fill in world " + worldname + ": " + avgsat);
+                        //double avgbore = intstats.Where(x => x.completable).Average(x => x.boredom);
+                        //Console.WriteLine("Average boredom for " + algos[i] + " Fill in world " + worldname + ": " + avgbore);
+                        //double avgtime = totaltime / trials;
+                        //Console.WriteLine("Average time to generate for " + algos[i] + " Fill in world " + worldname + ": " + avgtime + "ms");
+
+                        db.SaveChanges(); //Save changes when combo of algo and world is done
                     }
-                    Console.Write(Environment.NewLine);
+                    //Console.Write(Environment.NewLine);
                 }
-                Console.Write(Environment.NewLine);
-                Console.Write(Environment.NewLine);
+                //Console.Write(Environment.NewLine);
+                //Console.Write(Environment.NewLine);
+                DateTime expend = DateTime.Now;
+                double expdifference = (expend - expstart).TotalMinutes;
+                Console.WriteLine("Time to perform " + trials + " iterations for world " + worldname + ": " + expdifference + " minutes");
             }
+            Console.ReadLine();
         }
 
         //This function outputs text for each sphere in the calculated sphere list

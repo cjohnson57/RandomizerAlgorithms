@@ -19,6 +19,10 @@ namespace RandomizerAlgorithms
         public double Bias { get; set; }
         public bool BiasDirection { get; set; }
         public double Interestingness { get; set; }
+        public double Fun { get; set; }
+        public double Challenge { get; set; }
+        public double Satisfyingness { get; set; }
+        public double Boredom { get; set; }
 
     }
 }

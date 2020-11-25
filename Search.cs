@@ -246,6 +246,12 @@ namespace RandomizerAlgorithms
             int initial = prevlocationsunlocked; //Saved to add to output later
             while(owneditems.Count(x => x.Importance == 3) < 1) //Loop until goal item found, or dead end reached (see break statement below)
             {
+                //If count gets this high usually indicates search is stuck in a loop... not great but just retry with a new permutation...
+                //Seems to happen roughly one in every 5000 permutations of most complex world (World5) so fairly rare occurrence
+                if (traversed.Count > world.Regions.Count() * 20)
+                {
+                    throw new Exception();
+                }
                 traversed.Add(current);
                 int checkcount = 0;
                 int prevcount = -1;
@@ -372,7 +378,7 @@ namespace RandomizerAlgorithms
                 if(lastindex > -1)
                 {
                     int howrecent = traversed.Count - 2 - lastindex;
-                    divider = 8 - howrecent; //Most recent region divided by 8, 2nd most recent divided by 7, etc to minimum of 1
+                    divider = 16 - howrecent; //Most recent region divided by 8, 2nd most recent divided by 7, etc to minimum of 1
                     divider = divider < 1 ? 1 : divider;
                 }
                 return score * multiplier / divider;
