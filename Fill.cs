@@ -54,7 +54,7 @@ namespace RandomizerAlgorithms
                 helper.Shuffle(locations);
                 Item item = helper.Pop(itempool); //Take random item from item pool
                 helper.Shuffle(itempool);
-                helper.Place(ref world, location, item); //Place random item in random location
+                world.Place(location, item); //Place random item in random location
                 owneditems.Add(item); //Add to owned items
             }
             return world; //World has been filled with items, return
@@ -81,7 +81,7 @@ namespace RandomizerAlgorithms
                 Location location = helper.Pop(locations); //Get random location and item
                 Item item = helper.Pop(itempool);
                 helper.Shuffle(itempool);
-                helper.Place(ref world, location, item); //Place random item in random reachable location
+                world.Place(location, item); //Place random item in random reachable location
                 owneditems.Add(item); //Add new item to owned items, R will expand
                 reachable = searcher.GetReachableLocations(world, owneditems); //Recalculate R now that more items are owned
                 locations = reachable.GetAllEmptyLocations();
@@ -123,7 +123,7 @@ namespace RandomizerAlgorithms
                 {
                     break;
                 }
-                helper.Place(ref world, location, item); //Place random item in random location
+                world.Place(location, item); //Place random item in random location
                 itempool.Add(item); //Add item to item pool
             }
             return world; //World has been filled with items, return

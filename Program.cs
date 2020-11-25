@@ -86,6 +86,7 @@ namespace RandomizerAlgorithms
                         //double totaltime = 0;
                         int savecounter = 0;
                         int countofexp = db.Results.Count(x => x.Algorithm == algos[i] && x.World == worldname);
+                        //int countofexp = 0;
                         while(countofexp < trials) //Go until there are trial number of records in db
                         {
                             InterestingnessOutput intstat = new InterestingnessOutput();

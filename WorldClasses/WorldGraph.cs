@@ -105,6 +105,12 @@ namespace RandomizerAlgorithms
             return locations;
         }
 
+        //Overwrites a location in the worldgraph to place the specified item in that location
+        public void Place(Location location, Item item)
+        {
+            Regions.First(x => x.Locations.Count(x => x.Name == location.Name) == 1).Locations.First(x => x.Name == location.Name).Item = item;
+        }
+
         //Gets all items currently placed in a location in the graph
         public List<Item> CollectAllItems()
         {
@@ -140,7 +146,7 @@ namespace RandomizerAlgorithms
         }
 
         //Find the region which has the longest shortest path from the root
-        //Used in world generation so that the goal can be placed in the farthest region from the start
+        //Currently not used
         public Region GetFarthestRegion()
         {
             Search searcher = new Search();
@@ -163,6 +169,7 @@ namespace RandomizerAlgorithms
                 if(shortest.Count > CurrentLongest)
                 {
                     farthest = r; //If it is the longest, then this region is farther from the root than any other
+                    CurrentLongest = shortest.Count;
                 }
             }
             return farthest;

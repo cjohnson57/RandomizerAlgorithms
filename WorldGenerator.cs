@@ -147,9 +147,9 @@ namespace RandomizerAlgorithms
                 Generated = new WorldGraph("Region-0", "Goal", regions.ToHashSet(), MajorItemList);
                 unreachable = Generated.GetUnreachableRegions(); //Recompute reachability 
             }
-            //Now before adding items, we will find the region which is farthest from the start and place the goal there- No other items will be placed there
+            //Now before adding items, we will get the last region and place the goal there- No other items will be placed there
             Generated = new WorldGraph("Region-0", "Goal", regions.ToHashSet(), MajorItemList);
-            Region goalregion = Generated.GetFarthestRegion();
+            Region goalregion = Generated.Regions.Last();
             Item goalitem = new Item("Goal", 3); //Create goal item
             Location goallocation = new Location("Final Boss", "None", goalitem); //Create location for goal item with no requirement since entrance to region will have full requirement
             //We want all exits to the goal region to require every item so that they will all be required to complete the game

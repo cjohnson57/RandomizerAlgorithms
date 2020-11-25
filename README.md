@@ -31,10 +31,10 @@ Write paper on results.
 * Assumed Fill
 
 [Search.cs](Search.cs) defines the functions used for searching
-* GetReachableLocations is the main search algorithm. Given a world graph and item set, returns all locations reachable with given item set. Utilizes BFS
+* GetReachableLocations is the main search algorithm. Given a world graph and item set, returns all locations reachable with given item set. Utilizes BFS.
 * GetReachableLocationsAssumed is a slight modification for assumed search where reachability is computed iteratively to check for items that have been removed from the owned items but are still reachable.
-* PathsToRegion returns all possible paths (that don't go back on themselves) from the root region to a target region. Utilizes recursive DFS
-* SphereSeach calculates spheres of reachability, where all items in sphere x are reachable with items found in sphere x-1
+* PathsToRegion returns all possible paths (that don't go back on themselves) from the root region to a target region. Utilizes recursive DFS.
+* SphereSeach calculates spheres of reachability, where all items in sphere x are reachable with items found in sphere x-1.
 * PlaythroughSearch traverses the game world similar to how a player would by going from region to region, collecting all available items, and using a heuristic considering the amount and proximity of item locations in each direction to decide which region to go to next.
 
 [Statistics.cs](Statistics.cs) Used to calculate the aforementioned complexity, interestingness, bias, and other metrics for interestingness
@@ -84,7 +84,7 @@ For more information on how Interestingness metrics are calculated, see "Bias an
 
 [Interestingness](https://docs.google.com/presentation/d/1VVmOIxesQDbI6D2yY7VFo1dLZs9_RkW5aShiv04aJKQ/edit?usp=sharing) describes the evaluation and calculation of metrics used to produce a final interestingness metric for a given permutation of items in a world.
 
-[Experimental Results](https://docs.google.com/presentation/d/1VpflLQdzNcvkVdjA3HhacI251lAlfHv6vBvRO3feWhI/edit?usp=sharing) describes the experimental setup and shows graphs resulting from our experiments, which can also be seen in [the results excel file](ExperimentResults/ResultStats.xlsx)
+[Experimental Results](https://docs.google.com/presentation/d/1VpflLQdzNcvkVdjA3HhacI251lAlfHv6vBvRO3feWhI/edit?usp=sharing) describes the experimental setup and shows graphs resulting from our experiments, which can also be seen in [the results excel file.](ExperimentResults/ResultStats.xlsx)
 
 ## Examples
 

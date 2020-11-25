@@ -23,12 +23,6 @@ namespace RandomizerAlgorithms
             rng = new Random(seed);
         }
 
-        //Overwrites a location in the worldgraph to place the specified item in that location
-        public void Place(ref WorldGraph world, Location location, Item item)
-        {
-            world.Regions.First(x => x.Locations.Count(x => x.Name == location.Name) == 1).Locations.First(x => x.Name == location.Name).Item = item;
-        }
-
         //Shuffles list items
         //Should be done every time a list is initialized and popped from
         //Here is where all the RNG comes from
