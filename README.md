@@ -19,11 +19,7 @@ Currently, there is no existing literature on these. The goal of this project is
 
 ## Needs to be done
    
-* Create code and graphs for experimental results
-   
-* Perform extensive experimention to determine each of these statistics, as well as failure rate and execution time, for each algorithm on each graph.
-
-* Write paper on results
+Write paper on results.
     
 ## Files
 
@@ -67,6 +63,13 @@ For more information on how Interestingness metrics are calculated, see "Bias an
 [WorldGraphs](WorldGraphs) contains some sample world graphs in .json form.
 * Currently these include a test world (empty items besides goal), randomized test world (items filled by Assumed Fill), and the test world with its originally designed item placements for comparison. Also contains 5 randomly generated test worlds of increasing complexity for evaluation.
 
+[ExperimentResults](ExperimentResults) contains classes and files related to experiments performed for this research. For more information, see "Experimental Results" under the Documents section.
+* [Result.cs](ExperimentResults/Result.cs) defines the class used to represent a row in the result database.
+* [ResultDB.cs](ExperimentResults/ResultDB.cs) is used by EntityFramework to connect to the result database.
+* [ResultsDB.zip](ExperimentResults/ResultsDB.zip) is the result database zipped so it can be stored on github. (Note it must be unzipped before it can be used.)
+* [ResultQueries.sql](ExperimentResults/ResultQueries.sql) defines SQL queries used to extract statistics from the result database.
+* [ResultStats.xlsx](ExperimentResults/ResultStats.xlsx) has tables where the outputs from ResultQueries are stored, as well as graphs of these results.
+
 ## Documents
 
 [Pseudocode](https://drive.google.com/file/d/1w8PWoPOP0WWzDxhrliUTG9Q8VwHo0w_A/view?usp=sharing) Some pseudocode definitions of the algorithms used in this code, namely the Fill and Search functions.
@@ -80,6 +83,8 @@ For more information on how Interestingness metrics are calculated, see "Bias an
 [Bias and PlaythroughSearch](https://docs.google.com/presentation/d/1_IezP3AD45V2YAj6AuKbr5FpFIJ9hw1qitbcXZCW-Hk/edit?usp=sharing) describes the calculation of bias from a computed world permutation as well as the implementation of PlaythroughSearch, which attempts to traverse the world as a player of the game would.
 
 [Interestingness](https://docs.google.com/presentation/d/1VVmOIxesQDbI6D2yY7VFo1dLZs9_RkW5aShiv04aJKQ/edit?usp=sharing) describes the evaluation and calculation of metrics used to produce a final interestingness metric for a given permutation of items in a world.
+
+[Experimental Results](https://docs.google.com/presentation/d/1VpflLQdzNcvkVdjA3HhacI251lAlfHv6vBvRO3feWhI/edit?usp=sharing) describes the experimental setup and shows graphs resulting from our experiments, which can also be seen in [the results excel file](ExperimentResults/ResultStats.xlsx)
 
 ## Examples
 
