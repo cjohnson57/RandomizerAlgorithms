@@ -90,29 +90,35 @@ For more information on how Interestingness metrics are calculated, see "Bias an
 
 Sample World (Original Design)
 
-![Sample World Original](https://i.imgur.com/mX2Kh0G.png)
+![Sample World Original](https://i.imgur.com/EIXoZHe.png)
     
 Sample World (Randomized with Assumed Fill)
 
-![Sample World Randomized](https://i.imgur.com/sL4CQvi.png)
+![Sample World Randomized](https://i.imgur.com/nZGoMjI.png)
 
 Sphere calculation for the randomized sample world
 ```
 Sphere 0:
-Forest_Chest: Key
-Forest_Quest: GrapplingHook
 Field_Hidden A: Bow
-City_Quest: Magic
+Valley_Hidden A: Bombs
+City_Quest: GrapplingHook
 
 Sphere 1:
-Lake_Quest: Bombs
-Village_Mini-Game: Key
+Field_Hidden B: Sword
+River_Hidden A: Key
 
 Sphere 2:
-River_Hidden A: Sword
-River_Chest: Sling
-Waterfall_Hidden A: GateKey
+Waterfall_Quest: Sling
 
 Sphere 3:
+Waterfall_Chest: GateKey
+
+Sphere 4:
+Dungeon_Chest: Magic
+
+Sphere 5:
+Lake_Quest: Key
+
+Sphere 6:
 Arena_Boss: Goal
 ```
