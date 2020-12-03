@@ -123,7 +123,7 @@ Sphere 6:
 Arena_Boss: Goal
 ```
 
-Bias calculation using these spheres, where the total of the absolute value of differences is the bias
+Bias calculation using these spheres:
 
 | Sphere  | Locations | % Of Locations | Major Items | % Of Major Items | % Difference | Abs. Value of Difference |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -134,4 +134,6 @@ Bias calculation using these spheres, where the total of the absolute value of d
 | 4 | 4 | .133 | 1 | .1 | -.033 | .033 |
 | 5 | 5 | .167 | 1 | .1 | -.067 | .067 |
 | 6 | 1 | .033 | 1 | .1 | .067 | .067 |
-| Total | 30 | 1 | 10 | 1 | 0 | **.467** |
+| Total | 30 | 1 | 10 | 1 | 0 | .467 |
+
+The result is then normalized by dividing the total of the absolute value of differences by the number of spheres, so the final bias is .467/7 = **.0667**
