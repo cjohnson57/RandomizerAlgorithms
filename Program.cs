@@ -17,7 +17,7 @@ namespace RandomizerAlgorithms
 
         //Fill list with name of worlds you want to consider
         static readonly string[] testworlds = { "World1", "World2", "World3", "World4", "World5" };
-        //static string[] testworlds = { "World5" };
+        //static string[] testworlds = { "TestWorld" };
 
         //Class which abstracts the database used to store experimental results
         private static ResultDB db = new ResultDB();
@@ -116,7 +116,9 @@ namespace RandomizerAlgorithms
                                 DateTime end = DateTime.Now;
                                 difference = (end - start).TotalMilliseconds;
                                 //totaltime += difference;
+                                //string randomizedjson = JsonConvert.SerializeObject(randomizedgraph);
                                 //SphereSearchInfo output = searcher.SphereSearch(randomizedgraph);
+                                //Print_Spheres(output);
                                 try
                                 {
                                     intstat = stats.CalcDistributionInterestingness(randomizedgraph);

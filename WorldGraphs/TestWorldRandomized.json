@@ -19,16 +19,16 @@
           "Name": "Forest_Chest",
           "Requirements": "None",
           "Item": {
-            "Name": "Key",
-            "Importance": 2
+            "Name": "HPUp",
+            "Importance": 1
           }
         },
         {
           "Name": "Forest_Quest",
           "Requirements": "None",
           "Item": {
-            "Name": "GrapplingHook",
-            "Importance": 2
+            "Name": "Gold",
+            "Importance": 0
           }
         }
       ]
@@ -74,16 +74,16 @@
           "Name": "Field_Hidden B",
           "Requirements": "Bombs",
           "Item": {
-            "Name": "Gold",
-            "Importance": 0
+            "Name": "Sword",
+            "Importance": 2
           }
         },
         {
           "Name": "Field_Hidden C",
           "Requirements": "Bombs and GrapplingHook",
           "Item": {
-            "Name": "HPUp",
-            "Importance": 1
+            "Name": "Gold",
+            "Importance": 0
           }
         }
       ]
@@ -101,23 +101,23 @@
           "Name": "Lake_Hidden A",
           "Requirements": "GrapplingHook",
           "Item": {
-            "Name": "Gold",
-            "Importance": 0
+            "Name": "HPUp",
+            "Importance": 1
           }
         },
         {
           "Name": "Lake_Hidden B",
           "Requirements": "Magic and ( Sling or Sword )",
           "Item": {
-            "Name": "HPUp",
-            "Importance": 1
+            "Name": "Gold",
+            "Importance": 0
           }
         },
         {
           "Name": "Lake_Quest",
           "Requirements": "None",
           "Item": {
-            "Name": "Bombs",
+            "Name": "Key",
             "Importance": 2
           }
         }
@@ -144,8 +144,8 @@
           "Name": "Village_Mini-Game",
           "Requirements": "GrapplingHook",
           "Item": {
-            "Name": "Key",
-            "Importance": 2
+            "Name": "HPUp",
+            "Importance": 1
           }
         },
         {
@@ -175,7 +175,7 @@
           "Name": "River_Hidden A",
           "Requirements": "None",
           "Item": {
-            "Name": "Sword",
+            "Name": "Key",
             "Importance": 2
           }
         },
@@ -191,8 +191,8 @@
           "Name": "River_Chest",
           "Requirements": "None",
           "Item": {
-            "Name": "Sling",
-            "Importance": 2
+            "Name": "Gold",
+            "Importance": 0
           }
         }
       ]
@@ -214,24 +214,24 @@
           "Name": "Waterfall_Hidden A",
           "Requirements": "None",
           "Item": {
-            "Name": "GateKey",
-            "Importance": 2
+            "Name": "Gold",
+            "Importance": 0
           }
         },
         {
           "Name": "Waterfall_Chest",
           "Requirements": "Sling",
           "Item": {
-            "Name": "HPUp",
-            "Importance": 1
+            "Name": "GateKey",
+            "Importance": 2
           }
         },
         {
           "Name": "Waterfall_Quest",
           "Requirements": "Sword and Bombs",
           "Item": {
-            "Name": "Gold",
-            "Importance": 0
+            "Name": "Sling",
+            "Importance": 2
           }
         }
       ]
@@ -253,16 +253,16 @@
           "Name": "Valley_Hidden A",
           "Requirements": "None",
           "Item": {
-            "Name": "HPUp",
-            "Importance": 1
+            "Name": "Bombs",
+            "Importance": 2
           }
         },
         {
           "Name": "Valley_Hidden B",
           "Requirements": "Bombs or Magic",
           "Item": {
-            "Name": "HPUp",
-            "Importance": 1
+            "Name": "Gold",
+            "Importance": 0
           }
         },
         {
@@ -288,16 +288,16 @@
           "Name": "Desert_Chest",
           "Requirements": "GrapplingHook and Sling",
           "Item": {
-            "Name": "Gold",
-            "Importance": 0
+            "Name": "HPUp",
+            "Importance": 1
           }
         },
         {
           "Name": "Desert_Mini-Boss",
           "Requirements": "Sword and Magic",
           "Item": {
-            "Name": "Gold",
-            "Importance": 0
+            "Name": "HPUp",
+            "Importance": 1
           }
         }
       ]
@@ -327,7 +327,7 @@
           "Name": "City_Quest",
           "Requirements": "None",
           "Item": {
-            "Name": "Magic",
+            "Name": "GrapplingHook",
             "Importance": 2
           }
         }
@@ -338,7 +338,7 @@
       "Exits": [
         {
           "ToRegionName": "City",
-          "Requirements": "GateKey and Sling"
+          "Requirements": "Sling"
         },
         {
           "ToRegionName": "Dungeon",
@@ -350,24 +350,24 @@
           "Name": "Castle_Chest A",
           "Requirements": "None",
           "Item": {
-            "Name": "Gold",
-            "Importance": 0
+            "Name": "HPUp",
+            "Importance": 1
           }
         },
         {
           "Name": "Castle_Chest B",
           "Requirements": "Key and Magic",
           "Item": {
-            "Name": "HPUp",
-            "Importance": 1
+            "Name": "Gold",
+            "Importance": 0
           }
         },
         {
           "Name": "Castle_Mini-Boss",
           "Requirements": "Sword and ( Sling or Bow )",
           "Item": {
-            "Name": "Gold",
-            "Importance": 0
+            "Name": "HPUp",
+            "Importance": 1
           }
         }
       ]
@@ -377,7 +377,7 @@
       "Exits": [
         {
           "ToRegionName": "Castle",
-          "Requirements": "Key and Bow"
+          "Requirements": "Bow"
         },
         {
           "ToRegionName": "Arena",
@@ -389,16 +389,16 @@
           "Name": "Dungeon_Chest",
           "Requirements": "GrapplingHook",
           "Item": {
-            "Name": "Gold",
-            "Importance": 0
+            "Name": "Magic",
+            "Importance": 2
           }
         },
         {
           "Name": "Dungeon_Puzzle",
           "Requirements": "Sword or Bow",
           "Item": {
-            "Name": "HPUp",
-            "Importance": 1
+            "Name": "Gold",
+            "Importance": 0
           }
         }
       ]
@@ -408,7 +408,7 @@
       "Exits": [
         {
           "ToRegionName": "Dungeon",
-          "Requirements": "Has(Key,2)"
+          "Requirements": "None"
         }
       ],
       "Locations": [
