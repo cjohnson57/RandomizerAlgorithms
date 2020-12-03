@@ -122,3 +122,16 @@ Lake_Quest: Key
 Sphere 6:
 Arena_Boss: Goal
 ```
+
+Bias calculation using these spheres, where the total of the absolute value of differences is the bias
+
+| Sphere  | Locations | % Of Locations | Major Items | % Of Major Items | % Difference | Abs. Value of Difference |
+| --- | --- | --- | --- | --- | --- | --- |
+| 0 | 6 | .2 | 3 | .3 | .1 | .1 |
+| 1 | 8 | .267 | 2 | .2 | -.067 | .067 |
+| 2 | 1 | .033 | 1 | .1 | .067 | .067 |
+| 3 | 5 | .167 | 1 | .1 | -.067 | .067 |
+| 4 | 4 | .133 | 1 | .1 | -.033 | .033 |
+| 5 | 5 | .167 | 1 | .1 | -.067 | .067 |
+| 6 | 1 | .033 | 1 | .1 | .067 | .067 |
+| Total | 30 | 1 | 10 | 1 | 0 | **.467** |
