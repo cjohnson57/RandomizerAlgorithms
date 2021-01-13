@@ -11,7 +11,7 @@ namespace RandomizerAlgorithms
         public HashSet<Exit> Exits; //List of edges to other regions
         public HashSet<Location> Locations; //List of edges to item locations
 
-
+        //Empty constructor
         public Region()
         {
             Name = "";

@@ -9,7 +9,7 @@ namespace RandomizerAlgorithms
     class ResultDB : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite("Data Source=C:\\Users\\Caleb\\Source\\Repos\\RandomizerAlgorithms\\ExperimentResults\\ResultsDB.db");
+            => options.UseSqlite("Data Source=C:\\Users\\Caleb\\Source\\Repos\\RandomizerAlgorithms\\ExperimentResults\\ResultsDB.db"); //If you're not me and want to run yourself, change this string
 
         public virtual DbSet<Result> Results { get; set; }
     }

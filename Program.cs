@@ -20,6 +20,9 @@ namespace RandomizerAlgorithms
         //static string[] testworlds = { "TestWorld" };
 
         //Class which abstracts the database used to store experimental results
+        //If you don't want to bother with the database you can comment this line, as well as all related lines in Main
+        //    Initialize countofexp to 0 if you do this
+        //Result information could be outputted to console instead, potentially averaged
         private static ResultDB db = new ResultDB();
 
         //Experiment space
@@ -29,9 +32,7 @@ namespace RandomizerAlgorithms
             Search searcher = new Search();
             Statistics stats = new Statistics();
 
-            //string testjsontext = File.ReadAllText("../../../WorldGraphs/World3.json");
-            //WorldGraph testworld = JsonConvert.DeserializeObject<WorldGraph>(testjsontext);
-
+            ////Uncomment to test different complexity measures and generate many worlds with different parameters.
             //double[] testaverages = new double[5];
             //for (int regioncount = 10; regioncount <= 50; regioncount += 5)
             //{
@@ -49,44 +50,20 @@ namespace RandomizerAlgorithms
             //    }
             //}
 
-            //string generatedjson = GenerateWorld(50, 30);
-
-            //string jsontest = File.ReadAllText("../../../WorldGraphs/World5.json");
-            //WorldGraph testworld = JsonConvert.DeserializeObject<WorldGraph>(jsontest);
-            //int testlocationcount = testworld.GetLocationCount();
-
-            //Search testsearcher = new Search();
-            //testsearcher.PathsToRegion(world, world.Regions.First(x => x.Name == "Waterfall"));
-
-            //Parser testparse = new Parser();
-            //string result = testparse.Simplify("(Sword and Bow and Bow) or Has(Key,2)"); //Should be simplified to something like (Sword and Bow) or Has(Key,2)
-            //string result2 = testparse.Simplify("Sword or Sword and Bow"); //Should be simplified to Sword
-            ////majoritempool.RemoveAt(8);
-            ////majoritempool.RemoveAt(0);
-            //bool result = testparse.RequirementsMet("(Sword and Bow) or Has(Key,2)", majoritempool);
-
-            //string testjsontext = File.ReadAllText("../../../WorldGraphs/TestWorldOriginal.json");
-            //WorldGraph testworld = JsonConvert.DeserializeObject<WorldGraph>(testjsontext);
-            //SphereSearchInfo testoutput = searcher.SphereSearch(testworld);
-            //Print_Spheres(testoutput);
-
+            //Loop through each algorithm set to be used and each world in the list, performing specified algorithm on specified world and recording information about the result.
             string[] algos = { "Random", "Forward", "Assumed" };
             foreach (string worldname in testworlds)
             {
                 DateTime expstart = DateTime.Now;
                 string jsontext = File.ReadAllText("../../../WorldGraphs/" + worldname + ".json");
                 WorldGraph world = JsonConvert.DeserializeObject<WorldGraph>(jsontext);
-                int l = world.GetLocationCount();
-                //Loop to perform fill
-                for(int i = 0; i < 3; i++) //0 = Random, 1 = Forward, 2 = assumed
+                //Loop to perform fill algorithms
+                for(int i = 0; i < 3; i++) //0 = Random, 1 = Forward, 2 = Assumed
                 {
                     if(dotests[i])
                     {
-                        //List<InterestingnessOutput> intstats = new List<InterestingnessOutput>();
-                        //double totaltime = 0;
                         int savecounter = 0;
                         int countofexp = db.Results.Count(x => x.Algorithm == algos[i] && x.World == worldname);
-                        //int countofexp = 0;
                         while(countofexp < trials) //Go until there are trial number of records in db
                         {
                             InterestingnessOutput intstat = new InterestingnessOutput();
@@ -115,18 +92,16 @@ namespace RandomizerAlgorithms
                                 //Calculate metrics 
                                 DateTime end = DateTime.Now;
                                 difference = (end - start).TotalMilliseconds;
-                                //totaltime += difference;
-                                //string randomizedjson = JsonConvert.SerializeObject(randomizedgraph);
-                                //SphereSearchInfo output = searcher.SphereSearch(randomizedgraph);
-                                //Print_Spheres(output);
                                 try
                                 {
                                     intstat = stats.CalcDistributionInterestingness(randomizedgraph);
                                     break; //Was successful, continue
                                 }
                                 catch { } //Something went wrong, retry fill from scratch
+                                ////Uncomment to print the spheres of the result.
+                                //SphereSearchInfo output = searcher.SphereSearch(randomizedgraph);
+                                //Print_Spheres(output);
                             }
-                            //intstats.Add(intstat);
                             //Store result in database
                             Result result = new Result();
                             result.Algorithm = algos[i];
@@ -139,7 +114,7 @@ namespace RandomizerAlgorithms
                             result.Fun = intstat.fun;
                             result.Challenge = intstat.challenge;
                             result.Satisfyingness = intstat.satisfyingness;
-                            result.Boredom = intstat.boredom;
+                            result.Boredom = intstat.boredom;                        
                             db.Entry(result).State = EntityState.Added;
                             savecounter++;
                             if (savecounter >= 1000) //Save every 1000 results processed
@@ -149,27 +124,9 @@ namespace RandomizerAlgorithms
                             }
                             countofexp++;
                         }
-                        //double avgint = intstats.Where(x => x.completable).Average(x => x.interestingness);
-                        //Console.WriteLine("Average interestingness for " + algos[i] + " Fill in world " + worldname + ": " + avgint);
-                        //double avgbias = intstats.Where(x => x.completable).Average(x => x.bias.biasvalue);
-                        //Console.WriteLine("Average bias for " + algos[i] + " Fill in world " + worldname + ": " + avgbias);
-                        //double avgfun = intstats.Where(x => x.completable).Average(x => x.fun);
-                        //Console.WriteLine("Average fun for " + algos[i] + " Fill in world " + worldname + ": " + avgfun);
-                        //double avgchal = intstats.Where(x => x.completable).Average(x => x.challenge);
-                        //Console.WriteLine("Average challenge for " + algos[i] + " Fill in world " + worldname + ": " + avgchal);
-                        //double avgsat = intstats.Where(x => x.completable).Average(x => x.satisfyingness);
-                        //Console.WriteLine("Average satisfyingness for " + algos[i] + " Fill in world " + worldname + ": " + avgsat);
-                        //double avgbore = intstats.Where(x => x.completable).Average(x => x.boredom);
-                        //Console.WriteLine("Average boredom for " + algos[i] + " Fill in world " + worldname + ": " + avgbore);
-                        //double avgtime = totaltime / trials;
-                        //Console.WriteLine("Average time to generate for " + algos[i] + " Fill in world " + worldname + ": " + avgtime + "ms");
-
                         db.SaveChanges(); //Save changes when combo of algo and world is done
                     }
-                    //Console.Write(Environment.NewLine);
                 }
-                //Console.Write(Environment.NewLine);
-                //Console.Write(Environment.NewLine);
                 DateTime expend = DateTime.Now;
                 double expdifference = (expend - expstart).TotalMinutes;
                 Console.WriteLine("Time to perform " + trials + " iterations for world " + worldname + ": " + expdifference + " minutes");

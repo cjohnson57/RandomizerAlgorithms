@@ -12,10 +12,7 @@ namespace RandomizerAlgorithms
         public Item Item = new Item(); //What item is placed in this location
 
         //Empty constructor
-        public Location()
-        {
-
-        }
+        public Location() { }
 
         //All parameters specified
         public Location(string name, string requirements, Item item)

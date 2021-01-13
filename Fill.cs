@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace RandomizerAlgorithms
@@ -16,14 +15,14 @@ namespace RandomizerAlgorithms
         public Fill()
         {
             helper = new Helpers();
-            searcher = new Search(helper);
+            searcher = new Search();
         }
 
         //Initialize with specified seed
         public Fill(int seed)
         {
             helper = new Helpers(seed);
-            searcher = new Search(helper);
+            searcher = new Search();
         }
 
         //G: Graph of world locations (called world in code)

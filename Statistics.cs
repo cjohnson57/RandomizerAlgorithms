@@ -13,8 +13,8 @@ namespace RandomizerAlgorithms
     //Interestingness (Considers item placement)
     class Statistics
     {
-        Search searcher = new Search();
-        Parser parser = new Parser();
+        private Search searcher = new Search();
+        private Parser parser = new Parser();
 
         //Calculate complexity of the base graph (Not considering items, only rules for location reachability)
         public TestComplexityOutput CalcWorldComplexity(WorldGraph world)
@@ -90,7 +90,7 @@ namespace RandomizerAlgorithms
         // Average of top x%
         // Max score
         // Sum of Squares
-        //For now, using sum of squares, may change later
+        //After much testing and consideration, decided to use average of top 50%
         private TestComplexityOutput ComplexityScoreCalculation(List<double> scores)
         {
             double sum = scores.Sum();
@@ -128,6 +128,7 @@ namespace RandomizerAlgorithms
             test.top75 = avgtop75percent;
             return test;
         }
+
         //Calculates the bias for a given permutation of items in the world graph
         public BiasOutput CalcDistributionBias(WorldGraph world)
         {
@@ -202,9 +203,11 @@ namespace RandomizerAlgorithms
         /*
          * Score info about human-like playthrough
          * Several considerations:
-         * 1. Number of locations collected for each region traversed
-         * 2. Number of regions traversed between finding major or helpful items
-         * 3. Number of regions traversed between finding major items
+         * 1. Bias
+         * 2. Fun
+         * 3. Challenge
+         * 4. Satisfyingness
+         * 5. Boredom
          */
         public InterestingnessOutput ScorePlaythrough(WorldGraph world, PlaythroughInfo input, BiasOutput biasinfo)
         {
@@ -298,6 +301,7 @@ namespace RandomizerAlgorithms
         }
     }
 
+    //Struct to store all the possible metrics for complexity used during testing, now only top50 is used.
     struct TestComplexityOutput
     {
         public double sum;
@@ -308,12 +312,14 @@ namespace RandomizerAlgorithms
         public double top75;
     }
 
+    //Struct to store bias value and direction resulting from bias calculation
     struct BiasOutput
     {
         public double biasvalue;
         public bool direction; //0: Toward beginning, 1: Toward end
     }
 
+    //Struct to score all measures considered in interestingness and final core, as well as whether the world was completable
     struct InterestingnessOutput
     {
         public BiasOutput bias;

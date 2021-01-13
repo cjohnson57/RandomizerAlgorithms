@@ -10,29 +10,28 @@ namespace RandomizerAlgorithms
     class WorldGenerator
     {
         private static Random rng;
-        private static Helpers Helper;
+        private static Helpers helper;
 
         private static int Regions;
         private static List<Item> MajorItemList;
 
         public WorldGraph Generated;
 
-
         //Constructor which only specifies a number of items which are then generated
         public WorldGenerator(int regions, int items)
         {
             rng = new Random();
-            Helper = new Helpers();
+            helper = new Helpers();
             Regions = regions;
             MajorItemList = GenItemList(items);
             Generated = new WorldGraph();
         }
 
         //Constructor which specifies an item list
-        public WorldGenerator(int regions, List<Item> itemlist, int seed)
+        public WorldGenerator(int regions, List<Item> itemlist)
         {
-            rng = new Random(seed);
-            Helper = new Helpers(seed);
+            rng = new Random();
+            helper = new Helpers();
             Regions = regions;
             MajorItemList = itemlist;
             Generated = new WorldGraph();
@@ -41,7 +40,7 @@ namespace RandomizerAlgorithms
         //Generate a random worldgraph using the specified number of regions and item list
         public WorldGraph Generate()
         {
-            HashSet<Region> regions = new HashSet<Region>();
+            HashSet<Region> regions = new HashSet<Region>(); //Set of all regions in the world
             for (int i = 0; i < Regions; i++)
             {
                 Region r = new Region("Region-" + i.ToString()); //Each region is named Region_x. So Region-1, Region-2, etc.
@@ -139,9 +138,9 @@ namespace RandomizerAlgorithms
             {
                 //Create a connection from a random reachable location to a random unreachable location
                 List<Region> regionscopy = regions.ToList();
-                Helper.Shuffle(regionscopy);
+                helper.Shuffle(regionscopy);
                 Region from = regionscopy.First(x => !unreachable.Contains(x)); //Not in unreachable, so it is reachable
-                Helper.Shuffle(unreachable);
+                helper.Shuffle(unreachable);
                 Region to = unreachable.First(); //Unreachable
                 AddExits(regions, from, to); //Add connection between two regions to join subgraphs
                 Generated = new WorldGraph("Region-0", "Goal", regions.ToHashSet(), MajorItemList);
@@ -294,7 +293,7 @@ namespace RandomizerAlgorithms
         //Simply return a random item name from the major item list
         private string GenerateOneRandomRequirement()
         {
-            Helper.Shuffle(MajorItemList); //Shuffle major item list to provide randomness
+            helper.Shuffle(MajorItemList); //Shuffle major item list to provide randomness
             return MajorItemList.First().Name;
         }
 
@@ -408,12 +407,12 @@ namespace RandomizerAlgorithms
             {
                 return new Region(); //Will indicate to calling code that it should break
             }
-            else if (r.Exits.Count == 0) //Handle case when r has 0 exits
+            else if (Available.Count == 0 && r.Exits.Count == 0) //Handle case when r has 0 exits
             {
                 Available = regions.Where(x => x.Name != "Region-0" && x.Name != "Region-1" && x != r).ToList(); //Looser region requirements
             }
-            Helper.Shuffle(Available); //Shuffle list
-            return Helper.Pop(Available); //Get random region from list
+            helper.Shuffle(Available); //Shuffle list
+            return helper.Pop(Available); //Get random region from list
         }
 
         //Has a 50% chance to return "or", 50% chance to return "and"
@@ -428,17 +427,19 @@ namespace RandomizerAlgorithms
             return andor;
         }
 
+        //Generates a simple item list given number of items to generate
         private List<Item> GenItemList(int count)
         {
             List<Item> list = new List<Item>();
             for(int i = 0; i < count; i++)
             {
-                Item item = new Item(Helper.NumToLetters(i), 2); //Generate major item with a name of an incrementing letter string. A, B.... Z, AA, AB, etc.
+                Item item = new Item(helper.NumToLetters(i), 2); //Generate major item with a name of an incrementing letter string. A, B.... Z, AA, AB, etc.
                 list.Add(item); //Add to list
             }
             return list;
         }
 
+        //Calculates and returns the complexity of the generated world
         public TestComplexityOutput GetComplexity()
         {
             Statistics stats = new Statistics();

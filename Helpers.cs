@@ -6,7 +6,7 @@ using System.Text;
 namespace RandomizerAlgorithms
 {
     //This class implements some miscellaneous functions used in the other classes
-    //Most importantly is the shuffle method
+    //Most importantly is the shuffle method, which provides all the randomness for the fill algorithms
     class Helpers
     {
 
@@ -26,7 +26,6 @@ namespace RandomizerAlgorithms
         //Shuffles list items
         //Should be done every time a list is initialized and popped from
         //Here is where all the RNG comes from
-        //Maybe need better randomization
         public void Shuffle<T>(IList<T> list)
         {
             int n = list.Count;
@@ -49,14 +48,13 @@ namespace RandomizerAlgorithms
             return r;
         }
 
-        //Gets a random element from a list
+        //Gets a random element from a list, not used anywhere
         public T RandomElement<T>(IList<T> list)
         {
             return list[rng.Next(list.Count + 1)];
         }
 
-        //Takes away redundant items from list subfrom which are already in toremove
-        //Currently not used
+        //Takes away redundant items from list subfrom which are already in toremove, not used anywhere
         public List<T> SubtractLists<T>(List<T> subfrom, List<T> toremove)
         {
             foreach(T elem in toremove)

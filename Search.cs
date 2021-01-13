@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http.Headers;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace RandomizerAlgorithms
@@ -10,22 +8,8 @@ namespace RandomizerAlgorithms
     //This class implements the searching methods used to compute reachability and trace a path through the game world
     class Search
     {
-        Helpers helper;
-        Parser parser;
 
-        public Search()
-        {
-            helper = new Helpers();
-            parser = new Parser();
-        }
-
-        //Constructor with pre-specified helper so it may be seeded
-        //Currently not necessary since search uses no RNG
-        public Search(Helpers h)
-        {
-            helper = h;
-            parser = new Parser();
-        }
+        private Parser parser = new Parser();
 
         //Utilizes BFS search algorithm to find all locations in the world which are reachable with the current item set
         //Important note is that throughout this function the owned items are static, they are not collected throughout (as they are in sphere search)
@@ -71,11 +55,12 @@ namespace RandomizerAlgorithms
                 }
                 reachable.Regions.Add(toadd); //Add every reachable exit and location discovered in this iteration
             }
-            return reachable;
+            return reachable; //Return graph of reachable locations
         }
 
         //Utilizes BFS search algorithm to find all locations in the world which are reachable with the current item set
-        //In this algorithm, we want to check for items which have been removed from I but are still contained within R, so an initial search is done to collect items before returning the final search
+        //In this algorithm, we want to check for items which have been removed from I but are still contained within R, so an initial search is done to collect items, 
+        //then repeated iteratively until no new items are found, at which point the final reachability graph is returned.
         public WorldGraph GetReachableLocationsAssumed(WorldGraph world, List<Item> owneditems)
         {
             WorldGraph copy = world.Copy(); //Used so items may be removed from world at will
@@ -89,11 +74,11 @@ namespace RandomizerAlgorithms
             return GetReachableLocations(world, combined); //Use that combined list to find final search result
         }
 
-        //Initially, went to collect all items which are reachable with the current item set and not already contained within the item set
+        //Very similar to GetReachableLocations except that it returns items found within those locations
+        //Used in GetReachableLocationsAssumed
         public List<Item> ItemSearch(WorldGraph world, List<Item> owneditems)
         {
             List<Item> newitems = new List<Item>();
-
             Region root = world.Regions.First(x => x.Name == world.StartRegionName);
             Queue<Region> Q = new Queue<Region>();
             HashSet<Region> visited = new HashSet<Region>();
@@ -136,7 +121,7 @@ namespace RandomizerAlgorithms
             return newitems;
         }
 
-        List<List<Region>> paths = new List<List<Region>>();
+        private List<List<Region>> paths = new List<List<Region>>(); //Declared outside of function scope so multiple instances of following two functions can access
 
         //Use DFS to find all possible paths from the root to the specified region
         //Not including paths that go back on themselves
@@ -151,14 +136,14 @@ namespace RandomizerAlgorithms
                 return paths;
             }
 
-            RecursiveDFSForPathlist(world, root, dest, visited); //Recursively run DFS, when dest found add the path to paths var
+            RecursiveDFSForPathList(world, root, dest, visited); //Recursively run DFS, when dest found add the path to paths var
 
             return paths; //Return list of paths
         }
 
         //Recursively check exits with copy of visited list
         //It's done this way so that after the destination or a dead end is met, the code flow "backs up"
-        public void RecursiveDFSForPathlist(WorldGraph world, Region r, Region dest, List<Region> visited)
+        public void RecursiveDFSForPathList(WorldGraph world, Region r, Region dest, List<Region> visited)
         {
             visited.Add(r); //Add to visited list
             if (r == dest)
@@ -172,7 +157,7 @@ namespace RandomizerAlgorithms
                 if (!visited.Contains(exitto)) //Don't revisit already visited nodes on this path
                 {
                     List<Region> copy = new List<Region>(visited); //If don't do this List is passed by reference, algo doesn't work
-                    RecursiveDFSForPathlist(world, exitto, dest, copy);
+                    RecursiveDFSForPathList(world, exitto, dest, copy);
                 }
             }
 
@@ -209,7 +194,7 @@ namespace RandomizerAlgorithms
                 temp = owneditems.Where(x => x.Importance >= 2).Count(); //Only want to consider count of major items
                 owneditems = sx.CollectAllItems();
             }
-            //At this point, either a dead end has been found or the end of the game has
+            //At this point, either a dead end has been found or all locations have been discovered
             //If the goal item is in the list of owned items, means the end has been found and thus the game is completable
             output.Completable = owneditems.Count(x => x.Name == world.GoalItemName) > 0;
             return output;
@@ -229,7 +214,7 @@ namespace RandomizerAlgorithms
          */
         public PlaythroughInfo PlaythroughSearch(WorldGraph world)
         {
-            List<int> BetweenMajorOrHelpfulList = new List<int>();
+            List<int> BetweenMajorOrHelpfulList = new List<int>(); //This did not end up being utilized.
             List<int> BetweenMajorList = new List<int>();
             List<int> LocationsPerTraversal = new List<int>();
             List<int> LocationsUnlockedPerMajorFound = new List<int>();
@@ -255,7 +240,7 @@ namespace RandomizerAlgorithms
                 traversed.Add(current);
                 int checkcount = 0;
                 int prevcount = -1;
-                while(prevcount < owneditems.Count()) // While loop to re-check locations if major item is found in this region
+                while(prevcount < owneditems.Count()) //While loop to re-check locations if major item is found in this region
                 {
                     prevcount = owneditems.Count();
                     //First, check each location in the current region, if accessible and not already searched check it for major items
@@ -266,7 +251,7 @@ namespace RandomizerAlgorithms
                             checkcount++; //Add to check count
                             Item i = l.Item;
                             l.Item = new Item(); //Remove item, location importance set to -1
-                            if (i.Importance == 1) //Maybe have some consideration for helpful items since they are better to find than major ones
+                            if (i.Importance == 1) //Helpful item, did not end up being utilized.
                             {
                                 //Update helpful list only and reset counts
                                 BetweenMajorOrHelpfulList.Add(BetweenMajorOrHelpfulCount);
@@ -430,14 +415,14 @@ namespace RandomizerAlgorithms
         }
     }
 
-    //Class to record list of spheres and completability bool
+    //Struct to record list of spheres and completability bool
     struct SphereSearchInfo
     {
         public List<WorldGraph> Spheres;
         public bool Completable;
     }
 
-    //Class to record different playthrough metrics and completability bool
+    //Struct to record different playthrough metrics and completability bool
     struct PlaythroughInfo
     {
         public List<int> BetweenMajorOrHelpfulList;

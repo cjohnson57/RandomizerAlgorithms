@@ -12,8 +12,6 @@ namespace RandomizerAlgorithms
     //This class is used to parse a requirements string to determine if the current set of owned items satisfies the requirements or not
     class Parser
     {
-        Helpers helper = new Helpers();
-
         //Converts requirements into a logical statement and uses an algorithm to process it
         public bool RequirementsMet(string requirements, List<Item> owneditems)
         {

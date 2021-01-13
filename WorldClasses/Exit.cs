@@ -8,7 +8,7 @@ namespace RandomizerAlgorithms
     //Only the destination region is recorded as exits are not necessarily bidirectional; requirements to go one way can be different from requirements to go the other way
     class Exit
     {
-        public string ToRegionName;
+        public string ToRegionName; //Name of the region this exit leads to
         public string Requirements; //Key item requirements to traverse this edge
 
         //Parameterless constructor

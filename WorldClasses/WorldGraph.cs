@@ -17,10 +17,8 @@ namespace RandomizerAlgorithms
         public HashSet<Region> Regions; //Specifies all regions in the game
         public List<Item> Items; //Specifies the list of items, including the goal item, major/key items, and minor items
 
-        public WorldGraph()
-        {
-
-        }
+        //Empty constructpr
+        public WorldGraph() { }
 
         //Constructor from a previous world graph
         //Copies the start region and goal but new items and regions
@@ -96,9 +94,9 @@ namespace RandomizerAlgorithms
             {
                 foreach(Location l in r.Locations)
                 {
-                    if(l.Item.Importance == -1)
+                    if(l.Item.Importance == -1) //-1 signifies empty location
                     {
-                        locations.Add(l);
+                        locations.Add(l); //Add to empty location list
                     }
                 }
             }
@@ -119,9 +117,9 @@ namespace RandomizerAlgorithms
             {
                 foreach (Location l in r.Locations)
                 {
-                    if (l.Item.Importance > -1)
+                    if (l.Item.Importance > -1) //-1 signifies empty location, so if true this location is non empty
                     {
-                        items.Add(l.Item);
+                        items.Add(l.Item); //Add to list of placed items
                     }
                 }
             }
@@ -136,43 +134,13 @@ namespace RandomizerAlgorithms
             {
                 foreach (Location l in r.Locations)
                 {
-                    if (l.Item.Importance >= 2)
+                    if (l.Item.Importance >= 2) //2 signifies major item, 3 is goal item
                     {
-                        items.Add(l.Item);
+                        items.Add(l.Item); //Add to list of major items
                     }
                 }
             }
             return items;
-        }
-
-        //Find the region which has the longest shortest path from the root
-        //Currently not used
-        public Region GetFarthestRegion()
-        {
-            Search searcher = new Search();
-            int CurrentLongest = -1;
-            Region farthest = Regions.First(x => x.Name == StartRegionName); //Get start region
-            //Check the length of each region from the start
-            foreach (Region r in Regions.Where(x => x.Name != StartRegionName))
-            {
-                List<List<Region>> paths = searcher.PathsToRegion(this, r);
-                //Must go through each path to this region to find the shortest one
-                List<Region> shortest = paths[0];
-                foreach(List<Region> path in paths)
-                {
-                    if(path.Count < shortest.Count)
-                    {
-                        shortest = path;
-                    }
-                }
-                //Now that we have the shortest path, we must compare it to the current longest path
-                if(shortest.Count > CurrentLongest)
-                {
-                    farthest = r; //If it is the longest, then this region is farther from the root than any other
-                    CurrentLongest = shortest.Count;
-                }
-            }
-            return farthest;
         }
 
         //Find the list of locations which are unreachable
@@ -185,7 +153,7 @@ namespace RandomizerAlgorithms
             {
                 if(r.Name != StartRegionName) //Don't check start region
                 {
-                    List<List<Region>> paths = searcher.PathsToRegion(this, r);
+                    List<List<Region>> paths = searcher.PathsToRegion(this, r); //List of all paths from start to r
                     if(paths.Count == 0) //If there are no paths, then this location is unreachable, so add it to the unreachable list
                     {
                         unreachable.Add(r);
@@ -205,7 +173,7 @@ namespace RandomizerAlgorithms
         public int GetLocationCount()
         {
             int locationcount = 0;
-            foreach (Region r in Regions)
+            foreach (Region r in Regions) //Count locations in each region and sum
             {
                 locationcount += r.Locations.Count();
             }
