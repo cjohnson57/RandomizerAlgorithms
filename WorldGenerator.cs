@@ -12,10 +12,10 @@ namespace RandomizerAlgorithms
         private static Random rng;
         private static Helpers helper;
 
-        private static int Regions;
-        private static List<Item> MajorItemList;
+        private static int Regions; //Number of regions to generate
+        private static List<Item> MajorItemList; //List of items either passed or generated
 
-        public WorldGraph Generated;
+        public WorldGraph Generated; //Result of world generation
 
         //Constructor which only specifies a number of items which are then generated
         public WorldGenerator(int regions, int items)
@@ -79,7 +79,6 @@ namespace RandomizerAlgorithms
                         else
                         {
                             AddExitsOneRequirement(regions, r, third);
-
                         }
                     }
                 }
@@ -129,7 +128,6 @@ namespace RandomizerAlgorithms
                         }
                     }
                 }
-
             }
             //Must make sure all locations are reachable
             Generated = new WorldGraph("Region-0", "Goal", regions.ToHashSet(), MajorItemList);
@@ -177,7 +175,7 @@ namespace RandomizerAlgorithms
             //Finally, generate item locations and place the location in the region
             foreach(Region r in regions)
             {
-                //The first region has some specific conditions:
+                //The starting region has some specific conditions:
                 // 1. Three locations with no requirement
                 // 2. 50% chance of a 4th location with one requirement
                 if (r.Name == "Region-0")
@@ -337,25 +335,24 @@ namespace RandomizerAlgorithms
             {
                 return "None";
             }
-            //50% chance at this point to be a single requirement (43.75% total)
+            //50% chance at this point to be a single requirement
             random = rng.Next(1, 3);
             if(random == 2)
             {
                 return GenerateOneRandomRequirement();
             }
-            //50% chance at this point to have 2 requirements (21.875% total)
+            //50% chance at this point to have 2 requirements
             random = rng.Next(1, 3);
             if(random == 2)
             {
                 return GenerateTwoRandomRequirements();
             }
             random = rng.Next(1, 3);
-            //50% chance at this point to have 3 requirements (10.9375% total)
+            //50% chance at this point to have either 3 requirements or a complex requirement
             if (random == 2)
             {
                 return GenerateThreeRandomRequirements();
             }
-            //50% chance at this point to have a complex requirement (10.9375% total)
             else
             {
                 return GenerateComplexRandomRequirement();

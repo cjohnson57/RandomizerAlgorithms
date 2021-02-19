@@ -25,7 +25,7 @@ namespace RandomizerAlgorithms
 
         //Shuffles list items
         //Should be done every time a list is initialized and popped from
-        //Here is where all the RNG comes from
+        //Here is where all the RNG for the fill algorithms comes from
         public void Shuffle<T>(IList<T> list)
         {
             int n = list.Count;

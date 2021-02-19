@@ -319,7 +319,7 @@ namespace RandomizerAlgorithms
         public bool direction; //0: Toward beginning, 1: Toward end
     }
 
-    //Struct to score all measures considered in interestingness and final core, as well as whether the world was completable
+    //Struct to store all measures considered in interestingness and final score, as well as whether the world was completable
     struct InterestingnessOutput
     {
         public BiasOutput bias;

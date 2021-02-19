@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace RandomizerAlgorithms
 {
     //Class acts as the interface to the database where experimental results are stored
     class ResultDB : DbContext
     {
+        string path = "Data Source=" + Path.GetFullPath("../../../ExperimentResults/ResultsDB.db");
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite("Data Source=C:\\Users\\Caleb\\Source\\Repos\\RandomizerAlgorithms\\ExperimentResults\\ResultsDB.db"); //If you're not me and want to run yourself, change this string
+            => options.UseSqlite(path);
 
         public virtual DbSet<Result> Results { get; set; }
     }

@@ -129,7 +129,7 @@ namespace RandomizerAlgorithms
                 }
                 DateTime expend = DateTime.Now;
                 double expdifference = (expend - expstart).TotalMinutes;
-                Console.WriteLine("Time to perform " + trials + " iterations for world " + worldname + ": " + expdifference + " minutes");
+                Console.WriteLine("Time to perform " + trials + " iterations for world " + worldname + ": " + expdifference + " minutes"); //Print how long this world took to do
             }
             Console.ReadLine();
         }
@@ -211,7 +211,7 @@ namespace RandomizerAlgorithms
             }
         }
 
-        //Calculate the avrage complexity from generating many worlds with a specific regioncount and itemcount
+        //Calculate the average complexity from generating many worlds with a specific regioncount and itemcount
         static List<TestComplexityOutput> AverageComplexity(int regioncount, int itemcount)
         {
             //First do x trials to determine an average complexity

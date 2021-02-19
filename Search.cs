@@ -422,7 +422,7 @@ namespace RandomizerAlgorithms
         public bool Completable;
     }
 
-    //Struct to record different playthrough metrics and completability bool
+    //Struct to record different playthrough metrics and completability bool used to score interestingness metrics
     struct PlaythroughInfo
     {
         public List<int> BetweenMajorOrHelpfulList;
