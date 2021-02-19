@@ -14,12 +14,6 @@ There are three algorithms which can accomplish this:
 * Assumed Fill
 
 For in depth descriptions and psuedocode of the algorithms used, see the Documents section.
-
-Currently, there is no existing literature on these. The goal of this project is to publish a paper about the algorithms so the previous statement is no longer true.
-
-## Needs to be done
-   
-Write paper on results.
     
 ## Files
 
@@ -58,10 +52,10 @@ For more information on how Interestingness metrics are calculated, see "Bias an
 [WorldGenerator.cs](WorldGenerator.cs) contains code to generate a randomized world graph given an input region count and item list. For more information, see "Complexity and Generation" under the Documents section.
 
 [WorldClasses](WorldClasses) contains several classes which are used to define an input world graph.
-* Of particular note is [WorldGraph.cs](WorldClasses/WorldGraph.cs), which contains many functions used to find information about its layout.
+* Of particular note is [WorldGraph.cs](WorldClasses/WorldGraph.cs), which contains many functions used to find information about a graph's layout and state.
 
 [WorldGraphs](WorldGraphs) contains some sample world graphs in .json form.
-* Currently these include a test world (empty items besides goal), randomized test world (items filled by Assumed Fill), and the test world with its originally designed item placements for comparison. Also contains 5 randomly generated test worlds of increasing complexity for evaluation.
+* This includes a test world (empty items besides goal), randomized test world (items filled by Assumed Fill), and the test world with its originally designed item placements for comparison. Also contains 5 randomly generated test worlds of increasing complexity for evaluation.
 
 [ExperimentResults](ExperimentResults) contains classes and files related to experiments performed for this research. For more information, see "Experimental Results" under the Documents section.
 * [Result.cs](ExperimentResults/Result.cs) defines the class used to represent a row in the result database.
