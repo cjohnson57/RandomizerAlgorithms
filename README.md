@@ -128,6 +128,6 @@ Bias calculation using these spheres:
 | 4 | 4 | .133 | 1 | .1 | -.033 | .033 |
 | 5 | 5 | .167 | 1 | .1 | -.067 | .067 |
 | 6 | 1 | .033 | 1 | .1 | .067 | .067 |
-| Total | 30 | 1 | 10 | 1 | 0 | **.467** |
+| Total | 30 | 1 | 10 | 1 | 0 | <ins>**.467**</ins> |
 
 The result is then normalized by dividing the total of the absolute value of differences by the number of spheres, so the final bias is .467/7 = **.0667**. This is a pretty low value for bias, which is intuitive as looking at the sphere list, most spheres contain only a single item.
