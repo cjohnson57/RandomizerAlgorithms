@@ -7,7 +7,7 @@ import os
 algebra = boolean.BooleanAlgebra()
 requirements = sys.argv[1]
 # If argument is a file, set text to parse to equal file contents
-# Used when logical clause is too large to pass as commadn line argument
+# Used when logical clause is too large to pass as command line argument
 if ".txt" in requirements:
     file = open(requirements, mode='r')
     requirements = file.read()
