@@ -113,15 +113,11 @@ namespace RandomizerAlgorithms
                 reachable = searcher.GetReachableLocationsAssumed(world, owneditems); //Recalculate R now that less items are owned
                 reachablelocations = reachable.GetAllEmptyLocations(); //Get empty locations which are reachable
                 helper.Shuffle(reachablelocations);
-                Location location = new Location();
-                try
-                {
-                    location = helper.Pop(reachablelocations); //Remove location from list
-                }
-                catch //If this happens, means there are no reachable locations left and must return, usually indicates uncompletable permutation
+                if(reachablelocations.Count() == 0) //If this happens, means there are no reachable locations left and must return, usually indicates uncompletable permutation
                 {
                     break;
                 }
+                Location location = helper.Pop(reachablelocations); //Remove location from list
                 world.Place(location, item); //Place random item in random location
                 itempool.Add(item); //Add item to item pool
             }

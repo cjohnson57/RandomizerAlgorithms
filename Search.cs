@@ -179,7 +179,7 @@ namespace RandomizerAlgorithms
             List<Item> owneditems = new List<Item>();
             //Initial sphere s0 includes items reachable from the start of the game
             WorldGraph s0 = GetReachableLocations(world, owneditems);
-            owneditems = s0.CollectMajorItems(); //College all major items reachable from the start of the game
+            owneditems = s0.CollectMajorItems(); //Collect all major items reachable from the start of the game
             output.Spheres.Add(s0); //Add initial sphere to sphere list
             //sx indicates every sphere after the first. Any major items found in s0 means sx should be bigger.
             WorldGraph sx = GetReachableLocations(world, owneditems);
