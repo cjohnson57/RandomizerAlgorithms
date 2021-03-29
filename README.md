@@ -4,7 +4,7 @@
 
 This is a project to study algorithms used to randomize key item location in computer games which require certain key items to reach certain locations.
 
-For example, if a computer game has a hammer item which is used to smash rocks, and you want to randomize the location of this item, the hammer can not be placed in a location hidden under a rock.
+For example, if a computer game has a hammer item which is used to smash rocks, and you want to randomize the location of this item, the hammer can not be placed in a location hidden under a rock or the hammer will be unobtainable.
 
 Further, the location of the hammer can not require an item which is hidden under a rock.
 
@@ -13,7 +13,7 @@ There are three algorithms which can accomplish this:
 * Forward Fill
 * Assumed Fill
 
-For in depth descriptions and psuedocode of the algorithms used, see the Documents section.
+For in depth descriptions and pseudocode of the algorithms used, see the Documents section.
     
 ## Files
 
@@ -47,7 +47,7 @@ For more information on how Interestingness metrics are calculated, see "Bias an
 * Also has ability to simplify a given rule string by transforming it into a basic boolean expression and utilizing the small script [simplify.py](simplify.py) to reduce it
     * Used in world complexity calculation to simplify all location rules
 
-[Helpers.cs](Helpers.cs) contains some miscellaneous functions that didn't quite fit in the other files. The most significant of these is the shuffle function, which provides randomness.
+[Helpers.cs](Helpers.cs) contains some miscellaneous functions that didn't quite fit in the other files. The most significant of these is the shuffle function, which provides the randomness.
 
 [WorldGenerator.cs](WorldGenerator.cs) contains code to generate a randomized world graph given an input region count and item list. For more information, see "Complexity and Generation" under the Documents section.
 
