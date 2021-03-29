@@ -17,21 +17,21 @@ For in depth descriptions and pseudocode of the algorithms used, see the Documen
     
 ## Files
 
-[Program.cs](Program.cs) is the main function, basically used as the experiment space
+[Program.cs](Program.cs) is the main function, basically used to run the experiments.
 
 [Fill.cs](Fill.cs) defines the 3 fill algorithms: 
 * Random Fill
 * Forward Fill
 * Assumed Fill
 
-[Search.cs](Search.cs) defines the functions used for searching
+[Search.cs](Search.cs) defines the functions used for searching.
 * GetReachableLocations is the main search algorithm. Given a world graph and item set, returns all locations reachable with given item set. Utilizes BFS.
 * GetReachableLocationsAssumed is a slight modification for assumed search where reachability is computed iteratively to check for items that have been removed from the owned items but are still reachable.
 * PathsToRegion returns all possible paths (that don't go back on themselves) from the root region to a target region. Utilizes recursive DFS.
 * SphereSeach calculates spheres of reachability, where all items in sphere x are reachable with items found in sphere x-1.
 * PlaythroughSearch traverses the game world similar to how a player would by going from region to region, collecting all available items, and using a heuristic considering the amount and proximity of item locations in each direction to decide which region to go to next.
 
-[Statistics.cs](Statistics.cs) Used to calculate the aforementioned complexity, interestingness, bias, and other metrics for interestingness
+[Statistics.cs](Statistics.cs) Used to calculate the aforementioned complexity, interestingness, bias, and other metrics for interestingness.
 * Complexity: Finds the absolute rule of every location in the world graph and scores it based on the number of items required to reach it, then uses the average of the max 50% of these scores to return a final complexity score. For more information on this scoring see "Complexity and Generation" and "Complexity and Generation Evaluation" under the Documents section.
 * Interestingness: Performs PlaythroughSearch, extracts some metrics, and calculates a final interestingness score with the following considerations:
    * Bias: Looks at a randomized world and compares the percentage of item locations in early spheres to the percentage of major items within that sphere to evaluate whether the algorithm introduced some bias by placing items early. Lower bias is better. This is the most objective measure, as it does not utilize PlaythroughSearch or some threshold/scoring system to produce its result. It is also the only measure that was considered by randomizer developers previous to this study.
