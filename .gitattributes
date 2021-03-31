@@ -62,4 +62,4 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 
-Paper/* linguist-vendored
+Paper/Source/* linguist-vendored
