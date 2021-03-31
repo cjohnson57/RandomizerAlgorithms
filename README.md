@@ -13,7 +13,13 @@ There are three algorithms which can accomplish this:
 * Forward Fill
 * Assumed Fill
 
-For in depth descriptions and pseudocode of the algorithms used, see the Documents section.
+## Paper
+
+[Read the paper resulting from the work in this repository here!](Paper/Paper.pdf) It provides in-depth descriptions of the algorithms for filling and searching, and the results of some experimentation with the algorithms.
+
+For some documents containing information which was eventually added into the paper, see the Documents section.
+
+[Here you can also view the official page of the publication on IEEE Xplore,](https://ieeexplore.ieee.org/document/9387363) although I prefer the formatting of the version on this repo.
     
 ## Files
 
@@ -64,7 +70,11 @@ For more information on how Interestingness metrics are calculated, see "Bias an
 * [ResultQueries.sql](ExperimentResults/ResultQueries.sql) defines SQL queries used to extract statistics from the result database.
 * [ResultStats.xlsx](ExperimentResults/ResultStats.xlsx) has tables where the outputs from ResultQueries are stored, as well as graphs of these results.
 
+[Paper](Paper) contains the LaTeX source of paper and the pdf produced by compiling it.
+
 ## Documents
+
+These documents were created while this work was in progress. Most of the information in them ended up being worked into the final paper.
 
 [Pseudocode](https://drive.google.com/file/d/1w8PWoPOP0WWzDxhrliUTG9Q8VwHo0w_A/view?usp=sharing) Some pseudocode definitions of the algorithms used in this code, namely the Fill and Search functions.
 
