@@ -62,4 +62,4 @@
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
 
-Paper/* linguist-vendored=false
+*.tex linguist-vendored=false
