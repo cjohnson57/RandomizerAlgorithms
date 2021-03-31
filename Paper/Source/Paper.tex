@@ -101,7 +101,7 @@ real game world. Item placements shown here are the "original" placements, desig
 how items would be in a real game world, with key items highlighted in different colors. Refer to
 Fig.~\ref{fig1} to understand the meaning of elements of the graph. For example, to travel from 
 Forest to Waterfall requires the sword item, and location Chest in Waterfall requires the sling. 
-The player would start in Forest, in the top right, and eventually make their way to Arena 
+The player would start in Forest, in the top left, and eventually make their way to Arena 
 (second to the left from the bottom right) where the goal item is located. One can hand-trace 
 a path through this world to eventually complete the game, travelling from region to region and
 collecting available item locations. Fig.~\ref{fig3} shows this same world but with the item 
@@ -632,7 +632,7 @@ player behavior and reactive to different item placements.
     likely to check it. This satisfies assumption 4.
 \end{itemize}
 
-For an example of this heuristic, see Fig. 4. Exit C will be visited first as it has the
+For an example of this heuristic, see Fig. ~\ref{fig4}. Exit C will be visited first as it has the
 highest score, then move back to start. The scores will then be evaluated again but exit C's
 score will be 0 as all of its available locations have been searched. Exit A will then win
 instead, because although the path through exit A visits the same regions as exit B, exit A has
@@ -765,21 +765,21 @@ requirement rule) and again randomly joins them with either AND or OR.
 
 There is also a chance to generate a complex requirement. A complex requirement will generate
 two or three (50\% chance each) clauses, where a clause has a 20\% chance to be a single
-requirement, and a 40\% chance each to require two or three items joined by a random selection
-of AND or OR.
+requirement, and a 40\% chance each to require two or three items, and each clause is
+joined by a random selection of AND or OR.
 
 The distribution of requirement probabilities for item locations and edges is shown in Table
 \ref{table1}. We decided that edges should be more generous since an exit (outgoing edge) is
 often simply an open doorway the player can freely walk through.
 
 \begin{table}
-\caption{Chance of Generating Each Type of Rule for Item Locations and Edges}
+\caption{Chance of Generating Each Type of Rule for Item Locations and Region Exits}
 \label{table1}
 \setlength{\tabcolsep}{3pt}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{ |p{100pt}|p{60pt}|p{60pt}|  }
  \hline
- Rule Type & Item Location & Edge \\
+ Rule Type & Item Location & Region Exit \\
  \hline
  No Requirement & 20\% & 60\% \\
  \hline
